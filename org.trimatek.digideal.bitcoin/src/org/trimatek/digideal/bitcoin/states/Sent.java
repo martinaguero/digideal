@@ -3,6 +3,7 @@ package org.trimatek.digideal.bitcoin.states;
 import java.util.LinkedList;
 
 import org.trimatek.digideal.bitcoin.actions.Action;
+import org.trimatek.digideal.bitcoin.actions.CreateTransaction;
 import org.trimatek.digideal.bitcoin.actions.DecodeTransaction;
 import org.trimatek.digideal.bitcoin.actions.GetUnspentRaw;
 import org.trimatek.digideal.bitcoin.entities.Contract;
@@ -16,6 +17,7 @@ public class Sent extends State {
 		this.contract = contract;
 		pending.add(new GetUnspentRaw());
 		pending.add(new DecodeTransaction());
+		pending.add(new CreateTransaction());
 	}
 
 	public void run() throws Exception {
@@ -37,8 +39,8 @@ public class Sent extends State {
 			State sent = new Sent(cnt);			
 			sent.run();
 			cnt = sent.getContract();
-			System.out.println("vout= " + cnt.getUnspentVout());
-			System.out.println("output_script= " + cnt.getUnspentOutputScript());
+			System.out.println("PayTxRaw= " + cnt.getPayTxRaw());
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

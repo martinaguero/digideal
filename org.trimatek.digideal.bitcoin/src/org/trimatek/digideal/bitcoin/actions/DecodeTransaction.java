@@ -33,6 +33,7 @@ public class DecodeTransaction extends Action {
 				BigDecimal sent = o.get("value").getAsBigDecimal();
 				BigDecimal sts = new BigDecimal(contract.getValue("sts"));
 				if (sent.compareTo(sts) == 0) {
+					contract.setSts(sts);
 					contract.setUnspentVout(o.get("n").getAsInt());
 					JsonObject scriptPubKey = o.getAsJsonObject("scriptPubKey");
 					contract.setUnspentOutputScript(scriptPubKey.get("hex").getAsString());

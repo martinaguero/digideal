@@ -3,6 +3,7 @@ package org.trimatek.digideal.bitcoin.entities;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,6 +19,8 @@ public class Contract {
 	private String unspentRaw;
 	private String unspentOutputScript;
 	private int unspentVout;
+	private BigDecimal sts;
+	private String payTxRaw;
 
 	public Contract() {
 	}
@@ -96,6 +99,22 @@ public class Contract {
 
 	public void setUnspentRaw(String unspentRaw) {
 		this.unspentRaw = unspentRaw;
+	}
+
+	public BigDecimal getSts() {
+		return sts;
+	}
+
+	public void setSts(BigDecimal sts) {
+		this.sts = sts;
+	}
+
+	public String getPayTxRaw() {
+		return payTxRaw;
+	}
+
+	public void setPayTxRaw(String payTxRaw) {
+		this.payTxRaw = payTxRaw;
 	}
 
 }
