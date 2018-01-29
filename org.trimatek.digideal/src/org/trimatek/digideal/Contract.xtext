@@ -1,0 +1,44 @@
+grammar org.trimatek.digideal.Contract with org.eclipse.xtext.common.Terminals
+
+generate contract "http://www.trimatek.org/digideal/Contract"
+
+Contract:
+	'CONTRATO #' cid=ID paragraph+=Sentence*;
+
+Sentence:
+	sentenceType=STRING | Subject | Reference | PayTo | PaymentCondition | SupervisedBy;
+
+Subject:
+	'@' name=ID '{' pk=STRING ',' email=Email '}';
+
+PublicKey:
+	ID;
+
+Email:
+	STRING;
+
+Reference:
+	'@' type=[Subject];
+
+PayTo:
+	'@' payer=[Subject] 'pagará a' ('@' collector=[Subject]) 'la suma de STS' sts=INT;
+
+PaymentCondition:
+	'si:' ('@' collector=[Subject]) description=STRING level=FactsLevel facts=Facts;
+
+FactsLevel:
+	options=(AnyFact | AllFacts);
+
+AnyFact:
+	value='demostrable con CUALQUIERA de los siguientes hechos:';
+
+AllFacts:
+	value='demostrable con TODOS los siguientes hechos:';
+
+Facts:
+	'{' (fact+=STRING ("," fact+=STRING)*) '}';
+
+SupervisedBy:
+	'y supervisado por ' agent=Subject;
+
+	
