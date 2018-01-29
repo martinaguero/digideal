@@ -18,7 +18,7 @@ public class DecodeTransaction extends Action {
 	public Contract exec(Contract contract) throws IOException {
 
 		Runtime rt = Runtime.getRuntime();
-		logger.log(Level.INFO, "Ready to run DecodeTransaction for " + contract.getValue("contract.id"));
+		logger.log(Level.INFO, "Ready to run DecodeTransaction for " + contract.getValue("id"));
 		Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(contract));
 
 		String err = Translators.toString(pr.getErrorStream());

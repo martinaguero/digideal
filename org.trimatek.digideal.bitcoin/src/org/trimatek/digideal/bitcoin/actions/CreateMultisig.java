@@ -15,7 +15,7 @@ public class CreateMultisig extends Action {
 	public Contract exec(Contract contract) throws IOException {
 
 		Runtime rt = Runtime.getRuntime();
-		logger.log(Level.INFO, "Ready to run CreateMultisig for " + contract.getValue("contract.id"));
+		logger.log(Level.INFO, "Ready to run CreateMultisig for " + contract.getValue("id"));
 		Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(contract, 2));
 
 		String err = Translators.toString(pr.getErrorStream());
