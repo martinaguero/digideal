@@ -39,6 +39,7 @@ public class RequestFunds extends Action {
 		Response response = sg.api(request);
 		if (String.valueOf(response.getStatusCode()).charAt(0) == '2') {
 			logger.log(Level.INFO, "Message send successfully");
+			done = Boolean.TRUE;
 			return cnt;
 		}
 		logger.log(Level.SEVERE, "Message could not be send");

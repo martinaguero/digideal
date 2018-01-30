@@ -6,6 +6,7 @@ import org.trimatek.digideal.bitcoin.actions.Action;
 import org.trimatek.digideal.bitcoin.actions.CreateTransaction;
 import org.trimatek.digideal.bitcoin.actions.DecodeTransaction;
 import org.trimatek.digideal.bitcoin.actions.GetUnspentRaw;
+import org.trimatek.digideal.bitcoin.actions.RequestTxSignature;
 import org.trimatek.digideal.bitcoin.entities.Contract;
 
 public class Sent extends State {
@@ -18,6 +19,7 @@ public class Sent extends State {
 		pending.add(new GetUnspentRaw());
 		pending.add(new DecodeTransaction());
 		pending.add(new CreateTransaction());
+		pending.add(new RequestTxSignature());
 	}
 
 	public void run() throws Exception {
@@ -38,8 +40,6 @@ public class Sent extends State {
 			cnt.setUnspentTxId("aaca37aae04c977842505831e32487ee8d82ff4a46682cf3e066cfe6d7204aeb");
 			State sent = new Sent(cnt);			
 			sent.run();
-			cnt = sent.getContract();
-			System.out.println("PayTxRaw= " + cnt.getPayTxRaw());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

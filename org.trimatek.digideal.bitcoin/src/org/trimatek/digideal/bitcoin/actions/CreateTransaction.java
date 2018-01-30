@@ -6,6 +6,7 @@ import java.util.logging.Level;
 
 import org.trimatek.digideal.bitcoin.entities.Context;
 import org.trimatek.digideal.bitcoin.entities.Contract;
+import org.trimatek.digideal.bitcoin.entities.Transaction;
 import org.trimatek.digideal.bitcoin.tools.Calc;
 import org.trimatek.digideal.bitcoin.tools.Translators;
 
@@ -22,7 +23,7 @@ public class CreateTransaction extends Action {
 
 		if (err.isEmpty()) {
 			logger.log(Level.INFO, "Execution success");
-			contract.setPayTxRaw(in);
+			contract.pushPayTx(new Transaction(null,in));
 			done = Boolean.TRUE;
 			return contract;
 		} else {

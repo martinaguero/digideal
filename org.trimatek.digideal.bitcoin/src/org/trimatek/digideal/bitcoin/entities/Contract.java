@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.Stack;
 
 public class Contract {
 
@@ -20,7 +21,7 @@ public class Contract {
 	private String unspentOutputScript;
 	private int unspentVout;
 	private BigDecimal sts;
-	private String payTxRaw;
+	private Stack<Transaction> payTxStack;
 
 	public Contract() {
 	}
@@ -109,12 +110,15 @@ public class Contract {
 		this.sts = sts;
 	}
 
-	public String getPayTxRaw() {
-		return payTxRaw;
+	public void pushPayTx(Transaction transaction) {
+		if (payTxStack == null) {
+			payTxStack = new Stack<Transaction>();
+		}
+		payTxStack.push(transaction);
 	}
 
-	public void setPayTxRaw(String payTxRaw) {
-		this.payTxRaw = payTxRaw;
+	public Transaction getpayTx() {
+		return payTxStack.peek();
 	}
 
 }
