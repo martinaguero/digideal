@@ -20,8 +20,8 @@ public class RequestFunds extends Action {
 		String subject = "[DD] Funds request";
 		Email to = new Email(cnt.getValue("payer.email"));
 
-		String html = "<html><body><p>Please send STS " + cnt.getValue("sts") + " to address: <b>"
-				+ cnt.getMultisigAddress() + "</b> in order to proceed with the contract requirements."
+		String html = "<html><body><p>Please send STS " + cnt.getValue("sts") + " to address: <br><b>"
+				+ cnt.getMultisigAddress() + "</b><br> in order to proceed with the contract requirements."
 				+ "</p></body></html>";
 
 		Content content = new Content("text/html", html);
