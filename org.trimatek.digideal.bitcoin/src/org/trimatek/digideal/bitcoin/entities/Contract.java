@@ -22,6 +22,7 @@ public class Contract {
 	private int unspentVout;
 	private int requiredSignatures;
 	private BigDecimal sts;
+	private String spentTxId;
 	private Stack<Transaction> payTxStack;
 
 	public Contract() {
@@ -128,6 +129,18 @@ public class Contract {
 
 	public void setRequiredSignatures(int requiredSignatures) {
 		this.requiredSignatures = requiredSignatures;
+	}
+
+	public int countSignedTx() {
+		return payTxStack.size() - 1;
+	}
+
+	public String getSpentTxId() {
+		return spentTxId;
+	}
+
+	public void setSpentTxId(String spentTxId) {
+		this.spentTxId = spentTxId;
 	}
 
 }
