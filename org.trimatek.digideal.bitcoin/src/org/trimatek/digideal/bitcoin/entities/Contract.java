@@ -20,6 +20,7 @@ public class Contract {
 	private String unspentRaw;
 	private String unspentOutputScript;
 	private int unspentVout;
+	private int requiredSignatures;
 	private BigDecimal sts;
 	private Stack<Transaction> payTxStack;
 
@@ -119,6 +120,14 @@ public class Contract {
 
 	public Transaction getpayTx() {
 		return payTxStack.peek();
+	}
+
+	public int getRequiredSignatures() {
+		return requiredSignatures;
+	}
+
+	public void setRequiredSignatures(int requiredSignatures) {
+		this.requiredSignatures = requiredSignatures;
 	}
 
 }

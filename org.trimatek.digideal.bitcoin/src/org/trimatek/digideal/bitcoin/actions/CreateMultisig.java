@@ -16,7 +16,7 @@ public class CreateMultisig extends Action {
 
 		Runtime rt = Runtime.getRuntime();
 		logger.log(Level.INFO, "Ready to run CreateMultisig for " + contract.getValue("id"));
-		Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(contract, 2));
+		Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(contract, contract.getRequiredSignatures()));
 
 		String err = Translators.toString(pr.getErrorStream());
 		String in = Translators.toString(pr.getInputStream());

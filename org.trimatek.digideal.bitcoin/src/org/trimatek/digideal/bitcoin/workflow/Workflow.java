@@ -11,6 +11,7 @@ public class Workflow {
 		try {
 
 			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
+			cnt.setRequiredSignatures(2);
 			State newState = new New(cnt);
 			newState.run();
 
