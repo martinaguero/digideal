@@ -2,8 +2,10 @@ package org.trimatek.digideal.bitcoin.actions;
 
 import java.util.logging.Level;
 
-import org.trimatek.digideal.bitcoin.entities.Contract;
-import org.trimatek.digideal.bitcoin.entities.Transaction;
+import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.Transaction;
+
+
 
 public class AddSignedTx extends AsyncAction<Transaction> {
 

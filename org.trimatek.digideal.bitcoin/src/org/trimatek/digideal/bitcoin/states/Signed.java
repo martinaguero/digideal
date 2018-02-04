@@ -1,8 +1,9 @@
 package org.trimatek.digideal.bitcoin.states;
 
 import org.trimatek.digideal.bitcoin.actions.SendTransaction;
-import org.trimatek.digideal.bitcoin.entities.Contract;
-import org.trimatek.digideal.bitcoin.entities.Transaction;
+import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.Transaction;
+
 
 public class Signed extends State {
 	

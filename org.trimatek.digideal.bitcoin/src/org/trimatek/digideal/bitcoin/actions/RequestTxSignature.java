@@ -2,7 +2,7 @@ package org.trimatek.digideal.bitcoin.actions;
 
 import java.util.logging.Level;
 
-import org.trimatek.digideal.bitcoin.entities.Contract;
+import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.bitcoin.tools.Mail;
 
 public class RequestTxSignature extends Action {

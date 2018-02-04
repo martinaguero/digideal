@@ -2,7 +2,9 @@ package org.trimatek.digideal.bitcoin.actions;
 
 import java.util.logging.Logger;
 
-import org.trimatek.digideal.bitcoin.entities.Contract;
+import org.trimatek.digideal.model.Contract;
+
+
 
 public abstract class Action {
 

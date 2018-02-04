@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 import org.trimatek.digideal.bitcoin.entities.Context;
-import org.trimatek.digideal.bitcoin.entities.Contract;
+import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.bitcoin.tools.Translators;
 
 import com.google.gson.Gson;

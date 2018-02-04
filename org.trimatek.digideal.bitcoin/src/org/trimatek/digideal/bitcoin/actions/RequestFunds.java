@@ -2,7 +2,7 @@ package org.trimatek.digideal.bitcoin.actions;
 
 import java.util.logging.Level;
 
-import org.trimatek.digideal.bitcoin.entities.Contract;
+import org.trimatek.digideal.model.Contract;
 
 import com.sendgrid.Content;
 import com.sendgrid.Email;

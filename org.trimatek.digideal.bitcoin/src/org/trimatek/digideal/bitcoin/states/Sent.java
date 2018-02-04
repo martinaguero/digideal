@@ -4,7 +4,8 @@ import org.trimatek.digideal.bitcoin.actions.CreateTransaction;
 import org.trimatek.digideal.bitcoin.actions.DecodeTransaction;
 import org.trimatek.digideal.bitcoin.actions.GetUnspentRaw;
 import org.trimatek.digideal.bitcoin.actions.RequestTxSignature;
-import org.trimatek.digideal.bitcoin.entities.Contract;
+import org.trimatek.digideal.model.Contract;
+
 
 public class Sent extends State {
 

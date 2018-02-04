@@ -2,7 +2,7 @@ package org.trimatek.digideal.bitcoin.states;
 
 import org.trimatek.digideal.bitcoin.actions.CreateMultisig;
 import org.trimatek.digideal.bitcoin.actions.RequestFunds;
-import org.trimatek.digideal.bitcoin.entities.Contract;
+import org.trimatek.digideal.model.Contract;
 
 public class New extends State {
 

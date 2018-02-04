@@ -3,7 +3,9 @@ package org.trimatek.digideal.bitcoin.states;
 import java.util.LinkedList;
 
 import org.trimatek.digideal.bitcoin.actions.Action;
-import org.trimatek.digideal.bitcoin.entities.Contract;
+import org.trimatek.digideal.model.Contract;
+
+
 
 public abstract class State {
 

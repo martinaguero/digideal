@@ -1,6 +1,6 @@
 package org.trimatek.digideal.bitcoin.workflow;
 
-import org.trimatek.digideal.bitcoin.entities.Contract;
+import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.bitcoin.states.New;
 import org.trimatek.digideal.bitcoin.states.State;
 
