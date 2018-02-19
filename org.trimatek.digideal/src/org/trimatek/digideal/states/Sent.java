@@ -1,9 +1,9 @@
-package org.trimatek.digideal.bitcoin.states;
+package org.trimatek.digideal.states;
 
+import org.trimatek.digideal.actions.RequestTxSignature;
 import org.trimatek.digideal.bitcoin.actions.CreateTransaction;
 import org.trimatek.digideal.bitcoin.actions.DecodeTransaction;
 import org.trimatek.digideal.bitcoin.actions.GetUnspentRaw;
-import org.trimatek.digideal.bitcoin.actions.RequestTxSignature;
 import org.trimatek.digideal.model.Contract;
 
 
@@ -21,7 +21,7 @@ public class Sent extends State {
 		
 		try {
 			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
-			cnt.setUnspentTxId("aaca37aae04c977842505831e32487ee8d82ff4a46682cf3e066cfe6d7204aeb");
+			cnt.setUnspentTxId("25fb4dc0542b8071cb7150504971e81faf5d3ced86f22e09519fb4080a8c0732");
 			State sent = new Sent(cnt);			
 			sent.run();
 			System.out.println("SpentTxRaw= " + sent.getContract().getpayTx().getRaw());

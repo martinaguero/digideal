@@ -1,8 +1,9 @@
-package org.trimatek.digideal.bitcoin.workflow;
+package org.trimatek.digideal.services;
 
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.bitcoin.states.New;
-import org.trimatek.digideal.bitcoin.states.State;
+import org.trimatek.digideal.states.New;
+import org.trimatek.digideal.states.State;
+
 
 public class Workflow {
 
@@ -21,5 +22,11 @@ public class Workflow {
 		}
 
 	}
+	
+	/*
+	 * New -> Sent -> Signed
+	 * 
+	 * 
+	 */
 
 }

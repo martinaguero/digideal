@@ -1,9 +1,10 @@
-package org.trimatek.digideal.bitcoin.actions;
+package org.trimatek.digideal.actions;
 
 import java.util.logging.Level;
 
+import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.bitcoin.tools.Mail;
+import org.trimatek.digideal.tools.Mail;
 
 public class RequestTxSignature extends Action {
 

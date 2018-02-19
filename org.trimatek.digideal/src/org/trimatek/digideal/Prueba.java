@@ -4,7 +4,7 @@ import org.trimatek.digideal.tools.Generators;
 
 public class Prueba {
 
-	private static final String QR_CODE_IMAGE_PATH = "c:\\Temp\\";
+	private static final String QR_CODE_IMAGE_PATH = "D:\\Temp\\";
 
 	public static void main(String[] args) throws Exception {
 		String code = Generators.genNewDeliveryCode();

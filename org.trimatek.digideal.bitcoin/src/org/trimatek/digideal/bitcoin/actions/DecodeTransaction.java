@@ -5,8 +5,9 @@ import java.math.BigDecimal;
 import java.util.logging.Level;
 
 import org.trimatek.digideal.bitcoin.entities.Context;
-import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.bitcoin.tools.Translators;
+import org.trimatek.digideal.model.Action;
+import org.trimatek.digideal.model.Contract;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
