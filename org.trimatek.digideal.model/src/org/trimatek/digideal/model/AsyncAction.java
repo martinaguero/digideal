@@ -1,12 +1,8 @@
-package org.trimatek.digideal.bitcoin.actions;
+package org.trimatek.digideal.model;
 
 import java.util.logging.Logger;
 
-import org.trimatek.digideal.model.Contract;
-
-
-
-public abstract class AsyncAction<E> {
+public abstract class AsyncAction<E> extends Action {
 
 	protected final static Logger logger = Logger.getLogger(AsyncAction.class.getName());
 

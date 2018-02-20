@@ -13,18 +13,22 @@ import java.util.Stack;
 public class Contract {
 
 	private String doc;
-	private byte[] metadata;
+	private byte[] metadata;	
+	private int deliveryCode;
+	private BigDecimal sts;
+	private int requiredSignatures;
+	//
 	private String multisigAddress;
 	private String redeemScript;
+	//
 	private String unspentTxId;
 	private String unspentRaw;
 	private String unspentOutputScript;
 	private int unspentVout;
-	private int requiredSignatures;
-	private int deliverCode;
-	private BigDecimal sts;
-	private String spentTxId;
+	//	
 	private Stack<Transaction> payTxStack;
+	private String agentPrivateKey;
+	private String spentTxId;
 
 	public Contract() {
 	}
@@ -144,12 +148,20 @@ public class Contract {
 		this.spentTxId = spentTxId;
 	}
 
-	public int getDeliverCode() {
-		return deliverCode;
+	public int getDeliveryCode() {
+		return deliveryCode;
 	}
 
-	public void setDeliverCode(int deliverCode) {
-		this.deliverCode = deliverCode;
+	public void setDeliveryCode(int deliveryCode) {
+		this.deliveryCode = deliveryCode;
+	}
+
+	public String getAgentPrivateKey() {
+		return agentPrivateKey;
+	}
+
+	public void setAgentPrivateKey(String agentPrivateKey) {
+		this.agentPrivateKey = agentPrivateKey;
 	}
 
 }

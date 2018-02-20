@@ -24,7 +24,7 @@ public class ValidarEntrega {
 
 	@When
 	public boolean when() {
-		return remito.getImage() != null && remito.getCode() == contract.getDeliverCode() ? true : false;
+		return remito.getImage() != null && remito.getCode() == contract.getDeliveryCode() ? true : false;
 	}
 
 	@Then

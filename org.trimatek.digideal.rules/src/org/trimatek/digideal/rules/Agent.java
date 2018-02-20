@@ -21,7 +21,7 @@ public class Agent {
 		NameValueReferableMap facts = new FactMap();
 		
 		Contract c = new Contract();
-		c.setDeliverCode(123);
+		c.setDeliveryCode(123);
 		
 		Remito r = new Remito();
 		r.setImage("la imagen".getBytes());
