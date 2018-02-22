@@ -6,7 +6,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/org.trimatek.digideal.repo/lib/objectdb.jar">
+	<classpathentry kind="lib" path="lib/objectdb.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.trimatek.digideal.model">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

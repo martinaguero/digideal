@@ -13,7 +13,7 @@ public class SendTransaction extends Action {
 	@Override
 	public Contract exec(Contract contract) throws Exception {
 
-		if (contract.countSignedTx() < contract.getRequiredSignatures()) {
+		if (contract.countPayTransactions() < contract.getRequiredSignatures()) {
 			logger.log(Level.SEVERE, "Minimum required signatures not reached");
 			return null;
 		}
@@ -38,7 +38,7 @@ public class SendTransaction extends Action {
 	}
 
 	private static String buildParams(Contract cnt) throws IOException {
-		return " sendrawtransaction " + cnt.getpayTx().getRaw();	
+		return " sendrawtransaction " + cnt.getLastPayTransaction().getRaw();	
 	}
 
 }

@@ -24,7 +24,7 @@ public class CreateTransaction extends Action {
 
 		if (err.isEmpty()) {
 			logger.log(Level.INFO, "Execution success");
-			contract.pushPayTx(new Transaction(null,in));
+			contract.addPayTransaction(new Transaction(null,in));
 			done = Boolean.TRUE;
 			return contract;
 		} else {

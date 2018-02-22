@@ -37,7 +37,7 @@ public class SignTransaction extends Action {
 	}
 
 	private static String buildParams(Contract cnt) throws IOException {
-		return " signrawtransaction " + cnt.getpayTx().getRaw() + " \"[{\\\"txid\\\":\\\""
+		return " signrawtransaction " + cnt.getLastPayTransaction().getRaw() + " \"[{\\\"txid\\\":\\\""
 				+ cnt.getUnspentTxId() + "\\\",\\\"vout\\\":" + cnt.getUnspentVout() + ",\\\"scriptPubKey\\\":\\\""
 				+ cnt.getUnspentOutputScript() + "\\\",\\\"redeemScript\\\":\\\"" + cnt.getRedeemScript() + "\\\"}]\""
 				+ " \"[\\\"" + cnt.getAgentPrivateKey() + "\\\"]";		

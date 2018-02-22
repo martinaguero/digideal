@@ -3,17 +3,32 @@ package org.trimatek.digideal.model;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedHashSet;
 import java.util.Properties;
-import java.util.Stack;
+import java.util.Set;
 
-public class Contract {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
+@Entity
+public class Contract implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue
+	private long id;
 	private String doc;
-	private byte[] metadata;	
+	private byte[] metadata;
 	private int deliveryCode;
 	private BigDecimal sts;
 	private int requiredSignatures;
@@ -25,8 +40,9 @@ public class Contract {
 	private String unspentRaw;
 	private String unspentOutputScript;
 	private int unspentVout;
-	//	
-	private Stack<Transaction> payTxStack;
+	//
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Transaction> payTransactions;
 	private String agentPrivateKey;
 	private String spentTxId;
 
@@ -43,6 +59,10 @@ public class Contract {
 		Properties prop = new Properties();
 		prop.load(new ByteArrayInputStream(metadata));
 		return prop != null ? prop.getProperty(key) : null;
+	}
+
+	public long getId() {
+		return id;
 	}
 
 	public String getDoc() {
@@ -117,15 +137,19 @@ public class Contract {
 		this.sts = sts;
 	}
 
-	public void pushPayTx(Transaction transaction) {
-		if (payTxStack == null) {
-			payTxStack = new Stack<Transaction>();
+	public void addPayTransaction(Transaction transaction) {
+		if (payTransactions == null) {
+			payTransactions = new LinkedHashSet<Transaction>();
 		}
-		payTxStack.push(transaction);
+		payTransactions.add(transaction);
 	}
 
-	public Transaction getpayTx() {
-		return payTxStack.peek();
+	public Set<Transaction> getPayTransactions() {
+		return payTransactions;
+	}
+
+	public Transaction getLastPayTransaction() {
+		return (Transaction) getPayTransactions().toArray()[getPayTransactions().size() - 1];
 	}
 
 	public int getRequiredSignatures() {
@@ -136,8 +160,8 @@ public class Contract {
 		this.requiredSignatures = requiredSignatures;
 	}
 
-	public int countSignedTx() {
-		return payTxStack.size() - 1;
+	public int countPayTransactions() {
+		return getPayTransactions().size();
 	}
 
 	public String getSpentTxId() {

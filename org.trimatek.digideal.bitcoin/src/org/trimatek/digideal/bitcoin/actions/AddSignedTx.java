@@ -13,7 +13,7 @@ public class AddSignedTx extends AsyncAction<Transaction> {
 	@Override
 	public Contract exec(Contract contract, Transaction t) throws Exception {
 		if (t.getSignedBy() != null && t.getRaw() != null) {
-			contract.pushPayTx(t);
+			contract.addPayTransaction(t);
 			done = Boolean.TRUE;
 			logger.log(Level.INFO, "Transaction pushed to stack");
 			return contract;

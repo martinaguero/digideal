@@ -11,7 +11,7 @@ public class RequestTxSignature extends Action {
 	@Override
 	public Contract exec(Contract cnt) throws Exception {
 		
-		String body = "<html><body><p>Please sign the current transaction raw: <b><br>" + cnt.getpayTx().getRaw() + "<br>" 
+		String body = "<html><body><p>Please sign the current transaction raw: <b><br>" + cnt.getLastPayTransaction().getRaw() + "<br>" 
 				+ "</b> in order to authorize send STS " + cnt.getValue("sts") + " to @" + cnt.getValue("collector.name")
 				+ "</p></body></html>";
 		

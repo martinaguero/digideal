@@ -24,7 +24,7 @@ public class Requested extends State {
 			cnt.setUnspentTxId("25fb4dc0542b8071cb7150504971e81faf5d3ced86f22e09519fb4080a8c0732");
 			State sent = new Requested(cnt);			
 			sent.run();
-			System.out.println("SpentTxRaw= " + sent.getContract().getpayTx().getRaw());
+			System.out.println("SpentTxRaw= " + sent.getContract().getLastPayTransaction().getRaw());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
