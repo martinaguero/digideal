@@ -16,7 +16,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -164,14 +163,6 @@ public class Contract implements Serializable {
 		return getPayTransactions().size();
 	}
 
-	public String getSpentTxId() {
-		return spentTxId;
-	}
-
-	public void setSpentTxId(String spentTxId) {
-		this.spentTxId = spentTxId;
-	}
-
 	public int getDeliveryCode() {
 		return deliveryCode;
 	}
@@ -186,6 +177,14 @@ public class Contract implements Serializable {
 
 	public void setAgentPrivateKey(String agentPrivateKey) {
 		this.agentPrivateKey = agentPrivateKey;
+	}
+
+	public String getSpentTxId() {
+		return spentTxId;
+	}
+
+	public void setSpentTxId(String spentTxId) {
+		this.spentTxId = spentTxId;
 	}
 
 }

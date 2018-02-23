@@ -24,6 +24,7 @@ public class Repository {
 		properties.put("javax.persistence.jdbc.password", PSW);
 		emf = Persistence.createEntityManagerFactory(URL, properties);
 		em = emf.createEntityManager();
+		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract,org.trimatek.digideal.model.Transaction");
 	}
 
 	public static Repository getInstance() {

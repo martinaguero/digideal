@@ -2,6 +2,8 @@ package org.trimatek.digideal.services;
 
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.repo.Repository;
+import org.trimatek.digideal.states.New;
+import org.trimatek.digideal.states.State;
 
 public class Workflow {
 
@@ -9,21 +11,25 @@ public class Workflow {
 
 		try {
 
-//			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
-//			cnt.setRequiredSignatures(2);
-//
-//			State newState = new New(cnt);
-//			newState.run();
-//			System.out.println("MultisigAddress: " + newState.getContract().getMultisigAddress());
-//			System.out.println("RedeemScript: " + newState.getContract().getRedeemScript());
-//
+			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
+			cnt.setRequiredSignatures(2);
+
+			State newState = new New(cnt);
+			newState.run();
+			System.out.println("MultisigAddress: " + newState.getContract().getMultisigAddress());
+			System.out.println("RedeemScript: " + newState.getContract().getRedeemScript());
+
 //			cnt.setMultisigAddress("2MxQny9iFiLzkmAHY1DaLG49jxhXJEgHBam");
 //			cnt.setRedeemScript(
 //					"522103855f89bd110748ecd9aa7db621e4e0cf2706149cd4c56e96d5d0bf42ef20ffa82102f39056bb71d9a4a492938eb7fd1e667efba3db9d761b62c6cbd19a6c668cc235210314977363f96e1d7fed75205f22d933d5cf38997e19fc50ba65115ef00a91e68f53ae");
-//			
-//			Repository.getInstance().save(cnt);
-			Contract c = Repository.getInstance().loadContract(8);
-			System.out.println(c.getMultisigAddress());
+			
+			cnt = newState.getContract();
+			Repository.getInstance().save(cnt);
+			
+			System.out.println("Contract ID: " + cnt.getId());
+			
+//			Contract c = Repository.getInstance().loadContract(8);
+//			System.out.println(c.getMultisigAddress());
 			
 			/*
 			 * cnt.setUnspentTxId(

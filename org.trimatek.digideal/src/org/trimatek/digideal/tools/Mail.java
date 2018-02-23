@@ -3,20 +3,20 @@ package org.trimatek.digideal.tools;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/*
 import com.sendgrid.Content;
 import com.sendgrid.Email;
 import com.sendgrid.Method;
 import com.sendgrid.Personalization;
 import com.sendgrid.Request;
 import com.sendgrid.SendGrid;
-
+*/
 public class Mail {
 
 	protected final static Logger logger = Logger.getLogger(Mail.class.getName());
 
 	public static int sendMail(String subject, String body, String from, String... to) throws IOException {
-
+/*
 		Personalization p1 = new Personalization();	
 		for (String rec : to) {
 			p1.addTo(new Email(rec));
@@ -36,7 +36,8 @@ public class Mail {
 
 		logger.log(Level.INFO, "Sending mail: " + subject);
 		
-		return sg.api(request).getStatusCode();
+		return sg.api(request).getStatusCode();*/
+		return 0;
 	}
 
 }

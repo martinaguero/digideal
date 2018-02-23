@@ -13,6 +13,8 @@ module org.trimatek.digideal {
 	requires org.trimatek.digideal.model;
 	requires org.trimatek.digideal.bitcoin;
 	requires org.trimatek.digideal.repo;
-	requires sendgrid.java.latest;	
+	requires org.trimatek.digideal.comm;
+//	requires sendgrid.java.latest;	
 	requires java.sql;
+	requires java.mail;
 }
