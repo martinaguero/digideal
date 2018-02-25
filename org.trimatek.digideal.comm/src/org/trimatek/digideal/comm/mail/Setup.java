@@ -59,7 +59,7 @@ public class Setup {
 	 */
 	public static Credential authorize() throws IOException {
 		// Load client secrets.
-		InputStream in = Resource.class.getResourceAsStream("/client_secret.json");
+		InputStream in = GMailResource.class.getResourceAsStream("/client_secret.json");
 		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 		// Build flow and trigger user authorization request.
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,

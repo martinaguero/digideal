@@ -6,30 +6,23 @@ import java.util.logging.Level;
 import javax.mail.internet.MimeMessage;
 
 import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
-import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Message;
 
-public class SendMessage extends Resource {
+public class SendMessage extends GMailResource {
 
 	/**
-	 * 
 	 * @param params
 	 *            MimeMessage
+	 * @return String
 	 * @throws Exception
 	 */
 
-	public static String exec(Object... params) throws Exception {
-		Gmail service = Setup.getGmailService();
-
+	public static Object exec(Object... params) throws Exception {
 		Message message = createMessageWithEmail((MimeMessage) params[0]);
-		message = service.users().messages().send(Setup.USER, message).execute();
-
-//		System.out.println("Message id: " + message.getId());
-//		System.out.println(message.toPrettyString());
-		logger.log(Level.INFO, "Sent message with id: " + message.getId());
-		
-		return message.getId();
-
+		message = Setup.getGmailService().users().messages().send(Setup.USER, message).execute();
+		logger.log(Level.INFO, "Sent message with id: " + message.getId() + " history id: " + message.getHistoryId()
+				+ " thread id: " + message.getThreadId());
+		return message;
 	}
 
 	public static Message createMessageWithEmail(MimeMessage email) throws Exception {

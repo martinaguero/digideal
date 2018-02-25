@@ -26,25 +26,25 @@ public class Main {
 
 		EntityManager em = emf.createEntityManager();
 
-//		 Contract c = new Contract();
-//		 Transaction t = new Transaction("signer", "raw");
-//		 Transaction t1 = new Transaction("signer1", "raw1");
-//		 c.addPayTransaction(t);
-//		 c.addPayTransaction(t1);
-//		
-//		 em.getTransaction().begin();
-//		 em.persist(c);
-//		 em.getTransaction().commit();
+		 Contract c = new Contract();
+		 Transaction t = new Transaction("signer", "raw");
+		 Transaction t1 = new Transaction("signer1", "raw1");
+		 c.addPayTransaction(t);
+		 c.addPayTransaction(t1);
+		
+		 em.getTransaction().begin();
+		 em.persist(c);
+		 em.getTransaction().commit();
 
-		TypedQuery<Contract> query = em.createQuery("SELECT c FROM Contract c", Contract.class);
-		List<Contract> results = query.getResultList();
-		for (Contract c : results) {
-			System.out.println(c.getId());
-			System.out.println("\t" + c.getLastPayTransaction().getRaw());
-		}
-
-		em.close();
-		emf.close();
+//		TypedQuery<Contract> query = em.createQuery("SELECT c FROM Contract c", Contract.class);
+//		List<Contract> results = query.getResultList();
+//		for (Contract c : results) {
+//			System.out.println(c.getId());
+//			System.out.println("\t" + c.getLastPayTransaction().getRaw());
+//		}
+//
+//		em.close();
+//		emf.close();
 		
 //		Contract c = Repository.getInstance().loadContract(5);
 		

@@ -38,7 +38,7 @@ public class RequestFunds extends Action {
 		*/
 
 		logger.log(Level.INFO, "Ready to send mail requesting contract funds");
-		String result = SendMessage.exec(setupMail(cnt));
+		String result = (String)SendMessage.exec(setupMail(cnt));
 		if (result != null && !result.equals("")) {
 			logger.log(Level.INFO, "Message send successfully");
 			done = Boolean.TRUE;
