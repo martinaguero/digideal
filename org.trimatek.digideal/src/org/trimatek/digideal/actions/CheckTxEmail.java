@@ -1,0 +1,74 @@
+package org.trimatek.digideal.actions;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.regex.Pattern;
+
+import javax.mail.Message;
+
+import org.trimatek.digideal.Config;
+import org.trimatek.digideal.comm.mail.LoadMessages;
+import org.trimatek.digideal.comm.mail.ModifyMessageLabel;
+import org.trimatek.digideal.model.Action;
+import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.states.State;
+import org.trimatek.digideal.states.WaitingFunds;
+import org.trimatek.digideal.tools.Mail;
+
+public class CheckTxEmail extends Action {
+
+	@Override
+	public Contract exec(Contract cnt) throws Exception {
+
+		String tx = null;
+		String msgId = null;
+
+		logger.log(Level.INFO, "Ready to retrieve Tx in mailbox");
+		List<Message> messages = (List<Message>) LoadMessages
+				.exec("is:unread from:(" + cnt.getValue("payer.email") + ") to:(aguero.martin@gmail.com)");
+
+		for (Message message : messages) {
+			tx = getTx(Mail.getMessageContent(message));			
+			if(tx != null) {
+				cnt.setUnspentTxId(tx);
+				msgId = message.getHeader("Gmail-ID")[0];
+				break;
+			}
+		}
+
+		if (tx != null && !tx.equals("")) {
+			ModifyMessageLabel.exec(msgId,"INBOX","UNREAD");
+			logger.log(Level.INFO, "Tx found");
+			done = Boolean.TRUE;
+			return cnt;
+		}
+		logger.log(Level.SEVERE, "Tx not found");
+		return null;
+	}
+
+	private static String getTx(String content) {
+		content = content.replace(" ", System.lineSeparator());
+		String[] words = content.split(System.lineSeparator());
+		for (String w : words) {
+			if (Pattern.matches(Config.TX_REGEX, w)) {
+				return w;
+			}
+		}
+		return null;
+	}
+
+	public static void main(String args[]) {
+
+		try {
+			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
+			cnt.setUnspentTxId("25fb4dc0542b8071cb7150504971e81faf5d3ced86f22e09519fb4080a8c0732");
+			State funds = new WaitingFunds(cnt);
+			funds.run();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

@@ -18,7 +18,12 @@ public class LoadMessages extends GMailResource {
 	 */
 
 	public static Object exec(String... params) throws Exception {
-		return listMessagesMatchingQuery(Setup.getGmailService(), Setup.USER, params[0]);
+		List<Message> messages = listMessagesMatchingQuery(Setup.getGmailService(), Setup.USER, params[0]);
+		List<javax.mail.internet.MimeMessage> mimes = new ArrayList<javax.mail.internet.MimeMessage>();
+		for (Message message : messages) {
+			mimes.add(Tools.getMimeMessage(Setup.getGmailService(), Setup.USER, message.getId()));
+		}
+		return mimes;
 	}
 
 	/**

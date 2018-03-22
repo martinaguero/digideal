@@ -3,6 +3,7 @@ package org.trimatek.digideal.comm.mail;
 import java.util.List;
 
 import com.google.api.services.gmail.model.Message;
+import com.google.api.services.gmail.model.MessagePartHeader;
 
 
 
@@ -10,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		List<Message> messages = (List<Message>) LoadMessages.exec("from:(aguero.martin@gmail.com) [DD] after:2018/2/22 before:2018/3/1");
+		List<Message> messages = (List<Message>) LoadMessages.exec("is:unread to:(aguero.martin@gmail.com)");
 		
 		System.out.println(messages.size());
 		for (Message m : messages) {
