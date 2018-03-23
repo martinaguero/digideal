@@ -23,26 +23,26 @@ public class CheckTxEmail extends Action {
 		String tx = null;
 		String msgId = null;
 
-		logger.log(Level.INFO, "Ready to retrieve Tx in mailbox");
+		logger.log(Level.INFO, "Ready to retrieve Pay Tx from mailbox");
 		List<Message> messages = (List<Message>) LoadMessages
-				.exec("is:unread from:(" + cnt.getValue("payer.email") + ") to:(aguero.martin@gmail.com)");
+				.exec("is:unread from:(" + cnt.getValue("payer.email") + ") to:(" + cnt.getValue("agent.email") + ")");
 
 		for (Message message : messages) {
 			tx = getTx(Mail.getMessageContent(message));			
 			if(tx != null) {
 				cnt.setUnspentTxId(tx);
-				msgId = message.getHeader("Gmail-ID")[0];
+				msgId = message.getHeader(Config.MAIL_ID)[0];
 				break;
 			}
 		}
 
 		if (tx != null && !tx.equals("")) {
 			ModifyMessageLabel.exec(msgId,"INBOX","UNREAD");
-			logger.log(Level.INFO, "Tx found");
+			logger.log(Level.INFO, "Pay Tx found");
 			done = Boolean.TRUE;
 			return cnt;
 		}
-		logger.log(Level.SEVERE, "Tx not found");
+		logger.log(Level.SEVERE, "Pay Tx not found");
 		return null;
 	}
 
