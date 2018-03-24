@@ -58,7 +58,7 @@ public class Workflow {
 	}
 
 	/*
-	 * New -> Sent -> Signed
+	 * New -> WaitingFunds -> Requested -> WaitingDelivery -> Received 
 	 * 
 	 * 
 	 */
