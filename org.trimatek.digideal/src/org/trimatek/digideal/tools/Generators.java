@@ -1,16 +1,30 @@
 package org.trimatek.digideal.tools;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
+
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Result;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.QRCodeReader;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.sun.mail.util.BASE64DecoderStream;
 
 public class Generators {
 
@@ -45,6 +59,19 @@ public class Generators {
 		MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
 		byte[] pngData = pngOutputStream.toByteArray();
 		return pngData;
+	}
+
+	public static String readQRCode(Object content)
+			throws IOException, NotFoundException, ChecksumException, FormatException {
+		BASE64DecoderStream stream = (BASE64DecoderStream) content;
+		InputStream is = new ByteArrayInputStream(stream.readAllBytes());
+		BufferedImage image = ImageIO.read(is);
+		int[] pixels = image.getRGB(0, 0, image.getWidth(), image.getHeight(), null, 0, image.getWidth());
+		RGBLuminanceSource source = new RGBLuminanceSource(image.getWidth(), image.getHeight(), pixels);
+		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+		QRCodeReader reader = new QRCodeReader();
+		Result result = reader.decode(bitmap);
+		return result.getText();
 	}
 
 }

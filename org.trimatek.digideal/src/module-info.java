@@ -17,4 +17,5 @@ module org.trimatek.digideal {
 //	requires sendgrid.java.latest;	
 	requires java.sql;
 	requires java.mail;
+	requires java.desktop;
 }
