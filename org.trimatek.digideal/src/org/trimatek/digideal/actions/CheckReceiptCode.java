@@ -13,11 +13,11 @@ import org.trimatek.digideal.comm.mail.ModifyMessageLabel;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.states.State;
-import org.trimatek.digideal.states.WaitingDelivery;
+import org.trimatek.digideal.states.WaitingReceipt;
 import org.trimatek.digideal.tools.Generators;
 import org.trimatek.digideal.tools.Mail;
 
-public class CheckReceiveCode extends Action {
+public class CheckReceiptCode extends Action {
 
 	@Override
 	public Contract exec(Contract cnt) throws Exception {
@@ -25,12 +25,12 @@ public class CheckReceiveCode extends Action {
 		String code = null;
 		String msgId = null;
 
-		logger.log(Level.INFO, "Ready to retrieve delivery code from mailbox");
+		logger.log(Level.INFO, "Ready to retrieve receive code from mailbox");
 		List<Message> messages = (List<Message>) LoadMessages
 				.exec("is:unread from:(" + cnt.getValue("payer.email") + ") to:(" + cnt.getValue("agent.email") + ")");
 
 		for (Message message : messages) {
-			code = parseDeliveryCode(Mail.getMessageTextContent(message));
+			code = parseReceiveCode(Mail.getMessageTextContent(message));
 			if (code != null) {
 				msgId = message.getHeader(Config.MAIL_ID)[0];
 				break;
@@ -38,7 +38,7 @@ public class CheckReceiveCode extends Action {
 				Map<String, Object> att = Mail.getAttachments(message);
 				for (Map.Entry<String, Object> entry : att.entrySet()) {
 					if (isValidExt(entry.getKey())) {
-						code = parseDeliveryCode(Generators.readQRCode(entry.getValue()));
+						code = parseReceiveCode(Generators.readQRCode(entry.getValue()));
 						if (code != null) {
 							msgId = message.getHeader(Config.MAIL_ID)[0];
 							break;
@@ -50,19 +50,19 @@ public class CheckReceiveCode extends Action {
 		
 		if (code != null && !code.equals("")) {
 			ModifyMessageLabel.exec(msgId, "INBOX", "UNREAD");
-			logger.log(Level.INFO, "Delivery code found: " + code);
+			logger.log(Level.INFO, "Receive code found: " + code);
 			done = Boolean.TRUE;
 			return cnt;
 		}
-		logger.log(Level.SEVERE, "Delivery code not found");
+		logger.log(Level.SEVERE, "Receive code not found");
 		return null;
 	}
 
-	private static String parseDeliveryCode(String content) {
+	private static String parseReceiveCode(String content) {
 		content = content.replace(" ", System.lineSeparator());
 		String[] words = content.split(System.lineSeparator());
 		for (String w : words) {
-			if (Pattern.matches(Config.DELIVERY_CODE_REGEX, w)) {
+			if (Pattern.matches(Config.RECEIPT_CODE_REGEX, w)) {
 				return w;
 			}
 		}
@@ -79,7 +79,7 @@ public class CheckReceiveCode extends Action {
 		try {
 			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
 			cnt.setUnspentTxId("25fb4dc0542b8071cb7150504971e81faf5d3ced86f22e09519fb4080a8c0732");
-			State delivery = new WaitingDelivery(cnt);
+			State delivery = new WaitingReceipt(cnt);
 			delivery.run();
 
 		} catch (Exception e) {

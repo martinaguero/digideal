@@ -1,6 +1,6 @@
 package org.trimatek.digideal.states;
 
-import org.trimatek.digideal.actions.RequestTxSignature;
+import org.trimatek.digideal.actions.SendReceiptCode;
 import org.trimatek.digideal.bitcoin.actions.CreateTransaction;
 import org.trimatek.digideal.bitcoin.actions.DecodeTransaction;
 import org.trimatek.digideal.bitcoin.actions.GetUnspentRaw;
@@ -14,7 +14,9 @@ public class Requested extends State {
 		pending.add(new GetUnspentRaw());
 		pending.add(new DecodeTransaction());
 		pending.add(new CreateTransaction());
-		pending.add(new RequestTxSignature());
+		//pending.add(new RequestTxSignature()); borrar
+		//enviar id de transacción de pago al vendedor
+		pending.add(new SendReceiptCode());
 	}
 	
 	public static void main(String args[]){

@@ -20,7 +20,7 @@ import org.trimatek.digideal.states.State;
 import org.trimatek.digideal.states.WaitingFunds;
 import org.trimatek.digideal.tools.Generators;
 
-public class SendReceiveCode extends Action {
+public class SendReceiptCode extends Action {
 
 	@Override
 	public Contract exec(Contract cnt) throws Exception {
