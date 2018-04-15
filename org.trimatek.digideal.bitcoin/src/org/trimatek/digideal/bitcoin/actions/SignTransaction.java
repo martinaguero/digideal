@@ -9,6 +9,9 @@ import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Transaction;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 
 public class SignTransaction extends Action {
 
@@ -23,10 +26,8 @@ public class SignTransaction extends Action {
 
 		if (err.isEmpty()) {
 			logger.log(Level.INFO, "Execution success");
-			System.out.println(in);
-			//
-			// falta parsear el in para obtener el raw de la transacción firmada
-			//contract.pushPayTx(new Transaction(contract.getValue("agent.name"), in));
+			JsonObject json = new Gson().fromJson(in, JsonObject.class);
+			contract.addPayTransaction(new Transaction(contract.getValue("agent.address"),json.get("hex").getAsString()));
 			done = Boolean.TRUE;
 			return contract;
 		} else {

@@ -49,23 +49,28 @@ public class Workflow {
 			}
 			*/
 			// HASTA ACÁ CODE SENT
-			
+			/*
 			Contract cnt = Repository.getInstance().loadContract(1);
 			System.out.println("Contract ID: " + cnt.getId());
 			System.out.println("Receipt Code: " + cnt.getReceiptCode());
 			
 			State state = new WaitingReceipt(cnt);
 			state.run();
-
+*/
 			// HASTA ACÁ WAITING RECEIPT
 			
-			state = new Received(cnt);
+			Contract cnt = Repository.getInstance().loadContract(1);
+			System.out.println("Contract ID: " + cnt.getId());
+			System.out.println("Receipt Code: " + cnt.getReceiptCode());
+			
+			State state = new Received(cnt);
 			state.run();
 				
 			if(state.isCompleted()) {
 				Repository.getInstance().save(cnt);
 			}
-
+			
+			// HASTA ACÁ RECEIVED
 			
 			/*
 			 * cnt.setUnspentTxId(
