@@ -28,7 +28,7 @@ public class Contract implements Serializable {
 	private long id;
 	private String doc;
 	private byte[] metadata;
-	private int deliveryCode;
+	private String receiptCode;
 	private BigDecimal sts;
 	private int requiredSignatures;
 	//
@@ -163,12 +163,12 @@ public class Contract implements Serializable {
 		return getPayTransactions().size();
 	}
 
-	public int getDeliveryCode() {
-		return deliveryCode;
+	public String getReceiptCode() {
+		return receiptCode;
 	}
 
-	public void setDeliveryCode(int deliveryCode) {
-		this.deliveryCode = deliveryCode;
+	public void setReceiptCode(String receiptCode) {
+		this.receiptCode = receiptCode;
 	}
 
 	public String getAgentPrivateKey() {

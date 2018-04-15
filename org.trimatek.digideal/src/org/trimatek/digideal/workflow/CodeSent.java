@@ -1,4 +1,4 @@
-package org.trimatek.digideal.states;
+package org.trimatek.digideal.workflow;
 
 import org.trimatek.digideal.actions.SendReceiptCode;
 import org.trimatek.digideal.bitcoin.actions.CreateTransaction;
@@ -7,9 +7,9 @@ import org.trimatek.digideal.bitcoin.actions.GetUnspentRaw;
 import org.trimatek.digideal.model.Contract;
 
 
-public class Requested extends State {
+public class CodeSent extends State {
 
-	public Requested(Contract contract) {
+	public CodeSent(Contract contract) {
 		this.contract = contract;
 		pending.add(new GetUnspentRaw());
 		pending.add(new DecodeTransaction());
@@ -23,8 +23,8 @@ public class Requested extends State {
 		
 		try {
 			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
-			cnt.setUnspentTxId("25fb4dc0542b8071cb7150504971e81faf5d3ced86f22e09519fb4080a8c0732");
-			State sent = new Requested(cnt);			
+			cnt.setUnspentTxId("0224f0086973cd185318d9c66796d4400e4937e84fcbd20fed3b9614d3e05ce5");
+			State sent = new CodeSent(cnt);			
 			sent.run();
 			System.out.println("SpentTxRaw= " + sent.getContract().getLastPayTransaction().getRaw());
 			

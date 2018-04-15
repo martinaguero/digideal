@@ -21,11 +21,11 @@ public class Agent {
 		NameValueReferableMap facts = new FactMap();
 		
 		Contract c = new Contract();
-		c.setDeliveryCode(123);
+		c.setReceiptCode("123");
 		
 		Remito r = new Remito();
 		r.setImage("la imagen".getBytes());
-		r.setCode(123);
+		r.setCode("123");
 		System.out.println("Remito validado: " + r.isValid());
 		
 		facts.setValue("remito", r);

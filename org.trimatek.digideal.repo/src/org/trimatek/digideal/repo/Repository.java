@@ -19,12 +19,13 @@ public class Repository {
 	private static final String PSW = "admin";
 
 	private Repository() {
+		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract,org.trimatek.digideal.model.Contract");
+		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract,org.trimatek.digideal.model.Transaction");
 		Map<String, String> properties = new HashMap<String, String>();
 		properties.put("javax.persistence.jdbc.user", USR);
 		properties.put("javax.persistence.jdbc.password", PSW);
 		emf = Persistence.createEntityManagerFactory(URL, properties);
-		em = emf.createEntityManager();
-		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract,org.trimatek.digideal.model.Transaction");
+		em = emf.createEntityManager();	
 	}
 
 	public static Repository getInstance() {

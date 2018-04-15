@@ -1,4 +1,4 @@
-package org.trimatek.digideal.states;
+package org.trimatek.digideal.workflow;
 
 import java.util.LinkedList;
 
@@ -37,6 +37,10 @@ public abstract class State {
 
 	public void setContract(Contract contract) {
 		this.contract = contract;
+	}
+
+	public boolean isCompleted() {
+		return pending.size() == 0 && completed.size() != 0 ? true : false;
 	}
 
 }

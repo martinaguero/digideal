@@ -1,35 +1,71 @@
-package org.trimatek.digideal.services;
+package org.trimatek.digideal.workflow;
 
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.repo.Repository;
-import org.trimatek.digideal.states.New;
-import org.trimatek.digideal.states.State;
 
 public class Workflow {
 
 	public static void main(String[] args) {
 
 		try {
-
+/*
 			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
-			cnt.setRequiredSignatures(2);
+			cnt.setRequiredSignatures(1);
 
 			State newState = new New(cnt);
 			newState.run();
 			System.out.println("MultisigAddress: " + newState.getContract().getMultisigAddress());
 			System.out.println("RedeemScript: " + newState.getContract().getRedeemScript());
-
-//			cnt.setMultisigAddress("2MxQny9iFiLzkmAHY1DaLG49jxhXJEgHBam");
-//			cnt.setRedeemScript(
-//					"522103855f89bd110748ecd9aa7db621e4e0cf2706149cd4c56e96d5d0bf42ef20ffa82102f39056bb71d9a4a492938eb7fd1e667efba3db9d761b62c6cbd19a6c668cc235210314977363f96e1d7fed75205f22d933d5cf38997e19fc50ba65115ef00a91e68f53ae");
 			
 			cnt = newState.getContract();
 			Repository.getInstance().save(cnt);
 			
 			System.out.println("Contract ID: " + cnt.getId());
+*/			
+			// HASTA ACÁ NEW
+			/*
+			Contract cnt = Repository.getInstance().loadContract(1);
+			System.out.println("Contract ID: " + cnt.getId());
+			System.out.println("MultisigAdd: " + cnt.getMultisigAddress());
 			
-//			Contract c = Repository.getInstance().loadContract(8);
-//			System.out.println(c.getMultisigAddress());
+			State state = new WaitingFunds(cnt);
+			state.run();
+			
+			cnt = state.getContract();
+			if(state.isCompleted()) {
+				Repository.getInstance().save(cnt);
+			}
+			*/
+			// HASTA ACÁ WAITING FUNDS
+			/*
+			Contract cnt = Repository.getInstance().loadContract(1);
+			System.out.println("Contract ID: " + cnt.getId());
+			System.out.println("MultisigAdd: " + cnt.getUnspentTxId());
+			
+			State state = new CodeSent(cnt);
+			state.run();
+			if(state.isCompleted()) {
+				Repository.getInstance().save(cnt);
+			}
+			*/
+			// HASTA ACÁ CODE SENT
+			
+			Contract cnt = Repository.getInstance().loadContract(1);
+			System.out.println("Contract ID: " + cnt.getId());
+			System.out.println("Receipt Code: " + cnt.getReceiptCode());
+			
+			State state = new WaitingReceipt(cnt);
+			state.run();
+
+			// HASTA ACÁ WAITING RECEIPT
+			
+			state = new Received(cnt);
+			state.run();
+				
+			if(state.isCompleted()) {
+				Repository.getInstance().save(cnt);
+			}
+
 			
 			/*
 			 * cnt.setUnspentTxId(
@@ -58,7 +94,7 @@ public class Workflow {
 	}
 
 	/*
-	 * New -> WaitingFunds -> Requested -> WaitingReceipt -> Received 
+	 * New -> WaitingFunds -> CodeSent -> WaitingReceipt -> Received 
 	 * 
 	 * 
 	 */

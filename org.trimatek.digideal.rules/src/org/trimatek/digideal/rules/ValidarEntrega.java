@@ -20,11 +20,11 @@ public class ValidarEntrega {
 	private Contract contract;
 
 	@Result
-	private Remito result;
+	private Remito result; 
 
 	@When
 	public boolean when() {
-		return remito.getImage() != null && remito.getCode() == contract.getDeliveryCode() ? true : false;
+		return remito.getImage() != null && remito.getCode().equals(contract.getReceiptCode()) ? true : false;
 	}
 
 	@Then

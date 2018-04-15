@@ -1,4 +1,4 @@
-package org.trimatek.digideal.states;
+package org.trimatek.digideal.workflow;
 
 import org.trimatek.digideal.actions.CheckTxEmail;
 import org.trimatek.digideal.actions.SendReceiptCode;

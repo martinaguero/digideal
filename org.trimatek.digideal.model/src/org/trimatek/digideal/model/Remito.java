@@ -4,7 +4,7 @@ public class Remito {
 
 	private boolean valid;
 	private byte[] image;
-	private int code;
+	private String code;
 
 	public boolean isValid() {
 		return valid;
@@ -26,11 +26,11 @@ public class Remito {
 		this.image = image;
 	}
 
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 

@@ -16,9 +16,9 @@ import org.trimatek.digideal.comm.mail.SendMessage;
 import org.trimatek.digideal.comm.mail.Tools;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.states.State;
-import org.trimatek.digideal.states.WaitingFunds;
 import org.trimatek.digideal.tools.Generators;
+import org.trimatek.digideal.workflow.State;
+import org.trimatek.digideal.workflow.WaitingFunds;
 
 public class SendReceiptCode extends Action {
 
@@ -26,9 +26,9 @@ public class SendReceiptCode extends Action {
 	public Contract exec(Contract cnt) throws Exception {
 		
 		logger.log(Level.INFO, "Ready to send receive code");
-		String code = Generators.genNewDeliveryCode();
-		byte[] qr = Generators.genQRCodeImage(code, Config.TAMANIO_QR, Config.TAMANIO_QR);
-		Object result = SendMessage.exec(setupMail(cnt,qr,code));
+		cnt.setReceiptCode(Generators.genNewDeliveryCode());
+		byte[] qr = Generators.genQRCodeImage(cnt.getReceiptCode(), Config.TAMANIO_QR, Config.TAMANIO_QR);
+		Object result = SendMessage.exec(setupMail(cnt,qr,cnt.getReceiptCode()));
 
 		if (result != null && !result.equals("")) {
 			logger.log(Level.INFO, "Message send successfully");
