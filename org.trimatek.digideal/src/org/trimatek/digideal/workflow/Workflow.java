@@ -42,13 +42,13 @@ public class Workflow {
 			System.out.println("Contract ID: " + cnt.getId());
 			System.out.println("MultisigAdd: " + cnt.getUnspentTxId());
 			
-			State state = new CodeSent(cnt);
+			State state = new FundsAvailable(cnt);
 			state.run();
 			if(state.isCompleted()) {
 				Repository.getInstance().save(cnt);
 			}
 			*/
-			// HASTA ACÁ CODE SENT
+			// HASTA ACÁ FUNDS AVAILABLE
 			/*
 			Contract cnt = Repository.getInstance().loadContract(1);
 			System.out.println("Contract ID: " + cnt.getId());

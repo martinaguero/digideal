@@ -1,5 +1,6 @@
 package org.trimatek.digideal.actions;
 
+import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
@@ -24,11 +25,11 @@ public class SendReceiptCode extends Action {
 
 	@Override
 	public Contract exec(Contract cnt) throws Exception {
-		
+
 		logger.log(Level.INFO, "Ready to send receive code");
 		cnt.setReceiptCode(Generators.genNewDeliveryCode());
-		byte[] qr = Generators.genQRCodeImage(cnt.getReceiptCode(), Config.TAMANIO_QR, Config.TAMANIO_QR);
-		Object result = SendMessage.exec(setupMail(cnt,qr,cnt.getReceiptCode()));
+		byte[] qr = Generators.genQRCodeImage(genQRGmail(cnt), Config.TAMANIO_QR, Config.TAMANIO_QR);
+		Object result = SendMessage.exec(setupMail(cnt, qr, cnt.getReceiptCode()));
 
 		if (result != null && !result.equals("")) {
 			logger.log(Level.INFO, "Message send successfully");
@@ -50,7 +51,7 @@ public class SendReceiptCode extends Action {
 		}
 		return null;
 	}
-	
+
 	private static MimeMessage setupMail(Contract cnt, byte[] qr, String code) throws Exception {
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
@@ -59,22 +60,22 @@ public class SendReceiptCode extends Action {
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject("[DD] Receive code");
-		
+		email.setSubject("[DD] Receipt code");
+
 		MimeMultipart content = new MimeMultipart("related");
-		
+
 		MimeBodyPart htmlPart = new MimeBodyPart();
-		htmlPart.setText(""
-		  + "<html>"
-		  + " <body>"
-		  + "  <p><b>" +code+ "</b></p>"
-		  + " </body>"
-		  + "</html>" 
-		  ,"US-ASCII", "html");
+		htmlPart.setText("" + "<html>" + " <body>" + "  <p><b>" + code + "</b></p>" + " </body>" + "</html>",
+				"US-ASCII", "html");
 		content.addBodyPart(htmlPart);
 		content.addBodyPart(Tools.addImage(qr, code + ".png"));
 		email.setContent(content);
-		return email;	
+		return email;
+	}
+
+	private static String genQRGmail(Contract cnt) throws IOException {
+		return "googlegmail:///co?subject=" + "[DD] Code scanned" + "&to=" + cnt.getValue("agent.email") + "&body="
+				+ cnt.getReceiptCode();
 	}
 
 	public static void main(String args[]) {
