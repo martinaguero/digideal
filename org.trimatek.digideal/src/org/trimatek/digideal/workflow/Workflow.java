@@ -1,77 +1,110 @@
 package org.trimatek.digideal.workflow;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.Callable;
+
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.State;
 import org.trimatek.digideal.repo.Repository;
 
-public class Workflow {
+public class Workflow implements Runnable {
+
+	private Contract cnt;
+
+	private Workflow() {
+	}
+
+	public Workflow(Contract cnt) {
+		this.cnt = cnt;
+	}
+
+	@Override
+	public void run() {
+		State state = null;
+
+		try {
+		if (cnt.getStatusName() == null) {
+			state = new New(cnt);
+			state.run();			
+		} else {
+			state = loadState(cnt);
+			state.run();
+		}
+		if (state.isCompleted()) {
+			cnt.setStatusName(state.getNextName());
+			Repository.getInstance().save(cnt);
+		}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+	
+	private State loadState(Contract cnt) throws Exception {
+		Class stClass = Class.forName("org.trimatek.digideal.workflow."+cnt.getStatusName());
+		Constructor constr = stClass.getConstructor(Contract.class);
+		return (State) constr.newInstance(cnt);
+	}
 
 	public static void main(String[] args) {
 
 		try {
-/*
-			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
-			cnt.setRequiredSignatures(1);
-
-			State newState = new New(cnt);
-			newState.run();
-			System.out.println("MultisigAddress: " + newState.getContract().getMultisigAddress());
-			System.out.println("RedeemScript: " + newState.getContract().getRedeemScript());
-			
-			cnt = newState.getContract();
-			Repository.getInstance().save(cnt);
-			
-			System.out.println("Contract ID: " + cnt.getId());
-*/			
+			/*
+			 * Contract cnt = new Contract("",
+			 * "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
+			 * cnt.setRequiredSignatures(1);
+			 * 
+			 * State newState = new New(cnt); newState.run();
+			 * System.out.println("MultisigAddress: " +
+			 * newState.getContract().getMultisigAddress());
+			 * System.out.println("RedeemScript: " +
+			 * newState.getContract().getRedeemScript());
+			 * 
+			 * cnt = newState.getContract(); Repository.getInstance().save(cnt);
+			 * 
+			 * System.out.println("Contract ID: " + cnt.getId());
+			 */
 			// HASTA ACÁ NEW
 			/*
-			Contract cnt = Repository.getInstance().loadContract(1);
-			System.out.println("Contract ID: " + cnt.getId());
-			System.out.println("MultisigAdd: " + cnt.getMultisigAddress());
-			
-			State state = new WaitingFunds(cnt);
-			state.run();
-			
-			cnt = state.getContract();
-			if(state.isCompleted()) {
-				Repository.getInstance().save(cnt);
-			}
-			*/
+			 * Contract cnt = Repository.getInstance().loadContract(1);
+			 * System.out.println("Contract ID: " + cnt.getId());
+			 * System.out.println("MultisigAdd: " + cnt.getMultisigAddress());
+			 * 
+			 * State state = new WaitingFunds(cnt); state.run();
+			 * 
+			 * cnt = state.getContract(); if(state.isCompleted()) {
+			 * Repository.getInstance().save(cnt); }
+			 */
 			// HASTA ACÁ WAITING FUNDS
 			/*
-			Contract cnt = Repository.getInstance().loadContract(1);
-			System.out.println("Contract ID: " + cnt.getId());
-			System.out.println("MultisigAdd: " + cnt.getUnspentTxId());
-			
-			State state = new FundsAvailable(cnt);
-			state.run();
-			if(state.isCompleted()) {
-				Repository.getInstance().save(cnt);
-			}
-			*/
+			 * Contract cnt = Repository.getInstance().loadContract(1);
+			 * System.out.println("Contract ID: " + cnt.getId());
+			 * System.out.println("MultisigAdd: " + cnt.getUnspentTxId());
+			 * 
+			 * State state = new FundsAvailable(cnt); state.run(); if(state.isCompleted()) {
+			 * Repository.getInstance().save(cnt); }
+			 */
 			// HASTA ACÁ FUNDS AVAILABLE
 			/*
-			Contract cnt = Repository.getInstance().loadContract(1);
-			System.out.println("Contract ID: " + cnt.getId());
-			System.out.println("Receipt Code: " + cnt.getReceiptCode());
-			
-			State state = new WaitingReceipt(cnt);
-			state.run();
-*/
+			 * Contract cnt = Repository.getInstance().loadContract(1);
+			 * System.out.println("Contract ID: " + cnt.getId());
+			 * System.out.println("Receipt Code: " + cnt.getReceiptCode());
+			 * 
+			 * State state = new WaitingReceipt(cnt); state.run();
+			 */
 			// HASTA ACÁ WAITING RECEIPT
-			
-			Contract cnt = Repository.getInstance().loadContract(1);
-			System.out.println("Contract ID: " + cnt.getId());
-			System.out.println("Receipt Code: " + cnt.getReceiptCode());
-			
-			State state = new Received(cnt);
-			state.run();
-				
-			if(state.isCompleted()) {
-				Repository.getInstance().save(cnt);
-			}
-			
+			/*
+			 * Contract cnt = Repository.getInstance().loadContract(1);
+			 * System.out.println("Contract ID: " + cnt.getId());
+			 * System.out.println("Receipt Code: " + cnt.getReceiptCode());
+			 * 
+			 * State state = new Received(cnt); state.run();
+			 * 
+			 * if(state.isCompleted()) { Repository.getInstance().save(cnt); }
+			 */
 			// HASTA ACÁ RECEIVED
-			
+
 			/*
 			 * cnt.setUnspentTxId(
 			 * "375a11b8cbe9118d000154146b632149b987060b9a61e90e1dbd9a5791feee53");
@@ -99,7 +132,7 @@ public class Workflow {
 	}
 
 	/*
-	 * New -> WaitingFunds -> CodeSent -> WaitingReceipt -> Received 
+	 * New -> WaitingFunds -> FundsAvailable -> WaitingReceipt -> Received
 	 * 
 	 * 
 	 */

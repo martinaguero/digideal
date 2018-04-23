@@ -5,6 +5,7 @@ import org.trimatek.digideal.bitcoin.actions.CreateTransaction;
 import org.trimatek.digideal.bitcoin.actions.DecodeTransaction;
 import org.trimatek.digideal.bitcoin.actions.GetUnspentRaw;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.State;
 
 
 public class FundsAvailable extends State {
@@ -17,6 +18,10 @@ public class FundsAvailable extends State {
 		//pending.add(new RequestTxSignature()); borrar
 		//enviar id de transacción de pago al vendedor
 		pending.add(new SendReceiptCode());
+	}
+	
+	public String getNextName() {
+		return "WaitingReceipt";
 	}
 	
 	public static void main(String args[]){
@@ -33,5 +38,7 @@ public class FundsAvailable extends State {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 }

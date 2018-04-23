@@ -11,8 +11,8 @@ import org.trimatek.digideal.comm.mail.LoadMessages;
 import org.trimatek.digideal.comm.mail.ModifyMessageLabel;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.State;
 import org.trimatek.digideal.tools.Mail;
-import org.trimatek.digideal.workflow.State;
 import org.trimatek.digideal.workflow.WaitingFunds;
 
 public class CheckTxEmail extends Action {

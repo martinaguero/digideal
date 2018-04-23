@@ -17,8 +17,8 @@ import org.trimatek.digideal.comm.mail.SendMessage;
 import org.trimatek.digideal.comm.mail.Tools;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.State;
 import org.trimatek.digideal.tools.Generators;
-import org.trimatek.digideal.workflow.State;
 import org.trimatek.digideal.workflow.WaitingFunds;
 
 public class SendReceiptCode extends Action {

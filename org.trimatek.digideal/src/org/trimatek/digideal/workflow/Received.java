@@ -4,6 +4,7 @@ import org.trimatek.digideal.bitcoin.actions.GetPrivateKey;
 import org.trimatek.digideal.bitcoin.actions.SendTransaction;
 import org.trimatek.digideal.bitcoin.actions.SignTransaction;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.State;
 import org.trimatek.digideal.model.Transaction;
 
 public class Received extends State {
@@ -13,6 +14,10 @@ public class Received extends State {
 		pending.add(new GetPrivateKey());
 		pending.add(new SignTransaction());
 		pending.add(new SendTransaction());
+	}
+	
+	public String getNextName() {
+		return null;
 	}
 
 	public static void main(String args[]) {

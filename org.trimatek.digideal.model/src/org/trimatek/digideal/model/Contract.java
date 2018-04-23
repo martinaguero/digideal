@@ -44,6 +44,8 @@ public class Contract implements Serializable {
 	private Set<Transaction> payTransactions;
 	private String agentPrivateKey;
 	private String spentTxId;
+	//
+	private String statusName;
 
 	public Contract() {
 	}
@@ -185,6 +187,14 @@ public class Contract implements Serializable {
 
 	public void setSpentTxId(String spentTxId) {
 		this.spentTxId = spentTxId;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
 	}
 
 }

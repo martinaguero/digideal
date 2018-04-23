@@ -1,9 +1,6 @@
-package org.trimatek.digideal.workflow;
+package org.trimatek.digideal.model;
 
 import java.util.LinkedList;
-
-import org.trimatek.digideal.model.Action;
-import org.trimatek.digideal.model.Contract;
 
 public abstract class State {
 
@@ -42,5 +39,7 @@ public abstract class State {
 	public boolean isCompleted() {
 		return pending.size() == 0 && completed.size() != 0 ? true : false;
 	}
+	
+	public abstract String getNextName();
 
 }
