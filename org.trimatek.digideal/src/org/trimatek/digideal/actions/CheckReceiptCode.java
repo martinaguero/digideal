@@ -1,7 +1,6 @@
 package org.trimatek.digideal.actions;
 
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
@@ -12,8 +11,8 @@ import org.trimatek.digideal.comm.mail.LoadMessages;
 import org.trimatek.digideal.comm.mail.ModifyMessageLabel;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.Receipt;
 import org.trimatek.digideal.model.State;
-import org.trimatek.digideal.tools.Generators;
 import org.trimatek.digideal.tools.Mail;
 import org.trimatek.digideal.workflow.WaitingReceipt;
 
@@ -25,7 +24,7 @@ public class CheckReceiptCode extends Action {
 		String code = null;
 		String msgId = null;
 
-		logger.log(Level.INFO, "Ready to retrieve receive code from mailbox");
+		logger.log(Level.INFO, "Ready to retrieve receipt code from mailbox");
 		List<Message> messages = (List<Message>) LoadMessages
 				.exec("is:unread from:(" + cnt.getValue("payer.email") + ") to:(" + cnt.getValue("agent.email") + ")");
 
@@ -34,7 +33,8 @@ public class CheckReceiptCode extends Action {
 			if (code != null) {
 				msgId = message.getHeader(Config.MAIL_ID)[0];
 				break;
-			} else {
+			} /* Analiza los adjuntos
+			else {
 				Map<String, Object> att = Mail.getAttachments(message);
 				for (Map.Entry<String, Object> entry : att.entrySet()) {
 					if (isValidExt(entry.getKey())) {
@@ -45,16 +45,17 @@ public class CheckReceiptCode extends Action {
 						}
 					}
 				}
-			}
+			}*/
 		}
 		
 		if (code != null && !code.equals("")) {
 			ModifyMessageLabel.exec(msgId, "INBOX", "UNREAD");
-			logger.log(Level.INFO, "Receive code found: " + code);
+			logger.log(Level.INFO, "Receipt code found: " + code);
+			cnt.setReceipt(new Receipt(code));
 			done = Boolean.TRUE;
 			return cnt;
 		}
-		logger.log(Level.SEVERE, "Receive code not found");
+		logger.log(Level.INFO, "Receipt code not found");
 		return null;
 	}
 

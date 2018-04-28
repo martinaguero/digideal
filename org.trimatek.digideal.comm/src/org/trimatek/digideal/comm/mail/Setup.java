@@ -26,7 +26,7 @@ public class Setup {
 	public static final String USER = "me";
 	/** Directory to store user credentials for this application. */
 	private static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"),
-			".credentials/gmail-java-quickstart");
+			".credentials/digideal");
 	/** Global instance of the {@link FileDataStoreFactory}. */
 	private static FileDataStoreFactory DATA_STORE_FACTORY;
 	/** Global instance of the JSON factory. */

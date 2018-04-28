@@ -1,7 +1,7 @@
-package org.trimatek.digideal.rules;
+package org.trimatek.digideal.agent.rules;
 
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.model.Remito;
+import org.trimatek.digideal.model.Receipt;
 
 import com.deliveredtechnologies.rulebook.RuleState;
 import com.deliveredtechnologies.rulebook.annotation.Given;
@@ -11,25 +11,27 @@ import com.deliveredtechnologies.rulebook.annotation.Then;
 import com.deliveredtechnologies.rulebook.annotation.When;
 
 @Rule
-public class ValidarEntrega {
+public class ValidateReceiptCodeRule {
 
-	@Given("remito")
-	private Remito remito;
+	@Given("receipt")
+	private Receipt receipt;
 
 	@Given("contract")
 	private Contract contract;
 
 	@Result
-	private Remito result; 
+	private Receipt result;
 
 	@When
 	public boolean when() {
-		return remito.getImage() != null && remito.getCode().equals(contract.getReceiptCode()) ? true : false;
+		return receipt.getCode() != null
+				&& receipt.getCode().replaceAll(".", "").equals(contract.getReceiptCode().replaceAll(".", "")) ? true
+						: false;
 	}
 
 	@Then
 	public RuleState then() {
-		result = remito;
+		result = receipt;
 		result.setValid(Boolean.TRUE);
 		return RuleState.BREAK;
 	}

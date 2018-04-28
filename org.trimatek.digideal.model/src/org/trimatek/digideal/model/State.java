@@ -1,6 +1,8 @@
 package org.trimatek.digideal.model;
 
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class State {
 
@@ -8,14 +10,21 @@ public abstract class State {
 	protected Contract contract;
 	protected LinkedList<Action> pending = new LinkedList<Action>();
 	protected LinkedList<Action> completed = new LinkedList<Action>();
+	protected final static Logger logger = Logger.getLogger(State.class.getName());
 
 	public void run() throws Exception {
+		logger.log(Level.INFO,"############# Runnig in " + this.getClass().getSimpleName().toUpperCase() + " state #############");
 		while (!pending.isEmpty()) {
 			Action action = pending.removeFirst();
 			if (!action.done) {
 				Contract result = action.exec(contract);
-				contract = result != null ? result : contract;
-				completed.add(action);
+				if(result!=null) {
+					contract = result;
+					completed.add(action);
+				} else {
+					pending.addFirst(action);
+					return;
+				}				
 			}
 		}
 	}

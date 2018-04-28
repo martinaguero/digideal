@@ -1,10 +1,26 @@
 package org.trimatek.digideal.model;
 
-public class Remito {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+public class Receipt {
+
+	@Id
+	@GeneratedValue
+	private long id;
 	private boolean valid;
 	private byte[] image;
 	private String code;
+	
+	public Receipt(String code) {
+		this.code = code;
+	}
+	
+	public long getId() {
+		return id;
+	}
 
 	public boolean isValid() {
 		return valid;

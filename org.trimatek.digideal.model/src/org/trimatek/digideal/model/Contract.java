@@ -13,6 +13,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,6 +47,9 @@ public class Contract implements Serializable {
 	private String spentTxId;
 	//
 	private String statusName;
+	//
+	@Embedded
+	private Receipt receipt;
 
 	public Contract() {
 	}
@@ -195,6 +199,14 @@ public class Contract implements Serializable {
 
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
+	}
+
+	public Receipt getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(Receipt receipt) {
+		this.receipt = receipt;
 	}
 
 }

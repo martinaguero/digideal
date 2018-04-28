@@ -14,17 +14,17 @@ import org.trimatek.digideal.workflow.Workflow;
 public class Launcher {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException, ExecutionException {
-		/*
-		Contract cnt = new Contract("","D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
-		cnt.setRequiredSignatures(1);
-		*/
-		Contract cnt = Repository.getInstance().loadContract(4);
+		
+//		Contract cnt = new Contract("","D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
+//		cnt.setRequiredSignatures(1);
+		
+		Contract cnt = Repository.getInstance().loadContract(1);
 		
 		ScheduledExecutorService exe = Executors.newScheduledThreadPool(5);
 		
 		Workflow wf = new Workflow(cnt);
 		
-		exe.scheduleAtFixedRate(wf, 0, 10 ,TimeUnit.SECONDS);
+		exe.scheduleAtFixedRate(wf, 0, 20 ,TimeUnit.SECONDS);
 		
 
 	}

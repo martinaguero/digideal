@@ -20,6 +20,7 @@ public class Repository {
 
 	private Repository() {
 		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract,org.trimatek.digideal.model.Contract");
+		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract,org.trimatek.digideal.model.Receipt");
 		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract,org.trimatek.digideal.model.Transaction");
 		Map<String, String> properties = new HashMap<String, String>();
 		properties.put("javax.persistence.jdbc.user", USR);

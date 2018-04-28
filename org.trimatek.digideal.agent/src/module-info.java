@@ -5,8 +5,8 @@
  * @author Martín
  *
  */
-module org.trimatek.digideal.rules {
-	exports org.trimatek.digideal.rules;
+module org.trimatek.digideal.agent {
+	exports org.trimatek.digideal.agent;
 
 	requires rulebook.core;
 	requires slf4j.api;

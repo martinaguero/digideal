@@ -38,7 +38,7 @@ public class CheckTxEmail extends Action {
 			done = Boolean.TRUE;
 			return cnt;
 		}
-		logger.log(Level.SEVERE, "Pay Tx not found");
+		logger.log(Level.INFO, "Pay Tx not found");
 		return null;
 	}
 
