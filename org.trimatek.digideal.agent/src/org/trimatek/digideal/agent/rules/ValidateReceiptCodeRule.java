@@ -24,9 +24,8 @@ public class ValidateReceiptCodeRule {
 
 	@When
 	public boolean when() {
-		return receipt.getCode() != null
-				&& receipt.getCode().replaceAll(".", "").equals(contract.getReceiptCode().replaceAll(".", "")) ? true
-						: false;
+		return receipt != null && contract != null
+				&& receipt.getCode().replace(".", "").equals(contract.getReceiptCode().replace(".", ""));
 	}
 
 	@Then
@@ -35,4 +34,5 @@ public class ValidateReceiptCodeRule {
 		result.setValid(Boolean.TRUE);
 		return RuleState.BREAK;
 	}
+
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.trimatek.digideal.model.Contract;
@@ -24,8 +25,13 @@ public class Launcher {
 		
 		Workflow wf = new Workflow(cnt);
 		
-		exe.scheduleAtFixedRate(wf, 0, 20 ,TimeUnit.SECONDS);
-		
+		ScheduledFuture<?> future = exe.scheduleAtFixedRate(wf, 0, 20 ,TimeUnit.SECONDS);
+			
+		while(!exe.isShutdown()) {
+			if(future.isDone()) {
+				future.cancel(false);				
+			}		
+		}
 
 	}
 

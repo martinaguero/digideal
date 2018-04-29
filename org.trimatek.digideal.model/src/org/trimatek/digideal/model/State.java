@@ -13,7 +13,7 @@ public abstract class State {
 	protected final static Logger logger = Logger.getLogger(State.class.getName());
 
 	public void run() throws Exception {
-		logger.log(Level.INFO,"############# Runnig in " + this.getClass().getSimpleName().toUpperCase() + " state #############");
+		logger.log(Level.INFO,"############# Running in " + this.getClass().getSimpleName().toUpperCase() + " state #############");
 		while (!pending.isEmpty()) {
 			Action action = pending.removeFirst();
 			if (!action.done) {

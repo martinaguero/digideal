@@ -16,6 +16,7 @@ public class Receipt {
 	
 	public Receipt(String code) {
 		this.code = code;
+		this.setValid(Boolean.FALSE);
 	}
 	
 	public long getId() {

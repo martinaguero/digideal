@@ -27,7 +27,7 @@ public static void main(String[] args) throws Exception {
 		
 		Contract c = new Contract();
 		c.setReceiptCode("123.123");
-		Receipt r = new Receipt("123123");
+		Receipt r = new Receipt("123122");
 		c.setReceipt(r);
 		
 		ValidateReceiptCode val = new ValidateReceiptCode();

@@ -24,25 +24,28 @@ public class Workflow implements Runnable {
 		State state = null;
 
 		try {
-		if (cnt.getStatusName() == null) {
-			state = new New(cnt);
-			state.run();			
-		} else {
-			state = loadState(cnt);
-			state.run();
-		}
-		if (state.isCompleted()) {
-			cnt.setStatusName(state.getNextName());
-			Repository.getInstance().save(cnt);
-		}
+			if (cnt.getStatusName() == null) {
+				state = new New(cnt);
+				state.run();
+			} else {
+				state = loadState(cnt);
+				state.run();
+			}
+			if (state.isCompleted()) {
+				cnt.setStatusName(state.getNextName());
+				Repository.getInstance().save(cnt);
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		if (Done.class.isInstance(state)) {
+			Thread.currentThread().stop();
+		}
 
 	}
-	
+
 	private State loadState(Contract cnt) throws Exception {
-		Class stClass = Class.forName("org.trimatek.digideal.workflow."+cnt.getStatusName());
+		Class stClass = Class.forName("org.trimatek.digideal.workflow." + cnt.getStatusName());
 		Constructor constr = stClass.getConstructor(Contract.class);
 		return (State) constr.newInstance(cnt);
 	}

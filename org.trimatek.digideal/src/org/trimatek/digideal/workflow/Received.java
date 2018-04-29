@@ -17,7 +17,7 @@ public class Received extends State {
 	}
 	
 	public String getNextName() {
-		return null;
+		return "Done";
 	}
 
 	public static void main(String args[]) {
