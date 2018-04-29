@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		List<Message> messages = (List<Message>) LoadMessages.exec("is:unread to:(aguero.martin@gmail.com)");
+		List<Message> messages = (List<Message>) LoadMessages.exec("is:unread to:(digideal.services@gmail.com)");
 		
 		System.out.println(messages.size());
 		for (Message m : messages) {

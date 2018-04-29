@@ -22,7 +22,7 @@ import com.google.api.services.gmail.GmailScopes;
 public class Setup {
 
 	/** Application name. */
-	private static final String APPLICATION_NAME = "digideal";
+	private static final String APPLICATION_NAME = "DigiDeal";
 	public static final String USER = "me";
 	/** Directory to store user credentials for this application. */
 	private static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"),
@@ -59,7 +59,7 @@ public class Setup {
 	 */
 	public static Credential authorize() throws IOException {
 		// Load client secrets.
-		InputStream in = GMailResource.class.getResourceAsStream("/client_secret.json");
+		InputStream in = GMailResource.class.getResourceAsStream("/client_id.json");
 		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 		// Build flow and trigger user authorization request.
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
