@@ -26,7 +26,7 @@ public class CheckReceiptCode extends Action {
 
 		logger.log(Level.INFO, "Ready to retrieve receipt code from mailbox");
 		List<Message> messages = (List<Message>) LoadMessages
-				.exec("is:unread from:(" + cnt.getValue("payer.email") + ") to:(" + cnt.getValue("agent.email") + ")");
+				.exec("is:unread from:(" + cnt.getValue("collector.email") + ") to:(" + cnt.getValue("agent.email") + ")");
 
 		for (Message message : messages) {
 			code = parseReceiveCode(Mail.getMessageTextContent(message));

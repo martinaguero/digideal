@@ -16,10 +16,10 @@ public class Launcher {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException, ExecutionException {
 		
-//		Contract cnt = new Contract("","D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\CUARTO.properties");
+//		Contract cnt = new Contract("","D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\QUINTO.properties");
 //		cnt.setRequiredSignatures(1);
 		
-		Contract cnt = Repository.getInstance().loadContract(6);
+		Contract cnt = Repository.getInstance().loadContract(10);
 		
 		ScheduledExecutorService exe = Executors.newScheduledThreadPool(5);
 		
