@@ -2,3 +2,4 @@
 2.enviar un mail al vendedor avisando que se liberó el pago y otro al comprador
 3.cambiar a STS
 4.cambiar la comisión
+5.integración REST

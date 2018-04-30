@@ -12,4 +12,6 @@ module org.trimatek.digideal.comm {
 	requires java.base;
 	requires java.activation;
 	requires java.logging;
+	requires vertx.core;
+	requires vertx.web;
 }
