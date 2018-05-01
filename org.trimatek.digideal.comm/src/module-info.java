@@ -1,6 +1,7 @@
 module org.trimatek.digideal.comm {
 	exports org.trimatek.digideal.comm.mail;
 
+	requires org.trimatek.digideal.model;
 	requires google.api.client;
 	requires google.api.services.gmail.v1.rev82;
 	requires google.http.client;
@@ -14,4 +15,6 @@ module org.trimatek.digideal.comm {
 	requires java.logging;
 	requires vertx.core;
 	requires vertx.web;
+	requires gson;
+	requires java.sql;
 }
