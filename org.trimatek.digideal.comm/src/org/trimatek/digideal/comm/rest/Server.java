@@ -1,6 +1,8 @@
 package org.trimatek.digideal.comm.rest;
 
 import org.trimatek.digideal.model.Draft;
+import org.trimatek.digideal.model.Launcher;
+import org.trimatek.digideal.repo.Repository;
 
 import com.google.gson.Gson;
 
@@ -12,15 +14,15 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
-public class Server extends AbstractVerticle {
-
-  public static void main(String[] args) {
-    Vertx vertx = Vertx.vertx();
-    vertx.deployVerticle(new Server(), ar -> {
-      if (ar.failed()) {
-        ar.cause().printStackTrace();
-      }
-    });
+public class Server extends AbstractVerticle implements Launcher {
+ 
+  public void init() {
+	  Vertx vertx = Vertx.vertx();
+	    vertx.deployVerticle(new Server(), ar -> {
+	      if (ar.failed()) {
+	        ar.cause().printStackTrace();
+	      }
+	    });
   }
 
   @Override
@@ -57,14 +59,22 @@ public class Server extends AbstractVerticle {
  
   private void addOne(RoutingContext routingContext) {
 
-	    final Draft draft = new Gson().fromJson(routingContext.getBodyAsString(),Draft.class);
+	  String message = "compile fail";  
+	  Draft draft = new Gson().fromJson(routingContext.getBodyAsString(),Draft.class);
 
 	    System.out.println(draft.getText());
+	    
+	    // compilar
+	    // sino, mensaje de error a la web
+	    if(draft!=null) {// si la compilación fue exitosa, se guarda el Draft
+	    	Repository.getInstance().save(draft);
+	    	message = "compile success";
+	    } 
 
 	    routingContext.response()
 	        .setStatusCode(201)
-	        .putHeader("content-type", "application/json; charset=utf-8")
-	        .end(new Gson().toJson(draft));
+	        .putHeader("content-type", "text/plain; charset=utf-8")
+	        .end(message);
 	}
   
   

@@ -1,7 +1,9 @@
 module org.trimatek.digideal.comm {
 	exports org.trimatek.digideal.comm.mail;
+	exports org.trimatek.digideal.comm.rest;
 
 	requires org.trimatek.digideal.model;
+	requires org.trimatek.digideal.repo;
 	requires google.api.client;
 	requires google.api.services.gmail.v1.rev82;
 	requires google.http.client;
