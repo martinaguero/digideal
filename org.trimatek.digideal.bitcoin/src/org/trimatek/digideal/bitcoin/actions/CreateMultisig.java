@@ -30,14 +30,15 @@ public class CreateMultisig extends Action {
 			done = Boolean.TRUE;
 			return contract;
 		} else {
-			logger.log(Level.INFO, "Execution failed");
-			return null;
+			logger.log(Level.INFO, "Execution failed: " + err);
+			return null; 
 		}
 	}
 
 	private static String buildParams(Contract cnt, int minReqSig) throws IOException {
-		return " createmultisig " + minReqSig + " \"[\\\"" + cnt.getValue("payer.public.key") + "\\\",\\\""
-				+ cnt.getValue("collector.public.key") + "\\\",\\\"" + cnt.getValue("agent.public.key") + "\\\"]\"";
+//		return " createmultisig " + minReqSig + " \"[\\\"" + cnt.getValue("payer.public.key") + "\\\",\\\""
+//		+ cnt.getValue("collector.public.key") + "\\\",\\\"" + cnt.getValue("agent.public.key") + "\\\"]\"";
+		return " createmultisig " + minReqSig + " \"[\\\"" + Context.AGENT_PUBLIC_KEY + "\\\"]\"";
 	}
 
 }

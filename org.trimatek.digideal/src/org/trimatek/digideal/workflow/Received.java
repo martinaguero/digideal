@@ -21,7 +21,7 @@ public class Received extends State {
 	}
 
 	public static void main(String args[]) {
-
+/*
 		try {
 			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
 			cnt.addPayTransaction(new Transaction("",
@@ -38,6 +38,7 @@ public class Received extends State {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 
 }

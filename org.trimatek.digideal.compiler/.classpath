@@ -6,12 +6,17 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.trimatek.digideal.bitcoin">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.trimatek.digideal.model">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.trimatek.digideal.bitcoin">
+	<classpathentry combineaccessrules="false" kind="src" path="/org.trimatek.digideal.repo">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

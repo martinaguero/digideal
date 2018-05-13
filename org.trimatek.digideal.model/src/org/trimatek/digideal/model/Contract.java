@@ -5,9 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -19,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.trimatek.digideal.model.utils.Tools;
+
 @Entity
 public class Contract implements Serializable {
 
@@ -27,7 +26,8 @@ public class Contract implements Serializable {
 	@Id
 	@GeneratedValue
 	private long id;
-	private String doc;
+	@Embedded
+	private Draft draft;
 	private byte[] metadata;
 	private String receiptCode;
 	private BigDecimal sts;
@@ -54,10 +54,13 @@ public class Contract implements Serializable {
 	public Contract() {
 	}
 
-	public Contract(String contract, String propertiesFilePath) throws FileNotFoundException, IOException {
-		doc = contract;
-		Path source = Paths.get(propertiesFilePath);
-		metadata = Files.readAllBytes(source);
+	public Contract(Draft draft) {
+		this.draft = draft;
+	}
+
+	public Contract(Draft draft, String propertiesFilePath) throws FileNotFoundException, IOException {
+		this.draft = draft;
+		metadata = Tools.readBytes(propertiesFilePath);
 	}
 
 	public String getValue(String key) throws IOException {
@@ -70,12 +73,12 @@ public class Contract implements Serializable {
 		return id;
 	}
 
-	public String getDoc() {
-		return doc;
+	public Draft getDraft() {
+		return draft;
 	}
 
-	public void setDoc(String doc) {
-		this.doc = doc;
+	public void setDraft(Draft draft) {
+		this.draft = draft;
 	}
 
 	public byte[] getMetadata() {
@@ -209,4 +212,7 @@ public class Contract implements Serializable {
 		this.receipt = receipt;
 	}
 
+	public void setMetadata(String propertiesFilePath) throws IOException {
+		metadata = Tools.readBytes(propertiesFilePath);
+	}
 }

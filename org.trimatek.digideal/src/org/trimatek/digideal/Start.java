@@ -38,7 +38,7 @@ public class Start implements Launcher {
 		// Contract cnt = new Contract("","D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\QUINTO.properties");
 		// cnt.setRequiredSignatures(1);
 
-		Contract cnt = Repository.getInstance().loadContract(12);
+		Contract cnt = Repository.getInstance().loadContract(27);
 		exe = Executors.newScheduledThreadPool(5);
 		Workflow wf = new Workflow(cnt);
 

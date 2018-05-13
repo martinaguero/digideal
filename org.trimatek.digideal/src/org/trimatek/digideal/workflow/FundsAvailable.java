@@ -25,7 +25,7 @@ public class FundsAvailable extends State {
 	}
 	
 	public static void main(String args[]){
-		
+		/*
 		try {
 			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
 			cnt.setUnspentTxId("0224f0086973cd185318d9c66796d4400e4937e84fcbd20fed3b9614d3e05ce5");
@@ -37,6 +37,7 @@ public class FundsAvailable extends State {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 	
 	

@@ -10,6 +10,7 @@ public class Draft {
 	@Id
 	@GeneratedValue
 	private long id;
+	private String code;
 	private String text;
 
 	public String getText() {
@@ -26,6 +27,14 @@ public class Draft {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 }

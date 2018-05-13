@@ -4,6 +4,7 @@ module org.trimatek.digideal.comm {
 
 	requires org.trimatek.digideal.model;
 	requires org.trimatek.digideal.repo;
+	requires org.trimatek.digideal.compiler;
 	requires google.api.client;
 	requires google.api.services.gmail.v1.rev82;
 	requires google.http.client;

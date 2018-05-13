@@ -76,7 +76,7 @@ public class CheckReceiptCode extends Action {
 	}
 
 	public static void main(String args[]) {
-
+/*
 		try {
 			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
 			cnt.setUnspentTxId("25fb4dc0542b8071cb7150504971e81faf5d3ced86f22e09519fb4080a8c0732");
@@ -87,6 +87,7 @@ public class CheckReceiptCode extends Action {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 
 }
