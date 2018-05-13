@@ -24,21 +24,21 @@ public class Compile extends Action implements Runnable {
 			String res = null;
 
 			Runtime rt = Runtime.getRuntime();
-			logger.log(Level.INFO, "Ready to compile draft");
-			String draftPath = Context.PATH_TO_TEMP + contract.getDraft().getCode();
+			logger.log(Level.INFO, "Ready to compile source");
+			String sourcePath = Context.PATH_TO_TEMP + contract.getSource().getName();
 
-			FileWriter writer = new FileWriter(draftPath + Context.DRAFT_EXT);
-			writer.write(contract.getDraft().getText());
+			FileWriter writer = new FileWriter(sourcePath + Context.SOURCE_EXT);
+			writer.write(contract.getSource().getText());
 			writer.close();
 
-			if (Files.exists(Paths.get(draftPath + Context.DRAFT_EXT))) {
-				Process pr = rt.exec(buildParams(draftPath));
+			if (Files.exists(Paths.get(sourcePath + Context.SOURCE_EXT))) {
+				Process pr = rt.exec(buildParams(sourcePath));
 				err = Translators.toString(pr.getErrorStream());
 				res = Translators.toString(pr.getInputStream());
 			}
 			if (err.isEmpty()) {
-				logger.log(Level.INFO, "Execution success");
-				contract.setMetadata(draftPath + Context.METADATA_EXT);
+				logger.log(Level.INFO, "Execution success: source compiled");
+				contract.setInstructions(sourcePath + Context.COMPILED_EXT);
 				contract.setStatusName("New");
 				contract.setRequiredSignatures(1);
 				Repository.getInstance().save(contract);
@@ -46,7 +46,7 @@ public class Compile extends Action implements Runnable {
 
 			} else {
 				logger.log(Level.SEVERE, err);
-				logger.log(Level.INFO, "Execution failed");
+				logger.log(Level.INFO, "Execution failed: source could not be compiled");
 				contract = null;
 			}
 		} catch (Exception e) {
@@ -57,16 +57,14 @@ public class Compile extends Action implements Runnable {
 
 	@Override
 	public Contract exec(Contract contract) {
-
 		this.contract = contract;
 		Thread thread1 = new Thread(this);
 		thread1.start();
-
 		return this.contract;
 	}
 
-	private static String buildParams(String draftPath) throws IOException {
-		return Context.PATH_TO_JRE8 + " -jar " + Context.PATH_TO_COCO + " " + draftPath + Context.DRAFT_EXT;
+	private static String buildParams(String sourcePath) throws IOException {
+		return Context.PATH_TO_JRE8 + " -jar " + Context.PATH_TO_COCO + " " + sourcePath + Context.SOURCE_EXT;
 	}
 
 }

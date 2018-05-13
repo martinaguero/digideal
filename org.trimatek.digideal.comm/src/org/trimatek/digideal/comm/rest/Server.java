@@ -2,7 +2,7 @@ package org.trimatek.digideal.comm.rest;
 
 import org.trimatek.digideal.compiler.actions.Compile;
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.model.Draft;
+import org.trimatek.digideal.model.Source;
 import org.trimatek.digideal.model.Launcher;
 import org.trimatek.digideal.repo.Repository;
 
@@ -59,15 +59,15 @@ public class Server extends AbstractVerticle implements Launcher {
 	private void addOne(RoutingContext routingContext) {
 
 		String message = "compile fail";
-		Draft draft = new Gson().fromJson(routingContext.getBodyAsString(), Draft.class);
+		Source source = new Gson().fromJson(routingContext.getBodyAsString(), Source.class);
 
-		if (draft != null) {
-			Contract cnt = new Contract(draft);
+		if (source != null) {
+			Contract cnt = new Contract(source);
 			Compile c = new Compile(); 
 			cnt = c.exec(cnt);
 		}
 
-		System.out.println(draft.getText());
+		System.out.println(source.getText());
 
 		// compilar
 		// sino, mensaje de error a la web

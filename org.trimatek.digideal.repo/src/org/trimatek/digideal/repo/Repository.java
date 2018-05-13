@@ -8,7 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.model.Draft;
+import org.trimatek.digideal.model.Source;
 
 public class Repository {
 
@@ -20,10 +20,10 @@ public class Repository {
 	private static final String PSW = "admin";
 
 	private Repository() {
-		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract,org.trimatek.digideal.model.Contract");
-		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract,org.trimatek.digideal.model.Receipt");
-		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract,org.trimatek.digideal.model.Transaction");
-		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Draft,org.trimatek.digideal.model.Draft");
+		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract");
+		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Receipt");
+		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Transaction");
+		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Source");
 		Map<String, String> properties = new HashMap<String, String>();
 		properties.put("javax.persistence.jdbc.user", USR);
 		properties.put("javax.persistence.jdbc.password", PSW);
@@ -48,7 +48,7 @@ public class Repository {
 		return em.find(Contract.class, id);
 	}
 	
-	public void save(Draft d) {
+	public void save(Source d) {
 		em.getTransaction().begin();
 		em.persist(d);
 		em.getTransaction().commit();

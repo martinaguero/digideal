@@ -5,12 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Draft {
+public class Source {
 
 	@Id
 	@GeneratedValue
 	private long id;
-	private String code;
+	private String name;
 	private String text;
 
 	public String getText() {
@@ -29,12 +29,14 @@ public class Draft {
 		this.id = id;
 	}
 
-	public String getCode() {
-		return code;
+	public String getName() {
+		return name;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+
 
 }

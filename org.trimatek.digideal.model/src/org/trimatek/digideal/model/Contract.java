@@ -27,8 +27,8 @@ public class Contract implements Serializable {
 	@GeneratedValue
 	private long id;
 	@Embedded
-	private Draft draft;
-	private byte[] metadata;
+	private Source source;
+	private byte[] instructions;
 	private String receiptCode;
 	private BigDecimal sts;
 	private int requiredSignatures;
@@ -54,18 +54,18 @@ public class Contract implements Serializable {
 	public Contract() {
 	}
 
-	public Contract(Draft draft) {
-		this.draft = draft;
+	public Contract(Source source) {
+		this.source = source;
 	}
 
-	public Contract(Draft draft, String propertiesFilePath) throws FileNotFoundException, IOException {
-		this.draft = draft;
-		metadata = Tools.readBytes(propertiesFilePath);
+	public Contract(Source source, String propertiesFilePath) throws FileNotFoundException, IOException {
+		this.source = source;
+		instructions = Tools.readBytes(propertiesFilePath);
 	}
 
 	public String getValue(String key) throws IOException {
 		Properties prop = new Properties();
-		prop.load(new ByteArrayInputStream(metadata));
+		prop.load(new ByteArrayInputStream(instructions));
 		return prop != null ? prop.getProperty(key) : null;
 	}
 
@@ -73,20 +73,20 @@ public class Contract implements Serializable {
 		return id;
 	}
 
-	public Draft getDraft() {
-		return draft;
+	public Source getSource() {
+		return source;
 	}
 
-	public void setDraft(Draft draft) {
-		this.draft = draft;
+	public void setSource(Source source) {
+		this.source = source;
 	}
 
-	public byte[] getMetadata() {
-		return metadata;
+	public byte[] getInstructions() {
+		return instructions;
 	}
 
-	public void setMetadata(byte[] metadata) {
-		this.metadata = metadata;
+	public void setInstructions(byte[] instructions) {
+		this.instructions = instructions;
 	}
 
 	public String getMultisigAddress() {
@@ -212,7 +212,7 @@ public class Contract implements Serializable {
 		this.receipt = receipt;
 	}
 
-	public void setMetadata(String propertiesFilePath) throws IOException {
-		metadata = Tools.readBytes(propertiesFilePath);
+	public void setInstructions(String propertiesFilePath) throws IOException {
+		instructions = Tools.readBytes(propertiesFilePath);
 	}
 }
