@@ -41,7 +41,7 @@ public class SignTransaction extends Action {
 		return " signrawtransaction " + cnt.getLastPayTransaction().getRaw() + " \"[{\\\"txid\\\":\\\""
 				+ cnt.getUnspentTxId() + "\\\",\\\"vout\\\":" + cnt.getUnspentVout() + ",\\\"scriptPubKey\\\":\\\""
 				+ cnt.getUnspentOutputScript() + "\\\",\\\"redeemScript\\\":\\\"" + cnt.getRedeemScript() + "\\\"}]\""
-				+ " \"[\\\"" + cnt.getAgentPrivateKey() + "\\\"]";		
+				+ " \"[\\\"" + Context.AGENT_PRIVATE_KEY + "\\\"]";		
 	}
 
 }

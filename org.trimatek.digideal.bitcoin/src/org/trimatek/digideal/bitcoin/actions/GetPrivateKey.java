@@ -21,7 +21,6 @@ public class GetPrivateKey extends Action {
 
 		if (err.isEmpty()) {
 			logger.log(Level.INFO, "Execution success");
-			contract.setAgentPrivateKey(in);
 			done = Boolean.TRUE;
 			return contract;
 		} else {

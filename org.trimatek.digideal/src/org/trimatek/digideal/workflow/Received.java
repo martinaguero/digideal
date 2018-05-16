@@ -1,17 +1,14 @@
 package org.trimatek.digideal.workflow;
 
-import org.trimatek.digideal.bitcoin.actions.GetPrivateKey;
 import org.trimatek.digideal.bitcoin.actions.SendTransaction;
 import org.trimatek.digideal.bitcoin.actions.SignTransaction;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.State;
-import org.trimatek.digideal.model.Transaction;
 
 public class Received extends State {
 	
 	public Received(Contract cnt){
 		contract = cnt;
-		pending.add(new GetPrivateKey());
 		pending.add(new SignTransaction());
 		pending.add(new SendTransaction());
 	}

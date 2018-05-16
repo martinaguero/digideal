@@ -43,7 +43,6 @@ public class Contract implements Serializable {
 	//
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Transaction> payTransactions;
-	private String agentPrivateKey;
 	private String spentTxId;
 	//
 	private String statusName;
@@ -178,14 +177,6 @@ public class Contract implements Serializable {
 
 	public void setReceiptCode(String receiptCode) {
 		this.receiptCode = receiptCode;
-	}
-
-	public String getAgentPrivateKey() {
-		return agentPrivateKey;
-	}
-
-	public void setAgentPrivateKey(String agentPrivateKey) {
-		this.agentPrivateKey = agentPrivateKey;
 	}
 
 	public String getSpentTxId() {
