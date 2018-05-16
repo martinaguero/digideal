@@ -1,5 +1,5 @@
-1.código en minúsculas no lo valida
-2.enviar un mail al vendedor avisando que se liberó el pago y otro al comprador
+1.código en minúsculas no lo valida SOLUCIONADO
+2.enviar un mail al vendedor avisando que se liberó el pago y otro al comprador AGREGADO
 3.cambiar a STS
 4.cambiar la comisión
-5.integración REST
+5.integración REST AGREGADO

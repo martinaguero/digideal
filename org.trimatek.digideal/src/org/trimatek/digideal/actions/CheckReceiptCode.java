@@ -50,6 +50,7 @@ public class CheckReceiptCode extends Action {
 		
 		if (code != null && !code.equals("")) {
 			ModifyMessageLabel.exec(msgId, "INBOX", "UNREAD");
+			code = code.toUpperCase();
 			logger.log(Level.INFO, "Receipt code found: " + code);
 			cnt.setReceipt(new Receipt(code));
 			done = Boolean.TRUE;

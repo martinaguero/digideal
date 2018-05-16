@@ -1,5 +1,6 @@
 package org.trimatek.digideal.workflow;
 
+import org.trimatek.digideal.actions.NotifyContractSuccess;
 import org.trimatek.digideal.bitcoin.actions.SendTransaction;
 import org.trimatek.digideal.bitcoin.actions.SignTransaction;
 import org.trimatek.digideal.model.Contract;
@@ -11,6 +12,7 @@ public class Received extends State {
 		contract = cnt;
 		pending.add(new SignTransaction());
 		pending.add(new SendTransaction());
+		pending.add(new NotifyContractSuccess());
 	}
 	
 	public String getNextName() {

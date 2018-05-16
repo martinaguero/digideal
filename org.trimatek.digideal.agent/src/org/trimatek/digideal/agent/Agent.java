@@ -26,9 +26,9 @@ public class Agent {
 	public static void main(String[] args) {
 
 		Contract c = new Contract();
-		c.setReceiptCode("123.123");
+		c.setReceiptCode("123.ABC.456");
 
-		Receipt r = new Receipt("123123");
+		Receipt r = new Receipt("123ABC456");
 
 		Receipt result = Agent.validateReceiptCode(c, r);
 		if (result != null) {

@@ -9,5 +9,6 @@ public class Config {
 	public static final String MAIL_ID = "Gmail-ID";
 	public static final int TAMANIO_QR = 350;
 	public static final List<String> VALID_QR_EXT = List.of("jpg","png","jpeg","bmp","gif");
+	public static final String MAIL_SUBJECT_HEADER = "[DD]";
 
 }

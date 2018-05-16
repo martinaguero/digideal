@@ -7,10 +7,6 @@ import org.trimatek.digideal.bitcoin.entities.Context;
 import org.trimatek.digideal.bitcoin.tools.Translators;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.model.Transaction;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 public class SendTransaction extends Action {
 
