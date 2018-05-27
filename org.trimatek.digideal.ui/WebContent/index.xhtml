@@ -12,57 +12,59 @@
 	<link rel="stylesheet" href="./css/perfect-scrollbar.css" />
 	<link rel="stylesheet" href="./css/sh.css" />
 	<link rel="stylesheet" href="./css/showcase.css" />
-	
+
 </h:head>
 <h:body>
 	<h:form>
-	
-	<h3>Responsive</h3>
-	<div class="ui-g">
-    	<div style="margin-left:auto; margin-right:0;">
-            <div class="ui-inputgroup">          
-            <span class="ui-inputgroup-addon">El presente contrato se celebra entre el Sr.</span>
-            <p:inputText placeholder="nombre y apellido" />
-            <span class="ui-inputgroup-addon"> en adelante </span>
-             <p:inputText placeholder="@ bla" />
-             <span class="ui-inputgroup-addon"> {</span>
-             <p:inputText placeholder="bitcoin address" />
-             <span class="ui-inputgroup-addon"> ,</span>
-             <p:inputText placeholder="email" />
-             <span class="ui-inputgroup-addon"> }</span>         
-        	</div>
-    	</div>
-    	<div style="margin-left:auto; margin-right:0;">
-            <div class="ui-inputgroup" >          
-            <span class="ui-inputgroup-addon">y el Sr.</span>
-            <p:inputText placeholder="nombre y apellido" />
-            <span class="ui-inputgroup-addon"> en adelante </span>
-             <p:inputText placeholder="@ bla" />
-             <span class="ui-inputgroup-addon"> {</span>
-             <p:inputText placeholder="bitcoin address" />
-             <span class="ui-inputgroup-addon"> ,</span>
-             <p:inputText placeholder="email" />
-             <span class="ui-inputgroup-addon"> }</span>         
-        	</div>
-    	</div>
-    	<div style="margin-left:auto; margin-right:0;">
-            <div class="ui-inputgroup" >          
-            <span class="ui-inputgroup-addon">y el Sr.</span>
-            <p:inputText placeholder="nombre y apellido" />
-            <span class="ui-inputgroup-addon"> en adelante </span>
-             <p:inputText placeholder="@ bla" />
-             <span class="ui-inputgroup-addon"> {</span>
-             <p:inputText placeholder="bitcoin address" />
-             <span class="ui-inputgroup-addon"> ,</span>
-             <p:inputText placeholder="email" />
-             <span class="ui-inputgroup-addon"> }</span>         
-        	</div>
-    	</div>
 
-</div>
- 
-	
+		<h3>Responsive</h3>
+		<div class="ui-g">
+			<div style="margin-left: auto; margin-right: 0;">
+				<div class="ui-inputgroup">
+					<span class="ui-inputgroup-addon">El presente contrato se
+						celebra entre el Sr/a.</span>
+					<p:inputText placeholder="nombre y apellido" />
+					<span class="ui-inputgroup-addon"> en adelante </span>
+					<p:inputMask id="usr1" mask="@aaaaaaaaaaaaaaa" />
+					<span class="ui-inputgroup-addon"> {</span>
+					<p:inputText placeholder="bitcoin address" />
+					<span class="ui-inputgroup-addon"> ,</span>
+					<p:inputText placeholder="email" />
+					<span class="ui-inputgroup-addon"> }</span>
+				</div>
+			</div>
+			<div style="margin-left: auto; margin-right: 0;">
+				<div class="ui-inputgroup">
+					<span class="ui-inputgroup-addon"> y el Sr/a. </span>
+					<p:inputText placeholder="nombre y apellido" />
+					<span class="ui-inputgroup-addon"> en adelante </span>
+					<p:inputMask id="usr2" mask="@aaaaaaaaaaaaaaa" />
+					<span class="ui-inputgroup-addon"> {</span>
+					<p:inputText placeholder="bitcoin address" />
+					<span class="ui-inputgroup-addon"> ,</span>
+					<p:inputText placeholder="email" />
+					<span class="ui-inputgroup-addon"> }</span>
+				</div>
+			</div>
+			<div style="margin-left: auto; margin-right: 0;">
+				<div class="ui-inputgroup">
+					<span class="ui-inputgroup-addon">se establece que </span>
+					<p:selectOneMenu id="primero" style="width:100px">
+						<p:ajax event="blur" update="out2" />
+					</p:selectOneMenu>
+					<span class="ui-inputgroup-addon"> pagará a </span>
+					<p:inputText id="out2" />
+					<span class="ui-inputgroup-addon"> la suma de </span>
+					<p:inputMask id="dollar" mask="US$99999999999999" />
+					<span class="ui-inputgroup-addon"> en BTC equivalentes a </span>
+					<p:inputText />
+				</div>
+			</div>
+
+		</div>
+
+
 	</h:form>
-	
+
 </h:body>
 </html>
