@@ -23,9 +23,13 @@
 				<div class="ui-inputgroup">
 					<span class="ui-inputgroup-addon">El presente contrato se
 						celebra entre el Sr/a.</span>
-					<p:inputText placeholder="nombre y apellido" />
+					<p:inputText id="namePayer" placeholder="nombre y apellido"
+						value="#{contractView.namePayer}" />
 					<span class="ui-inputgroup-addon"> en adelante </span>
-					<p:inputMask id="usr1" mask="@aaaaaaaaaaaaaaa" />
+					<p:inputText id="nickPayer" value="#{contractView.nickPayer}">
+						<p:ajax event="blur" update="nickPayer,payer"
+							listener="#{contractView.handlePayer}" />
+					</p:inputText>
 					<span class="ui-inputgroup-addon"> {</span>
 					<p:inputText placeholder="bitcoin address" />
 					<span class="ui-inputgroup-addon"> ,</span>
@@ -36,9 +40,14 @@
 			<div style="margin-left: auto; margin-right: 0;">
 				<div class="ui-inputgroup">
 					<span class="ui-inputgroup-addon"> y el Sr/a. </span>
-					<p:inputText placeholder="nombre y apellido" />
+					<p:inputText id="nameCollector" placeholder="nombre y apellido"
+						value="#{contractView.namePayer}" />
 					<span class="ui-inputgroup-addon"> en adelante </span>
-					<p:inputMask id="usr2" mask="@aaaaaaaaaaaaaaa" />
+					<p:inputText id="nickCollector"
+						value="#{contractView.nickCollector}">
+						<p:ajax event="blur" update="nickCollector,collector"
+							listener="#{contractView.handleCollector}" />
+					</p:inputText>
 					<span class="ui-inputgroup-addon"> {</span>
 					<p:inputText placeholder="bitcoin address" />
 					<span class="ui-inputgroup-addon"> ,</span>
@@ -49,15 +58,25 @@
 			<div style="margin-left: auto; margin-right: 0;">
 				<div class="ui-inputgroup">
 					<span class="ui-inputgroup-addon">se establece que </span>
-					<p:selectOneMenu id="primero" style="width:100px">
-						<p:ajax event="blur" update="out2" />
-					</p:selectOneMenu>
+					<p:inputText id="payer" value="#{contractView.nickPayer}"
+						readonly="true" />
 					<span class="ui-inputgroup-addon"> pagará a </span>
-					<p:inputText id="out2" />
+					<p:inputText id="collector" value="#{contractView.nickCollector}"
+						readonly="true" />
 					<span class="ui-inputgroup-addon"> la suma de </span>
-					<p:inputMask id="dollar" mask="US$99999999999999" />
-					<span class="ui-inputgroup-addon"> en BTC equivalentes a </span>
-					<p:inputText />
+					<p:selectOneMenu id="currencies"
+						value="#{contractView.selectedCurrency}" style="width:30px">
+						<p:ajax listener="#{contractView.onCurrencyChange}" update="btc" />
+						<f:selectItems value="#{contractView.currencies}" />
+					</p:selectOneMenu>
+					<p:inputText id="money" value="#{contractView.quantity}"
+						style="width:85px">
+						<p:ajax event="blur" update="btc"
+							listener="#{contractView.handleQuantity}" />
+					</p:inputText>
+					<span class="ui-inputgroup-addon"> equivalentes a </span>
+					<p:inputText id="btc" value="BTC #{contractView.btc}"
+						readonly="true" style="width:120px" />
 				</div>
 			</div>
 
