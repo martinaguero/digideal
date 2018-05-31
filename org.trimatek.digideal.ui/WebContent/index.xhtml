@@ -45,7 +45,8 @@
 					<span class="ui-inputgroup-addon"> en adelante </span>
 					<p:inputText id="nickCollector"
 						value="#{contractView.nickCollector}">
-						<p:ajax event="blur" update="nickCollector,collector"
+						<p:ajax event="blur"
+							update="nickCollector,collector,collector-cond"
 							listener="#{contractView.handleCollector}" />
 					</p:inputText>
 					<span class="ui-inputgroup-addon"> {</span>
@@ -79,10 +80,33 @@
 						readonly="true" style="width:120px" />
 				</div>
 			</div>
-
+			<div style="margin-left: auto; margin-right: 0;">
+				<div class="ui-inputgroup">
+					<span class="ui-inputgroup-addon">si </span>
+					<p:inputText id="collector-cond"
+						value="#{contractView.nickCollector}" readonly="true" />
+					<span class="ui-inputgroup-addon"> entrega en </span>
+					<p:inputTextarea style="font-size: 13px;" rows="2" cols="40" id="address"
+						value="#{contractView.address}"
+						placeholder="ejemplo: Av. Cabildo 2204 piso 10 dto C - Buenos Aires - Argentina" />
+					<span class="ui-inputgroup-addon"> el siguiente </span>
+					<p:inputTextarea style="font-size: 13px;" rows="2" cols="40" id="item"
+						value="#{contractView.item}"
+						placeholder="descripción del artículo o servicio incluyendo cantidad" />
+				</div>
+			</div>
+			<div style="margin-left: auto; margin-right: 0;">
+				<div class="ui-inputgroup">
+					<span class="ui-inputgroup-addon">supervisado por </span>
+					<p:inputText id="nickagent" value="@digideal" />
+					<span class="ui-inputgroup-addon"> {</span>
+					<p:inputText placeholder="xxxxxxxxxxxxxxx" readonly="true" />
+					<span class="ui-inputgroup-addon"> ,</span>
+					<p:inputText placeholder="digideal.services@gmail.com" readonly="true" />
+					<span class="ui-inputgroup-addon"> }</span>
+				</div>
+			</div>
 		</div>
-
-
 	</h:form>
 
 </h:body>
