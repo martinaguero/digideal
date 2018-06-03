@@ -8,13 +8,16 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
 public class ContractView {
 
 	private String namePayer;
 	private String nickPayer;
+	private String emailPayer;
 	private String nameCollector;
 	private String nickCollector;
 	private Map<String, String> currencies;
@@ -25,6 +28,7 @@ public class ContractView {
 	private String address;
 	private final String BTC_PRICE_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	private double BTC_PER_DOLLAR = 0.00013828;
+	private String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	public ContractView() {
 		currencies = new HashMap<String, String>();
@@ -70,6 +74,14 @@ public class ContractView {
 
 	public void setNickPayer(String nickPayer) {
 		this.nickPayer = nickPayer;
+	}
+
+	public String getEmailPayer() {
+		return emailPayer;
+	}
+
+	public void setEmailPayer(String emailPayer) {
+		this.emailPayer = emailPayer;
 	}
 
 	public String getNameCollector() {
@@ -138,6 +150,14 @@ public class ContractView {
 				setBtc(result.setScale(8, BigDecimal.ROUND_HALF_EVEN).toPlainString());
 			}
 		}
+	}
+
+	public void validateEmail() {
+		if (getEmailPayer() != null && !getEmailPayer().matches(emailRegex)) {
+			 FacesContext.getCurrentInstance().addMessage(null,
+	                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+	                    getEmailPayer() + " is not a valid email address"));
+		}			
 	}
 
 	public String getBtc() {
