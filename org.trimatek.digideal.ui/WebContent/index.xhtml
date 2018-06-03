@@ -8,105 +8,127 @@
 <h:head>
 	<title>JSF Tree Selection Example</title>
 	<link rel="stylesheet" href="./css/style.css" />
-	<link rel="stylesheet" href="./css/grid.css" />
-	<link rel="stylesheet" href="./css/perfect-scrollbar.css" />
-	<link rel="stylesheet" href="./css/sh.css" />
 	<link rel="stylesheet" href="./css/showcase.css" />
-
 </h:head>
 <h:body>
 	<h:form>
+		<p:panelGrid style="margin-top:20px">
+			<p:row style="height: 100px">
+				<p:column style="font-weight: bold;">Quienes</p:column>
+				<p:column>
+					<div style="margin-left: auto; margin-right: auto; align: left;">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"> El presente contracto
+								se celebra entre </span>
+						</div>
+					</div>
+					<div style="margin-left: auto; margin-right: 0;">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"> el Sr/a.</span>
+							<p:inputText id="namePayer" placeholder="nombre y apellido"
+								value="#{contractView.namePayer}" />
+							<span class="ui-inputgroup-addon"> en adelante </span>
+							<p:inputText id="nickPayer" value="#{contractView.nickPayer}">
+								<p:ajax event="blur" update="nickPayer,payer"
+									listener="#{contractView.handlePayer}" />
+							</p:inputText>
+							<span class="ui-inputgroup-addon"> {</span>
+							<p:inputText placeholder="bitcoin address" />
+							<span class="ui-inputgroup-addon"> ,</span>
+							<p:inputText placeholder="email" />
+							<span class="ui-inputgroup-addon"> }</span> <span
+								class="ui-inputgroup-addon"> y </span>
+						</div>
+					</div>
+					<div style="margin-left: auto; margin-right: 0;">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon"> el Sr/a. </span>
+							<p:inputText id="nameCollector" placeholder="nombre y apellido"
+								value="#{contractView.namePayer}" />
+							<span class="ui-inputgroup-addon"> en adelante </span>
+							<p:inputText id="nickCollector"
+								value="#{contractView.nickCollector}">
+								<p:ajax event="blur"
+									update="nickCollector,collector,collector-cond"
+									listener="#{contractView.handleCollector}" />
+							</p:inputText>
+							<span class="ui-inputgroup-addon"> {</span>
+							<p:inputText placeholder="bitcoin address" />
+							<span class="ui-inputgroup-addon"> ,</span>
+							<p:inputText placeholder="email" />
+							<span class="ui-inputgroup-addon"> }</span>
+						</div>
+					</div>
 
-		<h3>Responsive</h3>
-		<div class="ui-g">
-			<div style="margin-left: auto; margin-right: 0;">
-				<div class="ui-inputgroup">
-					<span class="ui-inputgroup-addon">El presente contrato se
-						celebra entre el Sr/a.</span>
-					<p:inputText id="namePayer" placeholder="nombre y apellido"
-						value="#{contractView.namePayer}" />
-					<span class="ui-inputgroup-addon"> en adelante </span>
-					<p:inputText id="nickPayer" value="#{contractView.nickPayer}">
-						<p:ajax event="blur" update="nickPayer,payer"
-							listener="#{contractView.handlePayer}" />
-					</p:inputText>
-					<span class="ui-inputgroup-addon"> {</span>
-					<p:inputText placeholder="bitcoin address" />
-					<span class="ui-inputgroup-addon"> ,</span>
-					<p:inputText placeholder="email" />
-					<span class="ui-inputgroup-addon"> }</span>
-				</div>
-			</div>
-			<div style="margin-left: auto; margin-right: 0;">
-				<div class="ui-inputgroup">
-					<span class="ui-inputgroup-addon"> y el Sr/a. </span>
-					<p:inputText id="nameCollector" placeholder="nombre y apellido"
-						value="#{contractView.namePayer}" />
-					<span class="ui-inputgroup-addon"> en adelante </span>
-					<p:inputText id="nickCollector"
-						value="#{contractView.nickCollector}">
-						<p:ajax event="blur"
-							update="nickCollector,collector,collector-cond"
-							listener="#{contractView.handleCollector}" />
-					</p:inputText>
-					<span class="ui-inputgroup-addon"> {</span>
-					<p:inputText placeholder="bitcoin address" />
-					<span class="ui-inputgroup-addon"> ,</span>
-					<p:inputText placeholder="email" />
-					<span class="ui-inputgroup-addon"> }</span>
-				</div>
-			</div>
-			<div style="margin-left: auto; margin-right: 0;">
-				<div class="ui-inputgroup">
-					<span class="ui-inputgroup-addon">se establece que </span>
-					<p:inputText id="payer" value="#{contractView.nickPayer}"
-						readonly="true" />
-					<span class="ui-inputgroup-addon"> pagará a </span>
-					<p:inputText id="collector" value="#{contractView.nickCollector}"
-						readonly="true" />
-					<span class="ui-inputgroup-addon"> la suma de </span>
-					<p:selectOneMenu id="currencies"
-						value="#{contractView.selectedCurrency}" style="width:30px">
-						<p:ajax listener="#{contractView.onCurrencyChange}" update="btc" />
-						<f:selectItems value="#{contractView.currencies}" />
-					</p:selectOneMenu>
-					<p:inputText id="money" value="#{contractView.quantity}"
-						style="width:85px">
-						<p:ajax event="blur" update="btc"
-							listener="#{contractView.handleQuantity}" />
-					</p:inputText>
-					<span class="ui-inputgroup-addon"> equivalentes a </span>
-					<p:inputText id="btc" value="BTC #{contractView.btc}"
-						readonly="true" style="width:120px" />
-				</div>
-			</div>
-			<div style="margin-left: auto; margin-right: 0;">
-				<div class="ui-inputgroup">
-					<span class="ui-inputgroup-addon">si </span>
-					<p:inputText id="collector-cond"
-						value="#{contractView.nickCollector}" readonly="true" />
-					<span class="ui-inputgroup-addon"> entrega en </span>
-					<p:inputTextarea style="font-size: 13px;" rows="2" cols="40" id="address"
-						value="#{contractView.address}"
-						placeholder="ejemplo: Av. Cabildo 2204 piso 10 dto C - Buenos Aires - Argentina" />
-					<span class="ui-inputgroup-addon"> el siguiente </span>
-					<p:inputTextarea style="font-size: 13px;" rows="2" cols="40" id="item"
-						value="#{contractView.item}"
-						placeholder="descripción del artículo o servicio incluyendo cantidad" />
-				</div>
-			</div>
-			<div style="margin-left: auto; margin-right: 0;">
-				<div class="ui-inputgroup">
-					<span class="ui-inputgroup-addon">supervisado por </span>
-					<p:inputText id="nickagent" value="@digideal" />
-					<span class="ui-inputgroup-addon"> {</span>
-					<p:inputText placeholder="xxxxxxxxxxxxxxx" readonly="true" />
-					<span class="ui-inputgroup-addon"> ,</span>
-					<p:inputText placeholder="digideal.services@gmail.com" readonly="true" />
-					<span class="ui-inputgroup-addon"> }</span>
-				</div>
-			</div>
-		</div>
+				</p:column>
+			</p:row>
+			<p:row style="height: 50px">
+				<p:column style="font-weight: bold;">Cuánto</p:column>
+				<p:column>
+					<div style="margin-left: auto; margin-right: 0;">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon">se establece que </span>
+							<p:inputText id="payer" value="#{contractView.nickPayer}"
+								readonly="true" />
+							<span class="ui-inputgroup-addon"> pagará a </span>
+							<p:inputText id="collector" value="#{contractView.nickCollector}"
+								readonly="true" />
+							<span class="ui-inputgroup-addon"> la suma de </span>
+							<p:selectOneMenu id="currencies"
+								value="#{contractView.selectedCurrency}" style="width:30px">
+								<p:ajax listener="#{contractView.onCurrencyChange}" update="btc" />
+								<f:selectItems value="#{contractView.currencies}" />
+							</p:selectOneMenu>
+							<p:inputText id="money" value="#{contractView.quantity}"
+								style="width:85px">
+								<p:ajax event="blur" update="btc"
+									listener="#{contractView.handleQuantity}" />
+							</p:inputText>
+							<span class="ui-inputgroup-addon"> equivalentes a </span>
+							<p:inputText id="btc" value="BTC #{contractView.btc}"
+								readonly="true" style="width:125px" />
+						</div>
+					</div>
+				</p:column>
+			</p:row>
+			<p:row style="height: 80px">
+				<p:column style="font-weight: bold;">Condición</p:column>
+				<p:column>
+					<div style="margin-left: auto; margin-right: 0;">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon">si </span>
+							<p:inputText id="collector-cond"
+								value="#{contractView.nickCollector}" readonly="true" />
+							<span class="ui-inputgroup-addon"> entrega en </span>
+							<p:inputTextarea style="font-size: 13px;" rows="3" cols="40"
+								id="address" value="#{contractView.address}"
+								placeholder="ejemplo: Av. Cabildo 2204 piso 10 dto C - Buenos Aires - Argentina" />
+							<span class="ui-inputgroup-addon"> el siguiente </span>
+							<p:inputTextarea style="font-size: 13px;" rows="3" cols="45"
+								id="item" value="#{contractView.item}"
+								placeholder="descripción del artículo o servicio incluyendo cantidad" />
+						</div>
+					</div>
+				</p:column>
+			</p:row>
+			<p:row style="height: 50px">
+				<p:column style="font-weight: bold;">Garante</p:column>
+				<p:column>
+					<div style="margin-left: auto; margin-right: 0;">
+						<div class="ui-inputgroup">
+							<span class="ui-inputgroup-addon">supervisado por </span>
+							<p:inputText id="nickagent" value="@digideal" readonly="true" />
+							<span class="ui-inputgroup-addon"> {</span>
+							<p:inputText value="sadafasfasfasdfads" readonly="true" />
+							<span class="ui-inputgroup-addon"> ,</span>
+							<p:inputText value="digideal.services@gmail.com" readonly="true" />
+							<span class="ui-inputgroup-addon"> }</span>
+						</div>
+					</div>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
 	</h:form>
 
 </h:body>

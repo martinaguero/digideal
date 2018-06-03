@@ -71,3 +71,11 @@ img {
 	background-color: #d43f3a;
 	border-color: #d9534f;
 }
+
+.ui-inputfield {
+	margin: 0;
+	outline: medium none;
+	padding: 4px;
+	padding-left: 4px;
+	font-weight: normal;
+}

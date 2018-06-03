@@ -21,6 +21,8 @@ public class ContractView {
 	private String selectedCurrency;
 	private String quantity;
 	private String btc;
+	private String item;
+	private String address;
 	private final String BTC_PRICE_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	private double BTC_PER_DOLLAR = 0.00013828;
 
@@ -129,7 +131,7 @@ public class ContractView {
 
 	public void handleQuantity() {
 		if (getQuantity() != null) {
-			if (CurrenciesEnum.BTC.name().equals(getSelectedCurrency())) {
+			if (CurrenciesEnum.BTC.name().equals(getSelectedCurrency()) || getSelectedCurrency() == null) {
 				setBtc(getQuantity());
 			} else {
 				BigDecimal result = new BigDecimal(Double.parseDouble(getQuantity()) * BTC_PER_DOLLAR);
@@ -148,6 +150,22 @@ public class ContractView {
 
 	public void updateBtc() {
 		new Thread(updateBtc).start();
+	}
+
+	public String getItem() {
+		return item;
+	}
+
+	public void setItem(String item) {
+		this.item = item;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }
