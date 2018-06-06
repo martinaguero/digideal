@@ -13,7 +13,7 @@
 <h:body>
 	<h:outputScript library="js" name="./js/common.js" />
 	<h:form>
-		<p:panelGrid style="margin-top:20px">
+		<p:panelGrid style="margin-top:40px">
 			<p:row style="height: 110px">
 				<p:column style="font-weight: bold;">Quienes</p:column>
 				<p:column>
@@ -23,7 +23,7 @@
 								<div class="ui-inputgroup">
 									<span class="ui-inputgroup-addon">El presente contrato
 										entre </span>
-									<p:messages id="msgs" showDetail="true" />
+									<p:growl id="msgs" showDetail="true" escape="false" />
 								</div>
 							</div>
 						</p:row>
@@ -33,18 +33,23 @@
 								<div class="ui-inputgroup">
 									<span class="ui-inputgroup-addon"> el Sr/a.</span>
 									<p:inputText id="namePayer" placeholder="nombre y apellido"
-										value="#{contractView.namePayer}" />
+										value="#{contractView.namePayer}">
+										<p:ajax update="msgs" event="blur"
+											listener="#{contractView.validatePayerName}" />
+									</p:inputText>
 									<span class="ui-inputgroup-addon"> en adelante </span>
-									<p:inputText id="nickPayer" value="#{contractView.nickPayer}">
-										<p:ajax event="blur" update="nickPayer,payer"
+									<p:inputText id="nickPayer" value="#{contractView.nickPayer}"
+										placeholder="apodo del comprador" maxlength="15">
+										<p:ajax event="blur" update="nickPayer,payer,msgs"
 											listener="#{contractView.handlePayer}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> {</span>
 									<p:inputText placeholder="bitcoin address" />
 									<span class="ui-inputgroup-addon"> ,</span>
-									<p:inputText id="email" value="#{contractView.emailPayer}">
+									<p:inputText id="emailPayer" value="#{contractView.emailPayer}"
+										placeholder="email">
 										<p:ajax update="msgs" event="blur"
-											listener="#{contractView.validateEmail}" />
+											listener="#{contractView.validatePayerEmail}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> }</span> <span
 										class="ui-inputgroup-addon"> y </span>
@@ -54,18 +59,26 @@
 								<div class="ui-inputgroup">
 									<span class="ui-inputgroup-addon"> el Sr/a. </span>
 									<p:inputText id="nameCollector" placeholder="nombre y apellido"
-										value="#{contractView.namePayer}" />
+										value="#{contractView.nameCollector}">
+										<p:ajax update="msgs" event="blur"
+											listener="#{contractView.validateCollectorName}" />
+									</p:inputText>
 									<span class="ui-inputgroup-addon"> en adelante </span>
 									<p:inputText id="nickCollector"
+										placeholder="apodo del vendedor" maxlength="15"
 										value="#{contractView.nickCollector}">
 										<p:ajax event="blur"
-											update="nickCollector,collector,collector-cond"
+											update="nickCollector,collector,collector-cond,msgs"
 											listener="#{contractView.handleCollector}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> {</span>
 									<p:inputText placeholder="bitcoin address" />
 									<span class="ui-inputgroup-addon"> ,</span>
-									<p:inputText placeholder="email" />
+									<p:inputText id="emailCollector"
+										value="#{contractView.emailCollector}" placeholder="email">
+										<p:ajax update="msgs" event="blur"
+											listener="#{contractView.validateCollectorEmail}" />
+									</p:inputText>
 									<span class="ui-inputgroup-addon"> }</span>
 								</div>
 							</div>

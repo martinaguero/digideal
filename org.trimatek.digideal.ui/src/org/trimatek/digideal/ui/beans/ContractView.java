@@ -8,9 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 
 @ManagedBean
 public class ContractView {
@@ -20,6 +18,7 @@ public class ContractView {
 	private String emailPayer;
 	private String nameCollector;
 	private String nickCollector;
+	private String emailCollector;
 	private Map<String, String> currencies;
 	private String selectedCurrency;
 	private String quantity;
@@ -28,7 +27,6 @@ public class ContractView {
 	private String address;
 	private final String BTC_PRICE_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	private double BTC_PER_DOLLAR = 0.00013828;
-	private String emailRegex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	public ContractView() {
 		currencies = new HashMap<String, String>();
@@ -101,16 +99,15 @@ public class ContractView {
 	}
 
 	public void handlePayer() {
-		setNickPayer(normalize(getNickPayer()));
+		if (Validators.validateName(getNickPayer(),"apodo de <b>comprador</b> no válido")) {
+			setNickPayer(Validators.normalize(getNickPayer()));
+		}
 	}
 
 	public void handleCollector() {
-		setNickCollector(normalize(getNickCollector()));
-	}
-
-	private String normalize(String source) {
-		String result = source.replace(" ", "_");
-		return result.contains("@") ? result : "@" + result;
+		if (Validators.validateName(getNickCollector(),"apodo de <b>vendedor</b> no válido")) {
+			setNickCollector(Validators.normalize(getNickCollector()));
+		}
 	}
 
 	public Map<String, String> getCurrencies() {
@@ -152,12 +149,20 @@ public class ContractView {
 		}
 	}
 
-	public void validateEmail() {
-		if (getEmailPayer() != null && !getEmailPayer().matches(emailRegex)) {
-			 FacesContext.getCurrentInstance().addMessage(null,
-	                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-	                    getEmailPayer() + " is not a valid email address"));
-		}			
+	public void validatePayerEmail() {
+		Validators.validateEmail(getEmailPayer(),"email de <b>comprador</b> no válido");
+	}
+
+	public void validateCollectorEmail() {
+		Validators.validateEmail(getEmailCollector(),"email de <b>vendedor</b> no válido");
+	}
+
+	public void validateCollectorName() {
+		Validators.validateName(getNameCollector(),"Nombre de <b>vendedor</b> no válido");
+	}
+
+	public void validatePayerName() {
+		Validators.validateName(getNamePayer(),"Nombre de <b>comprador</b> no válido");
 	}
 
 	public String getBtc() {
@@ -186,6 +191,14 @@ public class ContractView {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getEmailCollector() {
+		return emailCollector;
+	}
+
+	public void setEmailCollector(String emailCollector) {
+		this.emailCollector = emailCollector;
 	}
 
 }
