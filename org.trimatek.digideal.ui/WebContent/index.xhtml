@@ -11,15 +11,14 @@
 	<link rel="stylesheet" href="./css/showcase.css" />
 </h:head>
 <h:body>
-	<h:outputScript library="js" name="./js/common.js" />
 	<h:form>
-	<h:outputText value = "#{msg.greeting}" />
+		<h:outputText value="#{msg.greeting}" />
 		<p:panelGrid style="margin-top:40px">
 			<p:row style="height: 110px">
 				<p:column style="font-weight: bold;">Quienes</p:column>
 				<p:column>
 					<p:panelGrid>
-						<p:row style="height: 200px">
+						<p:row>
 							<div style="margin-left: auto; margin-right: 0;">
 								<div class="ui-inputgroup">
 									<span class="ui-inputgroup-addon">El presente contrato
@@ -34,15 +33,17 @@
 								<div class="ui-inputgroup">
 									<span class="ui-inputgroup-addon"> el Sr/a.</span>
 									<p:inputText id="namePayer" placeholder="nombre y apellido"
-										value="#{contractView.namePayer}">
-										<p:ajax update="msgs" event="blur"
+										value="#{contractView.namePayer}"
+										style="#{contractView.namePayerStyle}">
+										<p:ajax update="msgs,namePayer" event="blur"
 											listener="#{contractView.validatePayerName}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> en adelante </span>
 									<p:inputText id="nickPayer" value="#{contractView.nickPayer}"
-										placeholder="apodo del comprador" maxlength="15">
-										<p:ajax event="blur" update="nickPayer,payer,msgs"
-											listener="#{contractView.handlePayer}" />
+										placeholder="apodo del comprador" maxlength="15"
+										style="#{contractView.nickPayerStyle}">
+										<p:ajax event="blur" update="nickPayer,payer,msgs,nickPayer"
+											listener="#{contractView.handlePayerNick}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> {</span>
 									<p:inputText placeholder="bitcoin address" />
@@ -93,7 +94,7 @@
 					<div style="margin-left: auto; margin-right: 0;">
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon">se establece que </span>
-							<p:inputText id="payer" value="#{contractView.nickPayer}"
+							<p:inputText id="payer" value="#{contractView.nickPayerValid}"
 								readonly="true" />
 							<span class="ui-inputgroup-addon"> pagará a </span>
 							<p:inputText id="collector" value="#{contractView.nickCollector}"

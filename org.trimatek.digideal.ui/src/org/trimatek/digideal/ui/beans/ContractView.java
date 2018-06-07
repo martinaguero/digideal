@@ -14,7 +14,10 @@ import javax.faces.bean.ManagedBean;
 public class ContractView {
 
 	private String namePayer;
+	private String namePayerStyle;
 	private String nickPayer;
+	private String nickPayerStyle;
+	private String nickPayerValid;
 	private String emailPayer;
 	private String nameCollector;
 	private String nickCollector;
@@ -34,6 +37,8 @@ public class ContractView {
 		currencies.put(CurrenciesEnum.USD.name(), CurrenciesEnum.USD.name());
 		currencies.put(CurrenciesEnum.BRL.name(), CurrenciesEnum.BRL.name());
 		updateBtc();
+		namePayerStyle = Config.REQUIRED_FIELD;
+		nickPayerStyle = Config.REQUIRED_FIELD;
 	}
 
 	Runnable updateBtc = () -> {
@@ -98,14 +103,19 @@ public class ContractView {
 		this.nickCollector = nickCollector;
 	}
 
-	public void handlePayer() {
-		if (Validators.validateName(getNickPayer(),"apodo de <b>comprador</b> no válido")) {
-			setNickPayer(Validators.normalize(getNickPayer()));
+	public void handlePayerNick() {
+		if (Validators.validateName(getNickPayer(), "apodo de <b>comprador</b> no válido")) {
+			nickPayerValid = Validators.normalize(getNickPayer());
+			setNickPayer(nickPayerValid);
+			nickPayerStyle = null;
+		} else {
+			nickPayerStyle = Config.REQUIRED_FIELD;
+			nickPayerValid = null;
 		}
 	}
 
 	public void handleCollector() {
-		if (Validators.validateName(getNickCollector(),"apodo de <b>vendedor</b> no válido")) {
+		if (Validators.validateName(getNickCollector(), "apodo de <b>vendedor</b> no válido")) {
 			setNickCollector(Validators.normalize(getNickCollector()));
 		}
 	}
@@ -150,19 +160,20 @@ public class ContractView {
 	}
 
 	public void validatePayerEmail() {
-		Validators.validateEmail(getEmailPayer(),"email de <b>comprador</b> no válido");
+		Validators.validateEmail(getEmailPayer(), "email de <b>comprador</b> no válido");
 	}
 
 	public void validateCollectorEmail() {
-		Validators.validateEmail(getEmailCollector(),"email de <b>vendedor</b> no válido");
+		Validators.validateEmail(getEmailCollector(), "email de <b>vendedor</b> no válido");
 	}
 
 	public void validateCollectorName() {
-		Validators.validateName(getNameCollector(),"nombre de <b>vendedor</b> no válido");
+		Validators.validateName(getNameCollector(), "nombre de <b>vendedor</b> no válido");
 	}
 
 	public void validatePayerName() {
-		Validators.validateName(getNamePayer(),"nombre de <b>comprador</b> no válido");
+		namePayerStyle = Validators.validateName(getNamePayer(), "nombre de <b>comprador</b> no válido") ? null
+				: Config.REQUIRED_FIELD;
 	}
 
 	public String getBtc() {
@@ -201,4 +212,16 @@ public class ContractView {
 		this.emailCollector = emailCollector;
 	}
 
+	public String getNamePayerStyle() {
+		return namePayerStyle;
+	}
+
+	public String getNickPayerStyle() {
+		return nickPayerStyle;
+	}
+
+	public String getNickPayerValid() {
+		return nickPayerValid;
+	}
+	
 }
