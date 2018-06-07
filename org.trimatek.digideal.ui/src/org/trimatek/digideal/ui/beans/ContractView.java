@@ -158,11 +158,11 @@ public class ContractView {
 	}
 
 	public void validateCollectorName() {
-		Validators.validateName(getNameCollector(),"Nombre de <b>vendedor</b> no válido");
+		Validators.validateName(getNameCollector(),"nombre de <b>vendedor</b> no válido");
 	}
 
 	public void validatePayerName() {
-		Validators.validateName(getNamePayer(),"Nombre de <b>comprador</b> no válido");
+		Validators.validateName(getNamePayer(),"nombre de <b>comprador</b> no válido");
 	}
 
 	public String getBtc() {
