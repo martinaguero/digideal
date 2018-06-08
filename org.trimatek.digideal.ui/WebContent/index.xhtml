@@ -4,13 +4,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<title>JSF Tree Selection Example</title>
 	<link rel="stylesheet" href="./css/style.css" />
 	<link rel="stylesheet" href="./css/showcase.css" />
 </h:head>
 <h:body>
+	<p:tooltip position="top" />
 	<h:form>
 		<h:outputText value="#{msg.greeting}" />
 		<p:panelGrid style="margin-top:40px">
@@ -46,11 +48,19 @@
 											listener="#{contractView.handlePayerNick}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> {</span>
-									<p:inputText placeholder="bitcoin address" />
+									<p:inputText
+										pt:data-tooltip="#{contractView.addressPayerTooltip}"
+										id="addressPayer" placeholder="bitcoin address" maxlength="35"
+										value="#{contractView.addressPayer}"
+										style="#{contractView.addressPayerStyle}">
+										<p:ajax update="msgs,addressPayer" event="blur"
+											listener="#{contractView.validatePayerAddress}" />
+									</p:inputText>
+
 									<span class="ui-inputgroup-addon"> ,</span>
 									<p:inputText id="emailPayer" value="#{contractView.emailPayer}"
-										placeholder="email">
-										<p:ajax update="msgs" event="blur"
+										placeholder="email" style="#{contractView.emailPayerStyle}">
+										<p:ajax update="msgs,emailPayer" event="blur"
 											listener="#{contractView.validatePayerEmail}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> }</span> <span
@@ -143,11 +153,13 @@
 					<div style="margin-left: auto; margin-right: 0;">
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon">supervisado por </span>
-							<p:inputText id="nickagent" value="@digideal" readonly="true" />
+							<p:inputText id="nickagent" value="#{contractView.agentNick}"
+								readonly="true" style="width:110px" />
 							<span class="ui-inputgroup-addon"> {</span>
-							<p:inputText value="sadafasfasfasdfads" readonly="true" />
+							<p:inputText pt:data-tooltip="#{contractView.agentAddress}"
+								value="#{contractView.agentAddress}" readonly="true" style="width:200px" />
 							<span class="ui-inputgroup-addon"> ,</span>
-							<p:inputText value="digideal.services@gmail.com" readonly="true" />
+							<p:inputText value="#{contractView.agentEmail}" readonly="true" style="width:200px" />
 							<span class="ui-inputgroup-addon"> }</span>
 						</div>
 					</div>

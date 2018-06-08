@@ -19,6 +19,10 @@ public class ContractView {
 	private String nickPayerStyle;
 	private String nickPayerValid;
 	private String emailPayer;
+	private String emailPayerStyle;
+	private String addressPayer;
+	private String addressPayerStyle;
+	private String addressPayerTooltip;
 	private String nameCollector;
 	private String nickCollector;
 	private String emailCollector;
@@ -39,6 +43,8 @@ public class ContractView {
 		updateBtc();
 		namePayerStyle = Config.REQUIRED_FIELD;
 		nickPayerStyle = Config.REQUIRED_FIELD;
+		emailPayerStyle = Config.REQUIRED_FIELD;
+		addressPayerStyle = Config.REQUIRED_FIELD;
 	}
 
 	Runnable updateBtc = () -> {
@@ -160,20 +166,37 @@ public class ContractView {
 	}
 
 	public void validatePayerEmail() {
-		Validators.validateEmail(getEmailPayer(), "email de <b>comprador</b> no válido");
+		emailPayerStyle = Validators.validateEmail(getEmailPayer(), "email de <b>comprador</b> no válido") ? null
+				: Config.REQUIRED_FIELD;
 	}
 
+	public void validatePayerName() {
+		namePayerStyle = Validators.validateName(getNamePayer(), "nombre de <b>comprador</b> no válido") ? null
+				: Config.REQUIRED_FIELD;
+	}
+
+	public void validatePayerAddress() {
+		if (Validators.validateAddress(getAddressPayer(), "dirección de <b>comprador</b> no válido")) {
+			addressPayerTooltip = getAddressPayer();
+			addressPayerStyle = null;
+		} else {
+			addressPayerStyle = Config.REQUIRED_FIELD;
+			addressPayerTooltip = null;
+		}
+	}
+
+	/*
+	 * public void validatePayerAddress() { addressPayerStyle =
+	 * Validators.validateAddress(getAddressPayer(),
+	 * "dirección de <b>comprador</b> no válido")? addressPayerTooltip =
+	 * getAddressPayer():Config.REQUIRED_FIELD; }
+	 */
 	public void validateCollectorEmail() {
 		Validators.validateEmail(getEmailCollector(), "email de <b>vendedor</b> no válido");
 	}
 
 	public void validateCollectorName() {
 		Validators.validateName(getNameCollector(), "nombre de <b>vendedor</b> no válido");
-	}
-
-	public void validatePayerName() {
-		namePayerStyle = Validators.validateName(getNamePayer(), "nombre de <b>comprador</b> no válido") ? null
-				: Config.REQUIRED_FIELD;
 	}
 
 	public String getBtc() {
@@ -223,5 +246,37 @@ public class ContractView {
 	public String getNickPayerValid() {
 		return nickPayerValid;
 	}
-	
+
+	public String getEmailPayerStyle() {
+		return emailPayerStyle;
+	}
+
+	public String getAddressPayer() {
+		return addressPayer;
+	}
+
+	public void setAddressPayer(String addressPayer) {
+		this.addressPayer = addressPayer;
+	}
+
+	public String getAddressPayerStyle() {
+		return addressPayerStyle;
+	}
+
+	public String getAgentAddress() {
+		return Config.AGENT_ADDRESS;
+	}
+
+	public String getAgentNick() {
+		return Config.AGENT_NICK;
+	}
+
+	public String getAgentEmail() {
+		return Config.AGENT_EMAIL;
+	}
+
+	public String getAddressPayerTooltip() {
+		return addressPayerTooltip == null ? "" : addressPayerTooltip;
+	}
+
 }
