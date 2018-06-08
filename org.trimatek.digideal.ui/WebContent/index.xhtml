@@ -41,7 +41,8 @@
 											listener="#{contractView.validatePayerName}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> en adelante </span>
-									<p:inputText id="nickPayer" value="#{contractView.nickPayer}"
+									<p:inputText styleClass="nick" id="nickPayer"
+										value="#{contractView.nickPayer}"
 										placeholder="apodo del comprador" maxlength="15"
 										style="#{contractView.nickPayerStyle}">
 										<p:ajax event="blur" update="nickPayer,payer,msgs,nickPayer"
@@ -76,7 +77,7 @@
 											listener="#{contractView.validateCollectorName}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> en adelante </span>
-									<p:inputText id="nickCollector"
+									<p:inputText styleClass="nick" id="nickCollector"
 										placeholder="apodo del vendedor" maxlength="15"
 										value="#{contractView.nickCollector}">
 										<p:ajax event="blur"
@@ -104,11 +105,11 @@
 					<div style="margin-left: auto; margin-right: 0;">
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon">se establece que </span>
-							<p:inputText id="payer" value="#{contractView.nickPayerValid}"
-								readonly="true" />
+							<p:inputText styleClass="nick" id="payer"
+								value="#{contractView.nickPayerValid}" readonly="true" />
 							<span class="ui-inputgroup-addon"> pagará a </span>
-							<p:inputText id="collector" value="#{contractView.nickCollector}"
-								readonly="true" />
+							<p:inputText styleClass="nick" id="collector"
+								value="#{contractView.nickCollector}" readonly="true" />
 							<span class="ui-inputgroup-addon"> la suma de </span>
 							<p:selectOneMenu id="currencies"
 								value="#{contractView.selectedCurrency}" style="width:30px">
@@ -116,7 +117,7 @@
 								<f:selectItems value="#{contractView.currencies}" />
 							</p:selectOneMenu>
 							<p:inputText id="money" value="#{contractView.quantity}"
-								style="width:85px">
+								style="width:75px">
 								<p:ajax event="blur" update="btc"
 									listener="#{contractView.handleQuantity}" />
 							</p:inputText>
@@ -133,10 +134,10 @@
 					<div style="margin-left: auto; margin-right: 0;">
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon">si </span>
-							<p:inputText id="collector-cond"
+							<p:inputText styleClass="nick" id="collector-cond"
 								value="#{contractView.nickCollector}" readonly="true" />
 							<span class="ui-inputgroup-addon"> entrega en </span>
-							<p:inputTextarea style="font-size: 13px;" rows="3" cols="40"
+							<p:inputTextarea style="font-size: 13px;" rows="3" cols="34"
 								id="address" value="#{contractView.address}"
 								placeholder="ejemplo: Av. Cabildo 2204 piso 10 dto C - Buenos Aires - Argentina" />
 							<span class="ui-inputgroup-addon"> el siguiente </span>
@@ -152,14 +153,16 @@
 				<p:column>
 					<div style="margin-left: auto; margin-right: 0;">
 						<div class="ui-inputgroup">
-							<span class="ui-inputgroup-addon">supervisado por </span>
+							<span class="ui-inputgroup-addon">operación supervisada por el agente </span>
 							<p:inputText id="nickagent" value="#{contractView.agentNick}"
-								readonly="true" style="width:110px" />
+								readonly="true" styleClass="nick" />
 							<span class="ui-inputgroup-addon"> {</span>
 							<p:inputText pt:data-tooltip="#{contractView.agentAddress}"
-								value="#{contractView.agentAddress}" readonly="true" style="width:200px" />
+								value="#{contractView.agentAddress}" readonly="true"
+								style="width:210px" />
 							<span class="ui-inputgroup-addon"> ,</span>
-							<p:inputText value="#{contractView.agentEmail}" readonly="true" style="width:200px" />
+							<p:inputText value="#{contractView.agentEmail}" readonly="true"
+								style="width:210px" />
 							<span class="ui-inputgroup-addon"> }</span>
 						</div>
 					</div>
