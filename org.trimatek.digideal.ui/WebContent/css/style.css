@@ -85,9 +85,16 @@ img {
 }
 
 .money {
-	width:75px;
+	width: 75px;
 }
 
 .textArea {
 	font-size: 13px;
+}
+
+.buttonsbar {
+	height: 50px;
+	border-right-style: hidden;
+	border-bottom-style: hidden;
+	border-left-style: hidden;
 }

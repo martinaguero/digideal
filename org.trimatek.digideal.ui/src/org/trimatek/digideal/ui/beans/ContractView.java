@@ -1,6 +1,5 @@
 package org.trimatek.digideal.ui.beans;
 
-import java.awt.desktop.QuitEvent;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -10,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
 
 @ManagedBean
 public class ContractView {
@@ -231,16 +231,13 @@ public class ContractView {
 				? null
 				: Config.REQUIRED_FIELD;
 	}
-	
+
 	public void validateAddress() {
-		addressStyle = Validators.validateName(getAddress(), "dirección incompleta", 4)
-				? null
-				: Config.REQUIRED_FIELD;
+		addressStyle = Validators.validateName(getAddress(), "dirección incompleta", 4) ? null : Config.REQUIRED_FIELD;
 	}
-	
+
 	public void validateItem() {
-		itemStyle = Validators.validateName(getItem(), "descripción de artículo o servicio incompleta", 4)
-				? null
+		itemStyle = Validators.validateName(getItem(), "descripción de artículo o servicio incompleta", 4) ? null
 				: Config.REQUIRED_FIELD;
 	}
 
@@ -367,7 +364,17 @@ public class ContractView {
 	public String getItemStyle() {
 		return itemStyle;
 	}
-	
-	
+
+	public void previewAction(ActionEvent actionEvent) {
+
+	}
+
+	public String getPreviewDisabled() {
+		return (namePayerStyle == null && nickPayerStyle == null && emailPayerStyle == null && addressPayerStyle == null
+				&& nameCollectorStyle == null && nickCollectorStyle == null && emailCollectorStyle == null
+				&& addressCollectorStyle == null && quantityStyle == null && addressStyle == null && itemStyle == null)
+						? "false"
+						: "true";
+	}
 
 }

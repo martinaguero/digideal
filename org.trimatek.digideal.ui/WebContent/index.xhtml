@@ -14,7 +14,6 @@
 <h:body>
 	<p:tooltip position="top" />
 	<h:form>
-		<h:outputText value="#{msg.greeting}" />
 		<p:panelGrid style="margin-top:40px">
 			<p:row style="height: 110px">
 				<p:column style="font-weight: bold;">Quienes</p:column>
@@ -37,7 +36,7 @@
 									<p:inputText id="namePayer" placeholder="nombre y apellido"
 										value="#{contractView.namePayer}"
 										style="#{contractView.namePayerStyle}">
-										<p:ajax update="msgs,namePayer" event="blur"
+										<p:ajax update="msgs,namePayer,preview" event="blur"
 											listener="#{contractView.validatePayerName}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> en adelante </span>
@@ -45,7 +44,7 @@
 										value="#{contractView.nickPayer}"
 										placeholder="apodo del comprador" maxlength="15"
 										style="#{contractView.nickPayerStyle}">
-										<p:ajax event="blur" update="nickPayer,payer,msgs,nickPayer"
+										<p:ajax event="blur" update="nickPayer,payer,msgs,nickPayer,preview"
 											listener="#{contractView.handlePayerNick}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> {</span>
@@ -54,14 +53,14 @@
 										id="addressPayer" placeholder="bitcoin address" maxlength="35"
 										value="#{contractView.addressPayer}"
 										style="#{contractView.addressPayerStyle}">
-										<p:ajax update="msgs,addressPayer" event="blur"
+										<p:ajax update="msgs,addressPayer,preview" event="blur"
 											listener="#{contractView.validatePayerAddress}" />
 									</p:inputText>
 
 									<span class="ui-inputgroup-addon"> ,</span>
 									<p:inputText id="emailPayer" value="#{contractView.emailPayer}"
 										placeholder="email" style="#{contractView.emailPayerStyle}">
-										<p:ajax update="msgs,emailPayer" event="blur"
+										<p:ajax update="msgs,emailPayer,preview" event="blur"
 											listener="#{contractView.validatePayerEmail}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> }</span> <span
@@ -74,7 +73,7 @@
 									<p:inputText id="nameCollector" placeholder="nombre y apellido"
 										value="#{contractView.nameCollector}"
 										style="#{contractView.nameCollectorStyle}">
-										<p:ajax update="msgs,nameCollector" event="blur"
+										<p:ajax update="msgs,nameCollector,preview" event="blur"
 											listener="#{contractView.validateCollectorName}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> en adelante </span>
@@ -83,7 +82,7 @@
 										value="#{contractView.nickCollector}"
 										style="#{contractView.nickCollectorStyle}">
 										<p:ajax event="blur"
-											update="nickCollector,msgs,collector,collector-cond"
+											update="nickCollector,msgs,collector,collector-cond,preview"
 											listener="#{contractView.handleCollectorNick}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> {</span>
@@ -92,14 +91,14 @@
 										id="addressCollector" placeholder="bitcoin address"
 										maxlength="35" value="#{contractView.addressCollector}"
 										style="#{contractView.addressCollectorStyle}">
-										<p:ajax update="msgs,addressCollector" event="blur"
+										<p:ajax update="msgs,addressCollector,preview" event="blur"
 											listener="#{contractView.validateCollectorAddress}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> ,</span>
 									<p:inputText id="emailCollector"
 										value="#{contractView.emailCollector}" placeholder="email"
 										style="#{contractView.emailCollectorStyle}">
-										<p:ajax update="msgs,emailCollector" event="blur"
+										<p:ajax update="msgs,emailCollector,preview" event="blur"
 											listener="#{contractView.validateCollectorEmail}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> }</span>
@@ -123,12 +122,12 @@
 							<span class="ui-inputgroup-addon"> la suma de </span>
 							<p:selectOneMenu id="currencies"
 								value="#{contractView.selectedCurrency}" style="width:30px">
-								<p:ajax listener="#{contractView.onCurrencyChange}" update="btc" />
+								<p:ajax listener="#{contractView.onCurrencyChange}" update="btc,preview" />
 								<f:selectItems value="#{contractView.currencies}" />
 							</p:selectOneMenu>
 							<p:inputText id="money" value="#{contractView.quantity}"
 								style="#{contractView.quantityStyle}" styleClass="money">
-								<p:ajax event="blur" update="btc,money"
+								<p:ajax event="blur" update="btc,money,preview"
 									listener="#{contractView.handleQuantity}" />
 							</p:inputText>
 							<span class="ui-inputgroup-addon"> equivalentes a </span>
@@ -151,7 +150,7 @@
 								id="address" value="#{contractView.address}"
 								style="#{contractView.addressStyle}"
 								placeholder="ejemplo: Av. Cabildo 2204 piso 10 dto C - Buenos Aires - Argentina">
-								<p:ajax event="blur" update="address,msgs"
+								<p:ajax event="blur" update="address,msgs,preview"
 									listener="#{contractView.validateAddress}" />
 							</p:inputTextarea>
 							<span class="ui-inputgroup-addon"> el siguiente </span>
@@ -159,7 +158,7 @@
 								id="item" value="#{contractView.item}"
 								style="#{contractView.itemStyle}"
 								placeholder="descripción del artículo o servicio incluyendo cantidad">
-								<p:ajax event="blur" update="item,msgs"
+								<p:ajax event="blur" update="item,msgs,preview"
 									listener="#{contractView.validateItem}" />
 							</p:inputTextarea>
 						</div>
@@ -184,6 +183,17 @@
 								style="width:210px" />
 							<span class="ui-inputgroup-addon"> }</span>
 						</div>
+					</div>
+				</p:column>
+			</p:row>
+			<p:row styleClass="buttonsbar">
+				<p:column style="border-right-style: hidden;"></p:column>
+				<p:column>
+					<div style="float: right;">
+						<p:commandButton value="Previsualizar" id="preview"
+							pt:data-tooltip="#{msg.preview_tooltip}"
+							actionListener="#{contractView.previewAction}"
+							disabled="#{contractView.previewDisabled}" />
 					</div>
 				</p:column>
 			</p:row>
