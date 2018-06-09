@@ -72,24 +72,34 @@
 								<div class="ui-inputgroup">
 									<span class="ui-inputgroup-addon"> el Sr/a. </span>
 									<p:inputText id="nameCollector" placeholder="nombre y apellido"
-										value="#{contractView.nameCollector}">
-										<p:ajax update="msgs" event="blur"
+										value="#{contractView.nameCollector}"
+										style="#{contractView.nameCollectorStyle}">
+										<p:ajax update="msgs,nameCollector" event="blur"
 											listener="#{contractView.validateCollectorName}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> en adelante </span>
 									<p:inputText styleClass="nick" id="nickCollector"
 										placeholder="apodo del vendedor" maxlength="15"
-										value="#{contractView.nickCollector}">
+										value="#{contractView.nickCollector}"
+										style="#{contractView.nickCollectorStyle}">
 										<p:ajax event="blur"
-											update="nickCollector,collector,collector-cond,msgs"
-											listener="#{contractView.handleCollector}" />
+											update="nickCollector,msgs,collector,collector-cond"
+											listener="#{contractView.handleCollectorNick}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> {</span>
-									<p:inputText placeholder="bitcoin address" />
+									<p:inputText
+										pt:data-tooltip="#{contractView.addressCollectorTooltip}"
+										id="addressCollector" placeholder="bitcoin address"
+										maxlength="35" value="#{contractView.addressCollector}"
+										style="#{contractView.addressCollectorStyle}">
+										<p:ajax update="msgs,addressCollector" event="blur"
+											listener="#{contractView.validateCollectorAddress}" />
+									</p:inputText>
 									<span class="ui-inputgroup-addon"> ,</span>
 									<p:inputText id="emailCollector"
-										value="#{contractView.emailCollector}" placeholder="email">
-										<p:ajax update="msgs" event="blur"
+										value="#{contractView.emailCollector}" placeholder="email"
+										style="#{contractView.emailCollectorStyle}">
+										<p:ajax update="msgs,emailCollector" event="blur"
 											listener="#{contractView.validateCollectorEmail}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> }</span>
@@ -109,7 +119,7 @@
 								value="#{contractView.nickPayerValid}" readonly="true" />
 							<span class="ui-inputgroup-addon"> pagará a </span>
 							<p:inputText styleClass="nick" id="collector"
-								value="#{contractView.nickCollector}" readonly="true" />
+								value="#{contractView.nickCollectorValid}" readonly="true" />
 							<span class="ui-inputgroup-addon"> la suma de </span>
 							<p:selectOneMenu id="currencies"
 								value="#{contractView.selectedCurrency}" style="width:30px">
@@ -117,8 +127,8 @@
 								<f:selectItems value="#{contractView.currencies}" />
 							</p:selectOneMenu>
 							<p:inputText id="money" value="#{contractView.quantity}"
-								style="width:75px">
-								<p:ajax event="blur" update="btc"
+								style="#{contractView.quantityStyle}" styleClass="money">
+								<p:ajax event="blur" update="btc,money"
 									listener="#{contractView.handleQuantity}" />
 							</p:inputText>
 							<span class="ui-inputgroup-addon"> equivalentes a </span>
@@ -137,13 +147,21 @@
 							<p:inputText styleClass="nick" id="collector-cond"
 								value="#{contractView.nickCollector}" readonly="true" />
 							<span class="ui-inputgroup-addon"> entrega en </span>
-							<p:inputTextarea style="font-size: 13px;" rows="3" cols="34"
+							<p:inputTextarea styleClass="textArea" rows="3" cols="34"
 								id="address" value="#{contractView.address}"
-								placeholder="ejemplo: Av. Cabildo 2204 piso 10 dto C - Buenos Aires - Argentina" />
+								style="#{contractView.addressStyle}"
+								placeholder="ejemplo: Av. Cabildo 2204 piso 10 dto C - Buenos Aires - Argentina">
+								<p:ajax event="blur" update="address,msgs"
+									listener="#{contractView.validateAddress}" />
+							</p:inputTextarea>
 							<span class="ui-inputgroup-addon"> el siguiente </span>
-							<p:inputTextarea style="font-size: 13px;" rows="3" cols="45"
+							<p:inputTextarea styleClass="textArea" rows="3" cols="45"
 								id="item" value="#{contractView.item}"
-								placeholder="descripción del artículo o servicio incluyendo cantidad" />
+								style="#{contractView.itemStyle}"
+								placeholder="descripción del artículo o servicio incluyendo cantidad">
+								<p:ajax event="blur" update="item,msgs"
+									listener="#{contractView.validateItem}" />
+							</p:inputTextarea>
 						</div>
 					</div>
 				</p:column>
@@ -153,7 +171,8 @@
 				<p:column>
 					<div style="margin-left: auto; margin-right: 0;">
 						<div class="ui-inputgroup">
-							<span class="ui-inputgroup-addon">operación supervisada por el agente </span>
+							<span class="ui-inputgroup-addon">operación supervisada
+								por el agente </span>
 							<p:inputText id="nickagent" value="#{contractView.agentNick}"
 								readonly="true" styleClass="nick" />
 							<span class="ui-inputgroup-addon"> {</span>
@@ -169,7 +188,6 @@
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-
 	</h:form>
 </h:body>
 

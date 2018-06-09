@@ -1,5 +1,6 @@
 package org.trimatek.digideal.ui.beans;
 
+import java.awt.desktop.QuitEvent;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -24,14 +25,24 @@ public class ContractView {
 	private String addressPayerStyle;
 	private String addressPayerTooltip;
 	private String nameCollector;
+	private String nameCollectorStyle;
 	private String nickCollector;
+	private String nickCollectorStyle;
+	private String nickCollectorValid;
 	private String emailCollector;
+	private String emailCollectorStyle;
+	private String addressCollectorTooltip;
+	private String addressCollector;
+	private String addressCollectorStyle;
 	private Map<String, String> currencies;
 	private String selectedCurrency;
 	private String quantity;
+	private String quantityStyle;
 	private String btc;
 	private String item;
+	private String itemStyle;
 	private String address;
+	private String addressStyle;
 	private final String BTC_PRICE_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	private double BTC_PER_DOLLAR = 0.00013828;
 
@@ -45,6 +56,13 @@ public class ContractView {
 		nickPayerStyle = Config.REQUIRED_FIELD;
 		emailPayerStyle = Config.REQUIRED_FIELD;
 		addressPayerStyle = Config.REQUIRED_FIELD;
+		nameCollectorStyle = Config.REQUIRED_FIELD;
+		nickCollectorStyle = Config.REQUIRED_FIELD;
+		emailCollectorStyle = Config.REQUIRED_FIELD;
+		addressCollectorStyle = Config.REQUIRED_FIELD;
+		quantityStyle = Config.REQUIRED_FIELD;
+		addressStyle = Config.REQUIRED_FIELD;
+		itemStyle = Config.REQUIRED_FIELD;
 	}
 
 	Runnable updateBtc = () -> {
@@ -110,7 +128,7 @@ public class ContractView {
 	}
 
 	public void handlePayerNick() {
-		if (Validators.validateName(getNickPayer(), "apodo de <b>comprador</b> no válido")) {
+		if (Validators.validateName(getNickPayer(), "apodo de <b>comprador</b> no válido", 1)) {
 			nickPayerValid = Validators.normalize(getNickPayer());
 			setNickPayer(nickPayerValid);
 			nickPayerStyle = null;
@@ -120,9 +138,14 @@ public class ContractView {
 		}
 	}
 
-	public void handleCollector() {
-		if (Validators.validateName(getNickCollector(), "apodo de <b>vendedor</b> no válido")) {
-			setNickCollector(Validators.normalize(getNickCollector()));
+	public void handleCollectorNick() {
+		if (Validators.validateName(getNickCollector(), "apodo de <b>vendedor</b> no válido", 1)) {
+			nickCollectorValid = Validators.normalize(getNickCollector());
+			setNickCollector(nickCollectorValid);
+			nickCollectorStyle = null;
+		} else {
+			nickCollectorStyle = Config.REQUIRED_FIELD;
+			nickCollectorValid = null;
 		}
 	}
 
@@ -162,6 +185,9 @@ public class ContractView {
 				BigDecimal result = new BigDecimal(Double.parseDouble(getQuantity()) * BTC_PER_DOLLAR);
 				setBtc(result.setScale(8, BigDecimal.ROUND_HALF_EVEN).toPlainString());
 			}
+			quantityStyle = null;
+		} else {
+			quantityStyle = Config.REQUIRED_FIELD;
 		}
 	}
 
@@ -171,7 +197,7 @@ public class ContractView {
 	}
 
 	public void validatePayerName() {
-		namePayerStyle = Validators.validateName(getNamePayer(), "nombre de <b>comprador</b> no válido") ? null
+		namePayerStyle = Validators.validateName(getNamePayer(), "nombre de <b>comprador</b> no válido", 2) ? null
 				: Config.REQUIRED_FIELD;
 	}
 
@@ -185,18 +211,37 @@ public class ContractView {
 		}
 	}
 
-	/*
-	 * public void validatePayerAddress() { addressPayerStyle =
-	 * Validators.validateAddress(getAddressPayer(),
-	 * "dirección de <b>comprador</b> no válido")? addressPayerTooltip =
-	 * getAddressPayer():Config.REQUIRED_FIELD; }
-	 */
+	public void validateCollectorAddress() {
+		if (Validators.validateAddress(getAddressCollector(), "dirección de <b>vendedor</b> no válido")) {
+			addressCollectorTooltip = getAddressCollector();
+			addressCollectorStyle = null;
+		} else {
+			addressCollectorStyle = Config.REQUIRED_FIELD;
+			addressCollectorTooltip = null;
+		}
+	}
+
 	public void validateCollectorEmail() {
-		Validators.validateEmail(getEmailCollector(), "email de <b>vendedor</b> no válido");
+		emailCollectorStyle = Validators.validateEmail(getEmailCollector(), "email de <b>vendedor</b> no válido") ? null
+				: Config.REQUIRED_FIELD;
 	}
 
 	public void validateCollectorName() {
-		Validators.validateName(getNameCollector(), "nombre de <b>vendedor</b> no válido");
+		nameCollectorStyle = Validators.validateName(getNameCollector(), "nombre de <b>vendedor</b> no válido", 2)
+				? null
+				: Config.REQUIRED_FIELD;
+	}
+	
+	public void validateAddress() {
+		addressStyle = Validators.validateName(getAddress(), "dirección incompleta", 4)
+				? null
+				: Config.REQUIRED_FIELD;
+	}
+	
+	public void validateItem() {
+		itemStyle = Validators.validateName(getItem(), "descripción de artículo o servicio incompleta", 4)
+				? null
+				: Config.REQUIRED_FIELD;
 	}
 
 	public String getBtc() {
@@ -278,5 +323,51 @@ public class ContractView {
 	public String getAddressPayerTooltip() {
 		return addressPayerTooltip == null ? "" : addressPayerTooltip;
 	}
+
+	public String getAddressCollector() {
+		return addressCollector;
+	}
+
+	public void setAddressCollector(String addressCollector) {
+		this.addressCollector = addressCollector;
+	}
+
+	public String getNameCollectorStyle() {
+		return nameCollectorStyle;
+	}
+
+	public String getNickCollectorStyle() {
+		return nickCollectorStyle;
+	}
+
+	public String getEmailCollectorStyle() {
+		return emailCollectorStyle;
+	}
+
+	public String getAddressCollectorStyle() {
+		return addressCollectorStyle;
+	}
+
+	public String getNickCollectorValid() {
+		return nickCollectorValid;
+	}
+
+	public String getAddressCollectorTooltip() {
+		return addressCollectorTooltip == null ? "" : addressCollectorTooltip;
+	}
+
+	public String getQuantityStyle() {
+		return quantityStyle;
+	}
+
+	public String getAddressStyle() {
+		return addressStyle;
+	}
+
+	public String getItemStyle() {
+		return itemStyle;
+	}
+	
+	
 
 }

@@ -83,3 +83,11 @@ img {
 .nick {
 	width: 130px;
 }
+
+.money {
+	width:75px;
+}
+
+.textArea {
+	font-size: 13px;
+}
