@@ -42,9 +42,10 @@
 									<span class="ui-inputgroup-addon"> en adelante </span>
 									<p:inputText styleClass="nick" id="nickPayer"
 										value="#{contractView.nickPayer}"
-										placeholder="apodo del comprador" maxlength="15"
+										placeholder="apodo del comprador" maxlength="16"
 										style="#{contractView.nickPayerStyle}">
-										<p:ajax event="blur" update="nickPayer,payer,msgs,nickPayer,preview"
+										<p:ajax event="blur"
+											update="nickPayer,payer,msgs,nickPayer,preview"
 											listener="#{contractView.handlePayerNick}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> {</span>
@@ -78,7 +79,7 @@
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> en adelante </span>
 									<p:inputText styleClass="nick" id="nickCollector"
-										placeholder="apodo del vendedor" maxlength="15"
+										placeholder="apodo del vendedor" maxlength="16"
 										value="#{contractView.nickCollector}"
 										style="#{contractView.nickCollectorStyle}">
 										<p:ajax event="blur"
@@ -122,7 +123,8 @@
 							<span class="ui-inputgroup-addon"> la suma de </span>
 							<p:selectOneMenu id="currencies"
 								value="#{contractView.selectedCurrency}" style="width:30px">
-								<p:ajax listener="#{contractView.onCurrencyChange}" update="btc,preview" />
+								<p:ajax listener="#{contractView.onCurrencyChange}"
+									update="btc,preview" />
 								<f:selectItems value="#{contractView.currencies}" />
 							</p:selectOneMenu>
 							<p:inputText id="money" value="#{contractView.quantity}"
@@ -143,7 +145,7 @@
 					<div style="margin-left: auto; margin-right: 0;">
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon">si </span>
-							<p:inputText styleClass="nick" id="collector-cond"
+							<p:inputTextarea id="collector-cond" rows="3" cols="10"
 								value="#{contractView.nickCollector}" readonly="true" />
 							<span class="ui-inputgroup-addon"> entrega en </span>
 							<p:inputTextarea styleClass="textArea" rows="3" cols="34"
@@ -191,13 +193,30 @@
 				<p:column>
 					<div style="float: right;">
 						<p:commandButton value="Previsualizar" id="preview"
-							pt:data-tooltip="#{msg.preview_tooltip}"
 							actionListener="#{contractView.previewAction}"
-							disabled="#{contractView.previewDisabled}" />
+							disabled="#{contractView.previewDisabled}"
+							icon="ui-icon-circle-zoomin" 
+							onclick="PF('dlg1').show();"
+							update="draft">
+						</p:commandButton>
 					</div>
 				</p:column>
 			</p:row>
 		</p:panelGrid>
+		<p:dialog header="#{contractView.draftNumber}" widgetVar="dlg1" showEffect="fade"
+			modal="true">
+			<div>
+				<h:outputText id="draft" value="#{contractView.draft}" />
+				<br/>
+			</div>
+			<div style="float: right;">
+				<br/>
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</div>
+		</p:dialog>
 	</h:form>
 </h:body>
 

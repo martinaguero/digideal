@@ -45,6 +45,8 @@ public class ContractView {
 	private String addressStyle;
 	private final String BTC_PRICE_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	private double BTC_PER_DOLLAR = 0.00013828;
+	private String draftNumber;
+	private String draft;
 
 	public ContractView() {
 		currencies = new HashMap<String, String>();
@@ -233,11 +235,13 @@ public class ContractView {
 	}
 
 	public void validateAddress() {
-		addressStyle = Validators.validateName(getAddress(), "dirección incompleta", 4) ? null : Config.REQUIRED_FIELD;
+		addressStyle = Validators.validateSentenceLength(getAddress(), "dirección incompleta", 4) ? null
+				: Config.REQUIRED_FIELD;
 	}
 
 	public void validateItem() {
-		itemStyle = Validators.validateName(getItem(), "descripción de artículo o servicio incompleta", 4) ? null
+		itemStyle = Validators.validateSentenceLength(getItem(), "descripción de artículo o servicio incompleta", 4)
+				? null
 				: Config.REQUIRED_FIELD;
 	}
 
@@ -365,16 +369,25 @@ public class ContractView {
 		return itemStyle;
 	}
 
-	public void previewAction(ActionEvent actionEvent) {
-
+	public void previewAction() {
+		draft = "El draft";
 	}
 
 	public String getPreviewDisabled() {
-		return (namePayerStyle == null && nickPayerStyle == null && emailPayerStyle == null && addressPayerStyle == null
+		/*return (namePayerStyle == null && nickPayerStyle == null && emailPayerStyle == null && addressPayerStyle == null
 				&& nameCollectorStyle == null && nickCollectorStyle == null && emailCollectorStyle == null
 				&& addressCollectorStyle == null && quantityStyle == null && addressStyle == null && itemStyle == null)
 						? "false"
-						: "true";
+						: "true";*/
+		return "false";
+	}
+
+	public String getDraftNumber() {
+		return draftNumber;
+	}
+
+	public String getDraft() {
+		return draft;
 	}
 
 }

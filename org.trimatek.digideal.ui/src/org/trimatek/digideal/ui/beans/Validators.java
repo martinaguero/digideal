@@ -35,6 +35,15 @@ public class Validators {
 		}
 		return true;
 	}
+	
+	public static boolean validateSentenceLength(String target, String message, int minWords) {
+		if (target == null || target.split(" ").length < minWords) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", message));
+			return false;
+		}
+		return true;
+	}
 
 	public static String normalize(String source) {
 		String result = source.replace(" ", "_");
