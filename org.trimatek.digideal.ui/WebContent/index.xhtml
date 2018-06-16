@@ -14,6 +14,7 @@
 <h:body>
 	<p:tooltip position="top" />
 	<h:form>
+	<p:growl id="growl" life="2000" />
 		<p:panelGrid style="margin-top:40px">
 			<p:row style="height: 110px">
 				<p:column style="font-weight: bold;">Quienes</p:column>
@@ -197,7 +198,7 @@
 							disabled="#{contractView.previewDisabled}"
 							icon="ui-icon-circle-zoomin" 
 							onclick="PF('dlg1').show();"
-							update="draft">
+							update="draft,growl">
 						</p:commandButton>
 					</div>
 				</p:column>
@@ -206,14 +207,14 @@
 		<p:dialog header="#{contractView.draftNumber}" widgetVar="dlg1" showEffect="fade"
 			modal="true">
 			<div>
-				<h:outputText id="draft" value="#{contractView.draft}" />
+				<h:outputText id="draft" value="#{contractView.draft}" escape="false" />
 				<br/>
 			</div>
 			<div style="float: right;">
 				<br/>
-				<p:commandButton value="Yes" type="button"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button"
+				<p:commandButton value="#{msg.btn_confirm}" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" disabled="#{contractView.confirmDraftDisabled}" />
+				<p:commandButton value="#{msg.btn_close}" type="button" actionListener="#{contractView.cancelDraftAction}"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</div>
 		</p:dialog>

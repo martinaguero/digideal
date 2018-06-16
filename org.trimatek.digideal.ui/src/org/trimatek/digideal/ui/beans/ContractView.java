@@ -11,6 +11,11 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 
+import org.trimatek.digideal.ui.Config;
+import org.trimatek.digideal.ui.model.Address;
+import org.trimatek.digideal.ui.utils.Geocoder;
+import org.trimatek.digideal.ui.utils.Tools;
+
 @ManagedBean
 public class ContractView {
 
@@ -47,6 +52,7 @@ public class ContractView {
 	private double BTC_PER_DOLLAR = 0.00013828;
 	private String draftNumber;
 	private String draft;
+	private boolean confirmDraftDisabled;
 
 	public ContractView() {
 		currencies = new HashMap<String, String>();
@@ -65,6 +71,8 @@ public class ContractView {
 		quantityStyle = Config.REQUIRED_FIELD;
 		addressStyle = Config.REQUIRED_FIELD;
 		itemStyle = Config.REQUIRED_FIELD;
+		confirmDraftDisabled = Boolean.TRUE;
+		draft = Tools.msg.getString("analyzing");
 	}
 
 	Runnable updateBtc = () -> {
@@ -370,15 +378,28 @@ public class ContractView {
 	}
 
 	public void previewAction() {
-		draft = "El draft";
+		Address address = Geocoder.geocode(getAddress());
+		String errors = Validators.validateAddress(address);
+		draft = errors.equals("") ? "el draft" : errors;
+	}
+	
+	public void cancelDraftAction() {
+		draft = Tools.msg.getString("analyzing");
+		System.out.println("pasó");
+	}
+
+	public boolean getConfirmDraftDisabled() {
+		return confirmDraftDisabled;
 	}
 
 	public String getPreviewDisabled() {
-		/*return (namePayerStyle == null && nickPayerStyle == null && emailPayerStyle == null && addressPayerStyle == null
-				&& nameCollectorStyle == null && nickCollectorStyle == null && emailCollectorStyle == null
-				&& addressCollectorStyle == null && quantityStyle == null && addressStyle == null && itemStyle == null)
-						? "false"
-						: "true";*/
+		/*
+		 * return (namePayerStyle == null && nickPayerStyle == null && emailPayerStyle
+		 * == null && addressPayerStyle == null && nameCollectorStyle == null &&
+		 * nickCollectorStyle == null && emailCollectorStyle == null &&
+		 * addressCollectorStyle == null && quantityStyle == null && addressStyle ==
+		 * null && itemStyle == null) ? "false" : "true";
+		 */
 		return "false";
 	}
 
