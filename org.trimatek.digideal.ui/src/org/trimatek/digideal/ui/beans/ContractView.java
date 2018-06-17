@@ -202,8 +202,12 @@ public class ContractView {
 	}
 
 	public void validatePayerEmail() {
-		emailPayerStyle = Validators.validateEmail(getEmailPayer(), "email de <b>comprador</b> no válido") ? null
-				: Config.REQUIRED_FIELD;
+		if (Validators.validateEmail(getEmailPayer(), Tools.msg.getString("error_payer_email"))) {
+			emailPayerStyle = null;
+			setEmailPayer(emailPayer.toLowerCase());
+		} else {
+			emailPayerStyle = Config.REQUIRED_FIELD;
+		}
 	}
 
 	public void validatePayerName() {
@@ -232,8 +236,12 @@ public class ContractView {
 	}
 
 	public void validateCollectorEmail() {
-		emailCollectorStyle = Validators.validateEmail(getEmailCollector(), "email de <b>vendedor</b> no válido") ? null
-				: Config.REQUIRED_FIELD;
+		if (Validators.validateEmail(getEmailCollector(), Tools.msg.getString("error_collector_email"))) {
+			emailCollectorStyle = null;
+			setEmailCollector(emailCollector.toLowerCase());
+		} else {
+			emailCollectorStyle = Config.REQUIRED_FIELD;
+		}
 	}
 
 	public void validateCollectorName() {
@@ -397,9 +405,7 @@ public class ContractView {
 		return (namePayerStyle == null && nickPayerStyle == null && emailPayerStyle == null && addressPayerStyle == null
 				&& nameCollectorStyle == null && nickCollectorStyle == null && emailCollectorStyle == null
 				&& addressCollectorStyle == null && quantityStyle == null && addressStyle == null && itemStyle == null
-				&& isDataAuthentic() == true)
-						? false
-						: true;
+				&& isDataAuthentic() == true) ? false : true;
 	}
 
 	public String getDraftNumber() {
@@ -417,7 +423,5 @@ public class ContractView {
 	public void setDataAuthentic(boolean dataAuthentic) {
 		this.dataAuthentic = dataAuthentic;
 	}
-	
-	
 
 }

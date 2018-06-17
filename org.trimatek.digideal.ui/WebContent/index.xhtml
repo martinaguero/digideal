@@ -192,20 +192,20 @@
 				<p:column style="border-right-style: hidden;"></p:column>
 				<p:column>
 					<div style="float: right;">
-						<h:panelGrid columns="2" style="margin-bottom:10px"
+						<h:panelGrid columns="3" style="margin-bottom:10px"
 							cellpadding="5">
-							<p:outputLabel for="@next"
-								value="Confirmo la veracidad de los datos " />
-							<p:selectBooleanCheckbox id="check" value="#{contractView.dataAuthentic}">
+							<p:outputLabel for="@next" value="#{msg.data_true}" />
+							<p:selectBooleanCheckbox id="check"
+								value="#{contractView.dataAuthentic}">
 								<p:ajax update="preview" />
 							</p:selectBooleanCheckbox>
+							<p:commandButton value="Previsualizar" id="preview"
+								actionListener="#{contractView.previewAction}"
+								disabled="#{contractView.previewDisabled}"
+								icon="ui-icon-circle-zoomin" onclick="PF('draftDlg').show();"
+								update="draft">
+							</p:commandButton>
 						</h:panelGrid>
-						<p:commandButton value="Previsualizar" id="preview"
-							actionListener="#{contractView.previewAction}"
-							disabled="#{contractView.previewDisabled}"
-							icon="ui-icon-circle-zoomin" onclick="PF('draftDlg').show();"
-							update="draft">
-						</p:commandButton>
 					</div>
 				</p:column>
 			</p:row>
