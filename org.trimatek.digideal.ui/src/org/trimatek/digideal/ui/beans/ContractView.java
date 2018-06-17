@@ -53,6 +53,7 @@ public class ContractView {
 	private String draftNumber;
 	private String draft;
 	private boolean confirmDraftDisabled;
+	private boolean dataAuthentic;
 
 	public ContractView() {
 		currencies = new HashMap<String, String>();
@@ -378,11 +379,13 @@ public class ContractView {
 	}
 
 	public void previewAction() {
+		System.out.println("entró a preview action");
 		Address address = Geocoder.geocode(getAddress());
+		System.out.println(address);
 		String errors = Validators.validateAddress(address);
 		draft = errors.equals("") ? "el draft" : errors;
 	}
-	
+
 	public void cancelDraftAction() {
 		draft = Tools.msg.getString("analyzing");
 		System.out.println("pasó");
@@ -392,15 +395,13 @@ public class ContractView {
 		return confirmDraftDisabled;
 	}
 
-	public String getPreviewDisabled() {
-		/*
-		 * return (namePayerStyle == null && nickPayerStyle == null && emailPayerStyle
-		 * == null && addressPayerStyle == null && nameCollectorStyle == null &&
-		 * nickCollectorStyle == null && emailCollectorStyle == null &&
-		 * addressCollectorStyle == null && quantityStyle == null && addressStyle ==
-		 * null && itemStyle == null) ? "false" : "true";
-		 */
-		return "false";
+	public boolean getPreviewDisabled() {
+		return (namePayerStyle == null && nickPayerStyle == null && emailPayerStyle == null && addressPayerStyle == null
+				&& nameCollectorStyle == null && nickCollectorStyle == null && emailCollectorStyle == null
+				&& addressCollectorStyle == null && quantityStyle == null && addressStyle == null && itemStyle == null
+				&& isDataAuthentic() == true)
+						? false
+						: true;
 	}
 
 	public String getDraftNumber() {
@@ -410,5 +411,15 @@ public class ContractView {
 	public String getDraft() {
 		return draft;
 	}
+
+	public boolean isDataAuthentic() {
+		return dataAuthentic;
+	}
+
+	public void setDataAuthentic(boolean dataAuthentic) {
+		this.dataAuthentic = dataAuthentic;
+	}
+	
+	
 
 }

@@ -14,7 +14,6 @@
 <h:body>
 	<p:tooltip position="top" />
 	<h:form>
-	<p:growl id="growl" life="2000" />
 		<p:panelGrid style="margin-top:40px">
 			<p:row style="height: 110px">
 				<p:column style="font-weight: bold;">Quienes</p:column>
@@ -193,32 +192,44 @@
 				<p:column style="border-right-style: hidden;"></p:column>
 				<p:column>
 					<div style="float: right;">
+						<h:panelGrid columns="2" style="margin-bottom:10px"
+							cellpadding="5">
+							<p:outputLabel for="@next"
+								value="Confirmo la veracidad de los datos " />
+							<p:selectBooleanCheckbox value="#{contractView.dataAuthentic}">
+								<p:ajax update="preview" />
+							</p:selectBooleanCheckbox>
+						</h:panelGrid>
 						<p:commandButton value="Previsualizar" id="preview"
 							actionListener="#{contractView.previewAction}"
 							disabled="#{contractView.previewDisabled}"
-							icon="ui-icon-circle-zoomin" 
-							onclick="PF('dlg1').show();"
-							update="draft,growl">
+							icon="ui-icon-circle-zoomin" onclick="PF('draftDlg').show();"
+							update="draft">
 						</p:commandButton>
 					</div>
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-		<p:dialog header="#{contractView.draftNumber}" widgetVar="dlg1" showEffect="fade"
-			modal="true">
+		<p:remoteCommand name="cancelDraft" update="draft"
+			actionListener="#{contractView.cancelDraftAction}" />
+		<p:dialog header="#{contractView.draftNumber}" widgetVar="draftDlg"
+			showEffect="fade" closable="false" modal="true">
 			<div>
-				<h:outputText id="draft" value="#{contractView.draft}" escape="false" />
-				<br/>
+				<h:outputText id="draft" value="#{contractView.draft}"
+					escape="false" />
+				<br />
 			</div>
 			<div style="float: right;">
-				<br/>
+				<br />
 				<p:commandButton value="#{msg.btn_confirm}" type="button"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" disabled="#{contractView.confirmDraftDisabled}" />
-				<p:commandButton value="#{msg.btn_close}" type="button" actionListener="#{contractView.cancelDraftAction}"
-					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+					disabled="#{contractView.confirmDraftDisabled}" />
+				<p:commandButton value="#{msg.btn_close}" type="button"
+					actionListener="#{contractView.cancelDraftAction}"
+					styleClass="ui-confirmdialog-no"
+					onclick="cancelDraft();PF('draftDlg').hide();" icon="ui-icon-close" />
 			</div>
 		</p:dialog>
 	</h:form>
 </h:body>
-
 </html>
