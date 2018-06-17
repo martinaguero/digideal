@@ -74,7 +74,7 @@ public class Validators {
 	}
 
 	public static String normalize(String source) {
-		String result = source.replace(" ", "_");
+		String result = source.replace(" ", "_").toLowerCase();		
 		return result.contains("@") ? result : "@" + result;
 	}
 

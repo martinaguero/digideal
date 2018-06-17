@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.trimatek.digideal.ui.Config;
+
 public class Tools {
 	
-	public final static ResourceBundle msg = ResourceBundle.getBundle("org.trimatek.digideal.ui.messages");
+	public final static ResourceBundle msg = ResourceBundle.getBundle(Config.MESSAGES_BUNDLE);
 
 	public static List<String> getFieldNames(Field[] fields) {
 		List<String> fieldNames = new ArrayList<>();

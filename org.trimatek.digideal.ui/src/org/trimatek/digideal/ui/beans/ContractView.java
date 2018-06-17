@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
 
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.model.Address;
@@ -379,7 +378,6 @@ public class ContractView {
 	}
 
 	public void previewAction() {
-		System.out.println("entró a preview action");
 		Address address = Geocoder.geocode(getAddress());
 		System.out.println(address);
 		String errors = Validators.validateAddress(address);
@@ -388,7 +386,7 @@ public class ContractView {
 
 	public void cancelDraftAction() {
 		draft = Tools.msg.getString("analyzing");
-		System.out.println("pasó");
+		setDataAuthentic(false);
 	}
 
 	public boolean getConfirmDraftDisabled() {

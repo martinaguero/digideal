@@ -196,7 +196,7 @@
 							cellpadding="5">
 							<p:outputLabel for="@next"
 								value="Confirmo la veracidad de los datos " />
-							<p:selectBooleanCheckbox value="#{contractView.dataAuthentic}">
+							<p:selectBooleanCheckbox id="check" value="#{contractView.dataAuthentic}">
 								<p:ajax update="preview" />
 							</p:selectBooleanCheckbox>
 						</h:panelGrid>
@@ -210,7 +210,7 @@
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-		<p:remoteCommand name="cancelDraft" update="draft"
+		<p:remoteCommand name="cancelDraft" update="draft,check,preview"
 			actionListener="#{contractView.cancelDraftAction}" />
 		<p:dialog header="#{contractView.draftNumber}" widgetVar="draftDlg"
 			showEffect="fade" closable="false" modal="true">
@@ -225,7 +225,6 @@
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
 					disabled="#{contractView.confirmDraftDisabled}" />
 				<p:commandButton value="#{msg.btn_close}" type="button"
-					actionListener="#{contractView.cancelDraftAction}"
 					styleClass="ui-confirmdialog-no"
 					onclick="cancelDraft();PF('draftDlg').hide();" icon="ui-icon-close" />
 			</div>
