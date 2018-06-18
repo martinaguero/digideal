@@ -1,0 +1,19 @@
+CONTRATO #ONCE 
+"El presente contrato se celebra entre 
+el Sr. Comprador, en adelante el comprador" @comprador {"mmC3Z1Sbke6n23zpo9P29Ztka6q3mJyAE1","aguero.martin@gmail.com" } 
+"y el Sr. Vendedor, el vendedor " @vendedor {"mxFjMkxqzfAMqd3Cim2ZZpbSHoTsLfoNsC","mariaminatel@gmail.com" } 
+"se establece que...." @comprador pagará a @vendedor la suma de STS 1 si: 
+@vendedor "entrega 16 cuadraditos de brownie de 4 x 4 cm" demostrable con TODOS los siguientes hechos: 
+{"entrega en Amenabar 2020 p 1 d B"} 
+y supervisado por @digideal{ "mkQ7wFkReXVXTNQpi57zwTATY4kFG6KuPF", "digideal.services@gmail.com"}
+
+
+
+
+{ "name": "ONCE",
+  "text": "CONTRATO #ONCE
+\"El presente contrato se celebra entre el Sr. Comprador, en adelante el comprador\" @comprador {\"mmC3Z1Sbke6n23zpo9P29Ztka6q3mJyAE1\",
+\"aguero.martin@gmail.com\" } \"y el Sr. Vendedor, el vendedor \" @vendedor {\"mxFjMkxqzfAMqd3Cim2ZZpbSHoTsLfoNsC\",
+\"mariaminatel@gmail.com\" } \"se establece que....\" @comprador pagará a @vendedor la suma de STS 1 si: @vendedor \"entrega 16 cuadraditos de brownie de 4 x 4 cm\"
+demostrable con TODOS los siguientes hechos: {\"entrega en Amenabar 2020 p 1 d B\"} y supervisado por @digideal{ \"mkQ7wFkReXVXTNQpi57zwTATY4kFG6KuPF\",
+\"digideal.services@gmail.com\"}" }

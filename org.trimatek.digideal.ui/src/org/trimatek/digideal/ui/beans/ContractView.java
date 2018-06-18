@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.model.Address;
 import org.trimatek.digideal.ui.utils.Geocoder;
+import org.trimatek.digideal.ui.utils.SourceBuilder;
 import org.trimatek.digideal.ui.utils.Tools;
 
 @ManagedBean
@@ -389,7 +390,7 @@ public class ContractView {
 		Address address = Geocoder.geocode(getAddress());
 		System.out.println(address);
 		String errors = Validators.validateAddress(address);
-		draft = errors.equals("") ? "el draft" : errors;
+		draft = errors.equals("") ? SourceBuilder.getDraft(this) : errors;
 	}
 
 	public void cancelDraftAction() {
