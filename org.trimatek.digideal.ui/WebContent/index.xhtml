@@ -212,8 +212,8 @@
 		</p:panelGrid>
 		<p:remoteCommand name="cancelDraft" update="draft,check,preview"
 			actionListener="#{contractView.cancelDraftAction}" />
-		<p:dialog header="#{contractView.draftNumber}" widgetVar="draftDlg"
-			showEffect="fade" closable="false" modal="true">
+		<p:dialog id="previewDialog" header="#{contractView.draftNumber}"
+			widgetVar="draftDlg" showEffect="fade" closable="false" modal="true">
 			<div>
 				<h:outputText id="draft" value="#{contractView.draft}"
 					escape="false" />
@@ -229,6 +229,9 @@
 					onclick="cancelDraft();PF('draftDlg').hide();" icon="ui-icon-close" />
 			</div>
 		</p:dialog>
+		<p:tooltip id="tooltipPreview" for="previewDialog"
+			value="#{contractView.previewTooltip}" position="bottom"
+			escape="false" />
 	</h:form>
 </h:body>
 </html>

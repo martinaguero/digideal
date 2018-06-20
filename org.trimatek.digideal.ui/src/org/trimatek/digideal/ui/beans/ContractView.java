@@ -403,6 +403,11 @@ public class ContractView {
 		return confirmDraftDisabled;
 	}
 
+	public String getPreviewTooltip() {
+		return getNickPayer() + " {" + getAddressPayer() + "," + getEmailPayer() + "} " + getNickCollector() + " {"
+				+ getAddressCollector() + "," + getEmailCollector() + "}";
+	}
+
 	public boolean getPreviewDisabled() {
 		return (namePayerStyle == null && nickPayerStyle == null && emailPayerStyle == null && addressPayerStyle == null
 				&& nameCollectorStyle == null && nickCollectorStyle == null && emailCollectorStyle == null
