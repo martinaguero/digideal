@@ -15,6 +15,7 @@ import org.trimatek.digideal.ui.model.Address;
 import org.trimatek.digideal.ui.utils.Geocoder;
 import org.trimatek.digideal.ui.utils.SourceBuilder;
 import org.trimatek.digideal.ui.utils.Tools;
+import org.trimatek.digideal.ui.utils.Validators;
 
 @ManagedBean
 public class ContractView {

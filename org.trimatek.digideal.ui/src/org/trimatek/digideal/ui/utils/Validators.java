@@ -1,19 +1,15 @@
-package org.trimatek.digideal.ui.beans;
+package org.trimatek.digideal.ui.utils;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.model.Address;
-import org.trimatek.digideal.ui.utils.Tools;
 
 public class Validators {
 
-	private static String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	private static String NAME_REGEX = "^[^\\d]+$";
-	private static String BTC_ADDRESS_REGEX = "^[123mn][1-9A-HJ-NP-Za-km-z]{26,35}";
-
 	public static boolean validateEmail(String target, String message) {
-		if (target != null && !target.matches(EMAIL_REGEX)) {
+		if (target != null && !target.matches(Config.EMAIL_REGEX)) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", message));
 			return false;
@@ -22,7 +18,7 @@ public class Validators {
 	}
 
 	public static boolean validateName(String target, String message, int minWords) {
-		if (target == null || !target.matches(NAME_REGEX) || target.split(" ").length < minWords) {
+		if (target == null || !target.matches(Config.NAME_REGEX) || target.split(" ").length < minWords) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", message));
 			return false;
@@ -31,7 +27,7 @@ public class Validators {
 	}
 
 	public static boolean validateAddress(String target, String message) {
-		if (target == null || !target.matches(BTC_ADDRESS_REGEX)) {
+		if (target == null || !target.matches(Config.BTC_ADDRESS_REGEX)) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", message));
 			return false;
