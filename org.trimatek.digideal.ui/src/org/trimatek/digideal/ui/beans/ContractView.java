@@ -55,6 +55,7 @@ public class ContractView {
 	private String draft;
 	private boolean confirmDraftDisabled;
 	private boolean dataAuthentic;
+	private boolean renderSignatures;
 
 	public ContractView() {
 		currencies = new HashMap<String, String>();
@@ -75,6 +76,7 @@ public class ContractView {
 		itemStyle = Config.REQUIRED_FIELD;
 		confirmDraftDisabled = Boolean.TRUE;
 		draft = Tools.msg.getString("analyzing");
+		renderSignatures = Boolean.FALSE;
 	}
 
 	Runnable updateBtc = () -> {
@@ -391,21 +393,30 @@ public class ContractView {
 		Address address = Geocoder.geocode(getAddress());
 		System.out.println(address);
 		String errors = Validators.validateAddress(address);
-		draft = errors.equals("") ? SourceBuilder.getDraft(this) : errors;
+		if (errors.equals("")) {
+			renderSignatures = true;
+			draft = SourceBuilder.getDraft(this);
+		} else {
+			draft = errors;
+		}
 	}
 
 	public void cancelDraftAction() {
 		draft = Tools.msg.getString("analyzing");
 		setDataAuthentic(false);
+		renderSignatures = false;
 	}
 
 	public boolean getConfirmDraftDisabled() {
 		return confirmDraftDisabled;
 	}
 
-	public String getPreviewTooltip() {
-		return getNickPayer() + " {" + getAddressPayer() + "," + getEmailPayer() + "} " + getNickCollector() + " {"
-				+ getAddressCollector() + "," + getEmailCollector() + "}";
+	public String getTooltipPayer() {
+		return getNickPayerValid() + " {" + getAddressPayer() + "," + getEmailPayer() + "}";
+	}
+
+	public String getTooltipCollector() {
+		return getNickCollectorValid() + " {" + getAddressCollector() + "," + getEmailCollector() + "}";
 	}
 
 	public boolean getPreviewDisabled() {
@@ -429,6 +440,10 @@ public class ContractView {
 
 	public void setDataAuthentic(boolean dataAuthentic) {
 		this.dataAuthentic = dataAuthentic;
+	}
+
+	public String getRenderSignatures() {
+		return renderSignatures ? "true" : "false";
 	}
 
 }

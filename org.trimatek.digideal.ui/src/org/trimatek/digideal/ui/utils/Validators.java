@@ -37,25 +37,30 @@ public class Validators {
 
 	public static String validateAddress(Address address) {
 		StringBuilder sb = new StringBuilder();
-		if (address.getROUTE() == null) {
+		if (address == null) {
 			sb.append("<br/>");
-			sb.append(Tools.msg.getString("error_street_not_found"));
-		}
-		if (address.getSTREET_NUMBER() == null) {
-			sb.append("<br/>");
-			sb.append(Tools.msg.getString("error_street_number_not_found"));
-		}
-		if (address.getPOSTAL_CODE() == null) {
-			sb.append("<br/>");
-			sb.append(Tools.msg.getString("error_postal_code_not_found"));
-		}
-		if (address.getADMINISTRATIVE_AREA_LEVEL_1() == null) {
-			sb.append("<br/>");
-			sb.append(Tools.msg.getString("error_city_not_found"));
-		}
-		if (address.getCOUNTRY() == null) {
-			sb.append("<br/>");
-			sb.append(Tools.msg.getString("error_country_not_found"));
+			sb.append(Tools.msg.getString("error_address_not_parseable"));
+		} else {
+			if (address.getROUTE() == null) {
+				sb.append("<br/>");
+				sb.append(Tools.msg.getString("error_street_not_found"));
+			}
+			if (address.getSTREET_NUMBER() == null) {
+				sb.append("<br/>");
+				sb.append(Tools.msg.getString("error_street_number_not_found"));
+			}
+			if (address.getPOSTAL_CODE() == null) {
+				sb.append("<br/>");
+				sb.append(Tools.msg.getString("error_postal_code_not_found"));
+			}
+			if (address.getADMINISTRATIVE_AREA_LEVEL_1() == null) {
+				sb.append("<br/>");
+				sb.append(Tools.msg.getString("error_city_not_found"));
+			}
+			if (address.getCOUNTRY() == null) {
+				sb.append("<br/>");
+				sb.append(Tools.msg.getString("error_country_not_found"));
+			}
 		}
 		return sb.length() > 0 ? Tools.msg.getString("error_address") + sb.toString() : "";
 	}
@@ -70,7 +75,7 @@ public class Validators {
 	}
 
 	public static String normalize(String source) {
-		String result = source.replace(" ", "_").toLowerCase();		
+		String result = source.replace(" ", "_").toLowerCase();
 		return result.contains("@") ? result : "@" + result;
 	}
 

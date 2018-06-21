@@ -18,8 +18,10 @@ public class Geocoder {
 		try {
 			GeoApiContext context = new GeoApiContext.Builder().apiKey(Config.GOOGLE_GEO_API_KEY).build();
 			GeocodingResult[] results = GeocodingApi.geocode(context, addressString).await();
-			AddressComponent comps[] = results[0].addressComponents;
-			address = Address.build(comps);
+			if (results[0].addressComponents != null) {
+				AddressComponent comps[] = results[0].addressComponents;
+				address = Address.build(comps);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

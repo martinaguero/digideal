@@ -98,3 +98,10 @@ img {
 	border-bottom-style: hidden;
 	border-left-style: hidden;
 }
+
+.dialog {
+	text-align: justify;
+	float: center;
+	height: 80%;
+	font-size: 17px;
+}

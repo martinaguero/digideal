@@ -203,21 +203,40 @@
 								actionListener="#{contractView.previewAction}"
 								disabled="#{contractView.previewDisabled}"
 								icon="ui-icon-circle-zoomin" onclick="PF('draftDlg').show();"
-								update="draft">
+								update="draft,paneldialog">
 							</p:commandButton>
 						</h:panelGrid>
 					</div>
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-		<p:remoteCommand name="cancelDraft" update="draft,check,preview"
+		<p:remoteCommand name="cancelDraft"
+			update="draft,check,preview,paneldialog"
 			actionListener="#{contractView.cancelDraftAction}" />
 		<p:dialog id="previewDialog" header="#{contractView.draftNumber}"
-			widgetVar="draftDlg" showEffect="fade" closable="false" modal="true">
-			<div>
-				<h:outputText id="draft" value="#{contractView.draft}"
-					escape="false" />
-				<br />
+			widgetVar="draftDlg" showEffect="fade" position="center"
+			positionType="absolute" closable="false" modal="true" width="35%"
+			height="200px">
+			<div class="dialog">
+				<p:outputLabel id="draft" value="#{contractView.draft}"
+					escape="false" />				
+				<br /> <br />
+				<p:panelGrid styleClass="ui-noborder" style="align: center;"
+					id="paneldialog" columns="4"
+					rendered="#{contractView.renderSignatures}">
+					<h:outputLink value="#">
+						<h:outputText id="signpayer"
+							value="#{contractView.nickPayerValid}" />
+					</h:outputLink>
+					<p:tooltip for="signpayer" value="#{contractView.tooltipPayer}"
+						position="bottom" />
+					<h:outputLink value="#">
+						<h:outputText id="signcollector"
+							value="#{contractView.nickCollectorValid}" />
+					</h:outputLink>
+					<p:tooltip for="signcollector"
+						value="#{contractView.tooltipCollector}" position="bottom" />
+				</p:panelGrid>
 			</div>
 			<div style="float: right;">
 				<br />
@@ -229,9 +248,6 @@
 					onclick="cancelDraft();PF('draftDlg').hide();" icon="ui-icon-close" />
 			</div>
 		</p:dialog>
-		<p:tooltip id="tooltipPreview" for="previewDialog"
-			value="#{contractView.previewTooltip}" position="bottom"
-			escape="false" />
 	</h:form>
 </h:body>
 </html>
