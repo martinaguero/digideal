@@ -213,26 +213,30 @@
 		<p:remoteCommand name="cancelDraft"
 			update="draft,check,preview,paneldialog"
 			actionListener="#{contractView.cancelDraftAction}" />
-		<p:dialog id="previewDialog" header="#{contractView.draftNumber}"
-			widgetVar="draftDlg" showEffect="fade" position="center"
-			positionType="absolute" closable="false" modal="true" width="35%"
-			height="200px">
-			<div class="dialog">
+		<p:dialog id="previewDialog" widgetVar="draftDlg" showEffect="fade"
+			position="center" positionType="absolute" closable="false" 
+			modal="true" width="600px" height="310px" draggable="false">
+			<div class="dialog">				
 				<p:outputLabel id="draft" value="#{contractView.draft}"
-					escape="false" />				
+					escape="false" />
 				<br /> <br />
-				<p:panelGrid styleClass="ui-noborder" style="align: center;"
-					id="paneldialog" columns="4"
-					rendered="#{contractView.renderSignatures}">
+				<p:panelGrid layout="grid" styleClass="ui-noborder" id="paneldialog"
+					columns="6">
+					<p:progressBar id="progressbar" style="height:6px" 
+					mode="indeterminate" rendered="#{contractView.renderProgressbar}" />
+					<h:outputText value="" />
 					<h:outputLink value="#">
 						<h:outputText id="signpayer"
-							value="#{contractView.nickPayerValid}" />
+							value="#{contractView.nickPayerValid}"
+							rendered="#{contractView.renderSignatures}" />
 					</h:outputLink>
 					<p:tooltip for="signpayer" value="#{contractView.tooltipPayer}"
-						position="bottom" />
+						position="bottom" rendered="#{contractView.renderSignatures}" />
+					<h:outputText value="" />
 					<h:outputLink value="#">
 						<h:outputText id="signcollector"
-							value="#{contractView.nickCollectorValid}" />
+							value="#{contractView.nickCollectorValid}"
+							rendered="#{contractView.renderSignatures}" />
 					</h:outputLink>
 					<p:tooltip for="signcollector"
 						value="#{contractView.tooltipCollector}" position="bottom" />

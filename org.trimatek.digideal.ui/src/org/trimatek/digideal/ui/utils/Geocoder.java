@@ -1,6 +1,7 @@
 package org.trimatek.digideal.ui.utils;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.model.Address;
@@ -13,7 +14,7 @@ import com.google.maps.model.GeocodingResult;
 
 public class Geocoder {
 
-	public static Address geocode(String addressString) {
+	public static Optional<Address> geocode(String addressString) {
 		Address address = null;
 		try {
 			GeoApiContext context = new GeoApiContext.Builder().apiKey(Config.GOOGLE_GEO_API_KEY).build();
@@ -25,7 +26,7 @@ public class Geocoder {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return address;
+		return Optional.of(address);
 	}
 
 	public static void main(String[] args) throws IOException, ApiException, InterruptedException {

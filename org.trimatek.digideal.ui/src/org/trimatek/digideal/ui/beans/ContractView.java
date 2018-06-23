@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.faces.bean.ManagedBean;
 
@@ -75,7 +76,6 @@ public class ContractView {
 		addressStyle = Config.REQUIRED_FIELD;
 		itemStyle = Config.REQUIRED_FIELD;
 		confirmDraftDisabled = Boolean.TRUE;
-		draft = Tools.msg.getString("analyzing");
 		renderSignatures = Boolean.FALSE;
 	}
 
@@ -390,19 +390,21 @@ public class ContractView {
 	}
 
 	public void previewAction() {
-		Address address = Geocoder.geocode(getAddress());
-		System.out.println(address);
-		String errors = Validators.validateAddress(address);
-		if (errors.equals("")) {
-			renderSignatures = true;
-			draft = SourceBuilder.getDraft(this);
-		} else {
-			draft = errors;
+		Optional<Address> address = Geocoder.geocode(getAddress());
+		if (address.isPresent()) {
+			System.out.println(address.get().toString());
+			String errors = Validators.validateAddress(address.get());
+			if (errors.equals("")) {
+				renderSignatures = true;
+				draft = SourceBuilder.getDraft(this);
+			} else {
+				draft = errors;
+			}
 		}
 	}
 
 	public void cancelDraftAction() {
-		draft = Tools.msg.getString("analyzing");
+		draft = "";
 		setDataAuthentic(false);
 		renderSignatures = false;
 	}
@@ -427,7 +429,7 @@ public class ContractView {
 	}
 
 	public String getDraftNumber() {
-		return draftNumber;
+		return System.currentTimeMillis() + "";
 	}
 
 	public String getDraft() {
@@ -444,6 +446,10 @@ public class ContractView {
 
 	public String getRenderSignatures() {
 		return renderSignatures ? "true" : "false";
+	}
+
+	public String getRenderProgressbar() {
+		return draft == null || draft.equals("") ? "true" : "false";
 	}
 
 }
