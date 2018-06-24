@@ -5,7 +5,7 @@ public class Source {
 	private long id;
 	private String name;
 	private String text;
-
+	
 	public String getText() {
 		return text;
 	}

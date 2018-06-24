@@ -13,10 +13,14 @@ import javax.faces.bean.ManagedBean;
 
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.model.Address;
+import org.trimatek.digideal.ui.model.Source;
 import org.trimatek.digideal.ui.utils.Geocoder;
 import org.trimatek.digideal.ui.utils.SourceBuilder;
 import org.trimatek.digideal.ui.utils.Tools;
 import org.trimatek.digideal.ui.utils.Validators;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @ManagedBean
 public class ContractView {
@@ -52,11 +56,8 @@ public class ContractView {
 	private String addressStyle;
 	private final String BTC_PRICE_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	private double BTC_PER_DOLLAR = 0.00013828;
-	private String draftNumber;
-	private String draft;
-	private boolean confirmDraftDisabled;
+	private Source source;
 	private boolean dataAuthentic;
-	private boolean renderSignatures;
 
 	public ContractView() {
 		currencies = new HashMap<String, String>();
@@ -75,8 +76,6 @@ public class ContractView {
 		quantityStyle = Config.REQUIRED_FIELD;
 		addressStyle = Config.REQUIRED_FIELD;
 		itemStyle = Config.REQUIRED_FIELD;
-		confirmDraftDisabled = Boolean.TRUE;
-		renderSignatures = Boolean.FALSE;
 	}
 
 	Runnable updateBtc = () -> {
@@ -395,22 +394,24 @@ public class ContractView {
 			System.out.println(address.get().toString());
 			String errors = Validators.validateAddress(address.get());
 			if (errors.equals("")) {
-				renderSignatures = true;
-				draft = SourceBuilder.getDraft(this);
+				source = SourceBuilder.getSource(this);
 			} else {
-				draft = errors;
+				source = new Source();
+				source.setText(errors);
 			}
 		}
 	}
 
 	public void cancelDraftAction() {
-		draft = "";
+		source = null;
 		setDataAuthentic(false);
-		renderSignatures = false;
 	}
-
-	public boolean getConfirmDraftDisabled() {
-		return confirmDraftDisabled;
+	
+	public void confirmDraftAction() {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		System.out.println(gson.toJson(SourceBuilder.formatToGo(source)));
+		source = null;
+		setDataAuthentic(false);
 	}
 
 	public String getTooltipPayer() {
@@ -428,12 +429,8 @@ public class ContractView {
 				&& isDataAuthentic() == true) ? false : true;
 	}
 
-	public String getDraftNumber() {
-		return System.currentTimeMillis() + "";
-	}
-
 	public String getDraft() {
-		return draft;
+		return source != null ? SourceBuilder.formatDraft(source) : "";
 	}
 
 	public boolean isDataAuthentic() {
@@ -445,11 +442,15 @@ public class ContractView {
 	}
 
 	public String getRenderSignatures() {
-		return renderSignatures ? "true" : "false";
+		return source != null && source.getName() != null ? "true" : "false";
 	}
 
 	public String getRenderProgressbar() {
-		return draft == null || draft.equals("") ? "true" : "false";
+		return source == null ? "true" : "false";
+	}
+
+	public String getConfirmDraftDisabled() {
+		return source != null && source.getName() != null ? "false" : "true";
 	}
 
 }

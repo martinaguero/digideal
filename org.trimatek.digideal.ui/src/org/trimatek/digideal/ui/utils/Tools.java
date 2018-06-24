@@ -18,20 +18,6 @@ public class Tools {
 		return fieldNames;
 	}
 
-	public static String formatPreview(String preview) {
-		StringBuilder sb = new StringBuilder();
-		String[] tokens = preview.split(" ");
-		for (int i = 0; i < tokens.length; i++) {
-			tokens[i] = tokens[i].replaceAll(Config.EMAIL_REGEX, "");
-			tokens[i] = tokens[i].replaceAll(Config.BTC_ADDRESS_REGEX, "");
-			tokens[i] = tokens[i].replaceAll("[{},]", "");
-		}
-		for (String s : tokens) {
-			if (!s.equals("")) {
-				sb.append(s + " ");
-			}
-		}
-		return sb.toString();
-	}
+	
 
 }
