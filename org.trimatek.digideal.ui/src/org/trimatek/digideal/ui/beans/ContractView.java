@@ -58,6 +58,7 @@ public class ContractView {
 	private double BTC_PER_DOLLAR = 0.00013828;
 	private Source source;
 	private boolean dataAuthentic;
+	private boolean downloadDraft;
 
 	public ContractView() {
 		currencies = new HashMap<String, String>();
@@ -75,7 +76,7 @@ public class ContractView {
 		addressCollectorStyle = Config.REQUIRED_FIELD;
 		quantityStyle = Config.REQUIRED_FIELD;
 		addressStyle = Config.REQUIRED_FIELD;
-		itemStyle = Config.REQUIRED_FIELD;
+		itemStyle = Config.REQUIRED_FIELD;		
 	}
 
 	Runnable updateBtc = () -> {
@@ -395,6 +396,7 @@ public class ContractView {
 			String errors = Validators.validateAddress(address.get());
 			if (errors.equals("")) {
 				source = SourceBuilder.getSource(this);
+				downloadDraft = Boolean.TRUE;
 			} else {
 				source = new Source();
 				source.setText(errors);
@@ -439,6 +441,14 @@ public class ContractView {
 
 	public void setDataAuthentic(boolean dataAuthentic) {
 		this.dataAuthentic = dataAuthentic;
+	}
+	
+	public boolean isDownloadDraft() {
+		return downloadDraft;
+	}
+
+	public void setDownloadDraft(boolean downloadDraft) {
+		this.downloadDraft = downloadDraft;
 	}
 
 	public String getRenderSignatures() {

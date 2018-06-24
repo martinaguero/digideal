@@ -203,7 +203,7 @@
 								actionListener="#{contractView.previewAction}"
 								disabled="#{contractView.previewDisabled}"
 								icon="ui-icon-circle-zoomin" onclick="PF('draftDlg').show();"
-								update="draft,paneldialog,confirmbtn,panelbar">
+								update="draft,paneldialog,confirmbtn,panelbar,pdf">
 							</p:commandButton>
 						</h:panelGrid>
 					</div>
@@ -217,7 +217,16 @@
 			actionListener="#{contractView.confirmDraftAction}" />
 		<p:dialog id="previewDialog" widgetVar="draftDlg" showEffect="fade"
 			position="center" positionType="absolute" closable="false"
-			modal="true" width="600px" height="310px" draggable="false">
+			showHeader="false" modal="true" width="600px" height="380px"
+			draggable="false">
+			<div style="float: right;">
+				<p:selectBooleanButton id="pdf" onLabel="PDF" offLabel="No"
+					style="width:60px" disabled="#{contractView.confirmDraftDisabled}"
+					value="#{contractView.downloadDraft}">
+				</p:selectBooleanButton>
+			</div>
+			<br />
+			<br />
 			<div class="dialog">
 				<p:outputLabel id="draft" value="#{contractView.draft}"
 					escape="false" />
