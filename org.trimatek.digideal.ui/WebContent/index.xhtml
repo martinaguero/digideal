@@ -203,7 +203,7 @@
 								actionListener="#{contractView.previewAction}"
 								disabled="#{contractView.previewDisabled}"
 								icon="ui-icon-circle-zoomin" onclick="PF('draftDlg').show();"
-								update="draft,paneldialog,confirmbtn">
+								update="draft,paneldialog,confirmbtn,panelbar">
 							</p:commandButton>
 						</h:panelGrid>
 					</div>
@@ -211,21 +211,24 @@
 			</p:row>
 		</p:panelGrid>
 		<p:remoteCommand name="cancelDraft"
-			update="draft,check,preview,paneldialog"
+			update="draft,check,preview,paneldialog,panelbar"
 			actionListener="#{contractView.cancelDraftAction}" />
 		<p:remoteCommand name="confirmDraft"
-			actionListener="#{contractView.confirmDraftAction}" />	
+			actionListener="#{contractView.confirmDraftAction}" />
 		<p:dialog id="previewDialog" widgetVar="draftDlg" showEffect="fade"
-			position="center" positionType="absolute" closable="false" 
+			position="center" positionType="absolute" closable="false"
 			modal="true" width="600px" height="310px" draggable="false">
-			<div class="dialog">				
+			<div class="dialog">
 				<p:outputLabel id="draft" value="#{contractView.draft}"
 					escape="false" />
 				<br /> <br />
+				<p:panelGrid layout="grid" styleClass="ui-noborder" id="panelbar"
+					columns="1">
+					<p:progressBar id="progressbar" style="height:6px"
+						mode="indeterminate" rendered="#{contractView.renderProgressbar}" />
+				</p:panelGrid>
 				<p:panelGrid layout="grid" styleClass="ui-noborder" id="paneldialog"
 					columns="6">
-					<p:progressBar id="progressbar" style="height:6px" 
-					mode="indeterminate" rendered="#{contractView.renderProgressbar}" />
 					<h:outputText value="" />
 					<h:outputLink value="#">
 						<h:outputText id="signpayer"
@@ -246,8 +249,9 @@
 			</div>
 			<div style="float: right;">
 				<br />
-				<p:commandButton id="confirmbtn" value="#{msg.btn_confirm}" type="button"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+				<p:commandButton id="confirmbtn" value="#{msg.btn_confirm}"
+					type="button" styleClass="ui-confirmdialog-yes"
+					icon="ui-icon-check"
 					onclick="confirmDraft();PF('draftDlg').hide();"
 					disabled="#{contractView.confirmDraftDisabled}" />
 				<p:commandButton value="#{msg.btn_close}" type="button"
