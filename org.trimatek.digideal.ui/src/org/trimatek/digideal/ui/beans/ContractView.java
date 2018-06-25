@@ -1,7 +1,12 @@
 package org.trimatek.digideal.ui.beans;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,7 +15,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.model.Address;
 import org.trimatek.digideal.ui.model.Source;
@@ -59,6 +67,7 @@ public class ContractView {
 	private Source source;
 	private boolean dataAuthentic;
 	private boolean downloadDraft;
+	private StreamedContent file;
 
 	public ContractView() {
 		currencies = new HashMap<String, String>();
@@ -412,8 +421,25 @@ public class ContractView {
 	public void confirmDraftAction() {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		System.out.println(gson.toJson(SourceBuilder.formatToGo(source)));
+		//file = Tools.getPdf();
+		InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/contract.pdf");
+        file = new DefaultStreamedContent(stream, "application/pdf", "contract.pdf");
+        File targetFile = new File("d:\\Temp\\targetFile.pdf");
+        
+        try {
+        	OutputStream outStream = new FileOutputStream(targetFile);
+			outStream.write(stream.readAllBytes());
+			outStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		source = null;
 		setDataAuthentic(false);
+	}
+	
+	public StreamedContent getFile() {
+		return file;
 	}
 
 	public String getTooltipPayer() {

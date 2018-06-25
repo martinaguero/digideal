@@ -213,15 +213,20 @@
 		<p:remoteCommand name="cancelDraft"
 			update="draft,check,preview,paneldialog,panelbar"
 			actionListener="#{contractView.cancelDraftAction}" />
-		<p:remoteCommand name="confirmDraft"
-			actionListener="#{contractView.confirmDraftAction}" />
+		<p:remoteCommand name="confirmDraft" update="@all"
+			actionListener="#{contractView.confirmDraftAction}">
+			<p:fileDownload value="#{contractView.file}"
+				contentDisposition="attachment" />
+		</p:remoteCommand>
 		<p:dialog id="previewDialog" widgetVar="draftDlg" showEffect="fade"
 			position="center" positionType="absolute" closable="false"
 			showHeader="false" modal="true" width="600px" height="380px"
 			draggable="false">
 			<div style="float: right;">
-				<p:selectBooleanButton id="pdf" onLabel="PDF" offLabel="No"
-					style="width:60px" disabled="#{contractView.confirmDraftDisabled}"
+				<p:selectBooleanButton id="pdf" onIcon="fa fa-arrow-circle-down"
+					onLabel="PDF" offLabel="Off" offIcon="fa fa-ban"
+					style="width:60px;background-color: silver;border:none;"
+					disabled="#{contractView.confirmDraftDisabled}"
 					value="#{contractView.downloadDraft}">
 				</p:selectBooleanButton>
 			</div>
