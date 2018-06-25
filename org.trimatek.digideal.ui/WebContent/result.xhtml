@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title>Result</title>
+	<link rel="stylesheet" href="./css/style.css" />
+	<link rel="stylesheet" href="./css/showcase.css" />
+</h:head>
+<h:body>
+	<p:tooltip position="top" />
+	<h:form>
+		<p:panelGrid style="margin-top:40px">
+			<p:row style="height: 110px">
+				<p:outputLabel value="contrato generado!" />
+				<p:commandButton value="PDF" ajax="false">
+					<p:fileDownload value="#{contractView.file}"
+						contentDisposition="attachment" />
+				</p:commandButton>
+			</p:row>
+		</p:panelGrid>
+	</h:form>
+</h:body>
+</html>

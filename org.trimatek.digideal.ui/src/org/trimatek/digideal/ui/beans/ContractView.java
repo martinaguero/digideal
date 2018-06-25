@@ -66,7 +66,6 @@ public class ContractView {
 	private double BTC_PER_DOLLAR = 0.00013828;
 	private Source source;
 	private boolean dataAuthentic;
-	private boolean downloadDraft;
 	private StreamedContent file;
 
 	public ContractView() {
@@ -405,7 +404,6 @@ public class ContractView {
 			String errors = Validators.validateAddress(address.get());
 			if (errors.equals("")) {
 				source = SourceBuilder.getSource(this);
-				downloadDraft = Boolean.TRUE;
 			} else {
 				source = new Source();
 				source.setText(errors);
@@ -424,7 +422,7 @@ public class ContractView {
 		//file = Tools.getPdf();
 		InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/contract.pdf");
         file = new DefaultStreamedContent(stream, "application/pdf", "contract.pdf");
-        File targetFile = new File("d:\\Temp\\targetFile.pdf");
+        File targetFile = new File("c:\\Temp\\targetFile.pdf");
         
         try {
         	OutputStream outStream = new FileOutputStream(targetFile);
@@ -439,6 +437,8 @@ public class ContractView {
 	}
 	
 	public StreamedContent getFile() {
+		InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/contract.pdf");
+        file = new DefaultStreamedContent(stream, "application/pdf", "contract.pdf");
 		return file;
 	}
 
@@ -467,14 +467,6 @@ public class ContractView {
 
 	public void setDataAuthentic(boolean dataAuthentic) {
 		this.dataAuthentic = dataAuthentic;
-	}
-	
-	public boolean isDownloadDraft() {
-		return downloadDraft;
-	}
-
-	public void setDownloadDraft(boolean downloadDraft) {
-		this.downloadDraft = downloadDraft;
 	}
 
 	public String getRenderSignatures() {

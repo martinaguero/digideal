@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15272877596690" configfile="/org.trimatek.digideal.ui/WebContent/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15272877596690" configfile="/org.trimatek.digideal.ui/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="180" y="264" id="pf15299676908520" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="success.xhtml" x="564" y="243" id="pf15299676908521" path="/success.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf15299680799825" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15299680799826" path="index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="result.xhtml" id="pf15299680799827" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15299680799826" path="result.xhtml"/>
+  <links id="pf15299680799826" target="pf15299680799827" source="pf15299680799825" outcome="result"/>
+</pageflow:Pageflow>
