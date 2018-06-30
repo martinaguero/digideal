@@ -17,6 +17,8 @@ import java.util.Optional;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.trimatek.digideal.ui.Config;
@@ -84,7 +86,7 @@ public class ContractView {
 		addressCollectorStyle = Config.REQUIRED_FIELD;
 		quantityStyle = Config.REQUIRED_FIELD;
 		addressStyle = Config.REQUIRED_FIELD;
-		itemStyle = Config.REQUIRED_FIELD;		
+		itemStyle = Config.REQUIRED_FIELD;
 	}
 
 	Runnable updateBtc = () -> {
@@ -415,17 +417,18 @@ public class ContractView {
 		source = null;
 		setDataAuthentic(false);
 	}
-	
+
 	public void confirmDraftAction() {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		System.out.println(gson.toJson(SourceBuilder.formatToGo(source)));
-		//file = Tools.getPdf();
-		InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/contract.pdf");
-        file = new DefaultStreamedContent(stream, "application/pdf", "contract.pdf");
-        File targetFile = new File("c:\\Temp\\targetFile.pdf");
-        
-        try {
-        	OutputStream outStream = new FileOutputStream(targetFile);
+		// file = Tools.getPdf();
+		InputStream stream = FacesContext.getCurrentInstance().getExternalContext()
+				.getResourceAsStream("/resources/contract.pdf");
+		file = new DefaultStreamedContent(stream, "application/pdf", "contract.pdf");
+		File targetFile = new File("c:\\Temp\\targetFile.pdf");
+
+		try {
+			OutputStream outStream = new FileOutputStream(targetFile);
 			outStream.write(stream.readAllBytes());
 			outStream.close();
 		} catch (IOException e) {
@@ -434,11 +437,15 @@ public class ContractView {
 		}
 		source = null;
 		setDataAuthentic(false);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+		.handleNavigation(FacesContext.getCurrentInstance(), null, "result");
+		PrimeFaces.current().executeScript("PF('resultDlg').show();");
 	}
-	
+
 	public StreamedContent getFile() {
-		InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/contract.pdf");
-        file = new DefaultStreamedContent(stream, "application/pdf", "contract.pdf");
+		InputStream stream = FacesContext.getCurrentInstance().getExternalContext()
+				.getResourceAsStream("/resources/contract.pdf");
+		file = new DefaultStreamedContent(stream, "application/pdf", "contract.pdf");
 		return file;
 	}
 
