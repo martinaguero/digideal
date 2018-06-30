@@ -24,21 +24,21 @@ PayTo:
 	'@' payer=[Subject] 'pagará a' ('@' collector=[Subject]) 'la suma de STS' sts=INT;
 
 PaymentCondition:
-	'si:' ('@' collector=[Subject]) description=STRING level=FactsLevel facts=Facts;
+	'si:' ('@' collector=[Subject]) level=FactsLevel facts=Facts 'el siguiente producto o servicio:' description=STRING ;
 
 FactsLevel:
 	options=(AnyFact | AllFacts);
 
 AnyFact:
-	value='demostrable con CUALQUIERA de los siguientes hechos:';
+	value='cumple con CUALQUIERA de los siguientes hechos:';
 
 AllFacts:
-	value='demostrable con TODOS los siguientes hechos:';
+	value='entrega en:';
 
 Facts:
 	'{' (fact+=STRING ("," fact+=STRING)*) '}';
 
 SupervisedBy:
-	'y supervisado por ' agent=Subject;
+	'Operación supervisada por el agente ' agent=Subject;
 
 	
