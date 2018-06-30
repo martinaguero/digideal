@@ -15,6 +15,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.trimatek.digideal.ui.Config;
+import org.trimatek.digideal.ui.model.Source;
 
 public class Tools {
 
@@ -27,7 +28,7 @@ public class Tools {
 		return fieldNames;
 	}
 
-	public static StreamedContent getPdf() {
+	public static StreamedContent getPdf(Source source) {
 
 		StreamedContent file = null;
 		try {
@@ -40,11 +41,9 @@ public class Tools {
 			// PDFont font = PDType1Font.HELVETICA_BOLD;
 			contentStream.setFont(PDType1Font.COURIER, 12);
 			contentStream.beginText();
-			contentStream.showText("Hello World");
+			contentStream.showText(SourceBuilder.formatDraft(source));
 			contentStream.endText();
 			contentStream.close();
-
-			// document.save("d:\\Temp\\pdfBoxHelloWorld.pdf");
 
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			document.save(out);

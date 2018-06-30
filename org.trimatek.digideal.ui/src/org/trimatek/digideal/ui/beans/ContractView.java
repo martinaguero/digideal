@@ -421,11 +421,11 @@ public class ContractView {
 	public void confirmDraftAction() {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		System.out.println(gson.toJson(SourceBuilder.formatToGo(source)));
-		file = Tools.getPdf();
+		file = Tools.getPdf(source);
 		source = null;
 		setDataAuthentic(false);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-				.handleNavigation(FacesContext.getCurrentInstance(), null, "result");
+				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.NAVIGATION_RESULT);
 	}
 
 	public StreamedContent getFile() {
