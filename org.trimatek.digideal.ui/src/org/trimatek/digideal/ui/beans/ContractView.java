@@ -421,32 +421,19 @@ public class ContractView {
 	public void confirmDraftAction() {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		System.out.println(gson.toJson(SourceBuilder.formatToGo(source)));
-		// file = Tools.getPdf();
-		InputStream stream = FacesContext.getCurrentInstance().getExternalContext()
-				.getResourceAsStream("/resources/contract.pdf");
-		file = new DefaultStreamedContent(stream, "application/pdf", "contract.pdf");
-		File targetFile = new File("c:\\Temp\\targetFile.pdf");
-
-		try {
-			OutputStream outStream = new FileOutputStream(targetFile);
-			outStream.write(stream.readAllBytes());
-			outStream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		file = Tools.getPdf();
 		source = null;
 		setDataAuthentic(false);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-		.handleNavigation(FacesContext.getCurrentInstance(), null, "result");
-		PrimeFaces.current().executeScript("PF('resultDlg').show();");
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "result");
 	}
 
 	public StreamedContent getFile() {
-		InputStream stream = FacesContext.getCurrentInstance().getExternalContext()
-				.getResourceAsStream("/resources/contract.pdf");
-		file = new DefaultStreamedContent(stream, "application/pdf", "contract.pdf");
 		return file;
+	}
+
+	public void closeResultAction() {
+
 	}
 
 	public String getTooltipPayer() {

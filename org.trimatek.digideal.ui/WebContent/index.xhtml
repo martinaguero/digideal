@@ -219,7 +219,7 @@
 		<p:dialog id="previewDialog" widgetVar="draftDlg" showEffect="fade"
 			position="center" positionType="absolute" closable="false"
 			showHeader="false" modal="true" width="600px" height="380px"
-			draggable="false">
+			draggable="false" resizable="false">
 			<br />
 			<br />
 			<div class="dialog">
@@ -258,7 +258,7 @@
 					icon="ui-icon-check" action="result"
 					onclick="confirmDraft();PF('draftDlg').hide();"
 					disabled="#{contractView.confirmDraftDisabled}" />
-				<p:commandButton value="#{msg.btn_close}" type="button"
+				<p:commandButton value="#{msg.btn_cancel}" type="button"
 					styleClass="ui-confirmdialog-no"
 					onclick="cancelDraft();PF('draftDlg').hide();" icon="ui-icon-close" />
 			</div>

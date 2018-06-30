@@ -11,26 +11,31 @@
 	<link rel="stylesheet" href="./css/style.css" />
 	<link rel="stylesheet" href="./css/showcase.css" />
 </h:head>
-<h:body onload="loadWidgets()">
+<h:body>
 	<p:tooltip position="top" />
 	<h:form id="result">
-		<p:remoteCommand name="loadWidgets" update="resultDialog" />
-		<div class="dialog">
-			<br /> <br />
-			<p:outputLabel value="contrato generado!" />
-			<p:commandButton value="PDF" ajax="false">
-				<p:fileDownload value="#{contractView.file}"
-					contentDisposition="attachment" />
-			</p:commandButton>
-		</div>
+	<p:remoteCommand name="resultClose"
+			actionListener="#{contractView.closeResultAction}" />
 		<p:dialog id="resultDialog" widgetVar="resultDlg" showEffect="fade"
 			position="center" positionType="absolute" closable="false"
 			showHeader="false" modal="true" width="600px" height="380px"
-			draggable="false" visible="true">
-			<p:outputLabel value="contrato generado!" />
-
+			draggable="false" visible="true" resizable="false">
+			<div class="dialog">
+				<br /> <br />
+				<p:outputLabel value="contrato generado!" />
+				<p:commandButton value="PDF" ajax="false">
+					<p:fileDownload value="#{contractView.file}"
+						contentDisposition="attachment" />
+				</p:commandButton>
+			</div>
+			<div style="float: right;">
+				<br /> <br />
+				<p:commandButton value="#{msg.btn_accept}" type="button"
+					styleClass="ui-confirmdialog-yes"
+					onclick="resultClose();PF('resultDlg').hide();"
+					icon="ui-icon-check" />
+			</div>
 		</p:dialog>
-
 	</h:form>
 </h:body>
 </html>
