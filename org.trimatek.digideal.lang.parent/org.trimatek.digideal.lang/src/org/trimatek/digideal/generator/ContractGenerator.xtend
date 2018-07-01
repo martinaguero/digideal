@@ -55,7 +55,8 @@ payer.address = «payTo.payer.address.replace('"','')»
 collector.name = «payTo.collector.name»
 collector.email = «payTo.collector.email.replace('"','')»
 collector.address = «payTo.collector.address.replace('"','')»
-sts = «payTo.sts»
+btc = «payTo.btc»
+quantity = «payTo.quantity»
   '''
 	}
 

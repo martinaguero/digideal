@@ -21,7 +21,7 @@ Reference:
 	'@' type=[Subject];
 
 PayTo:
-	'@' payer=[Subject] 'pagará a' ('@' collector=[Subject]) 'la suma de STS' sts=INT;
+	'@' payer=[Subject] 'pagará a' ('@' collector=[Subject]) 'la suma de' quantity=STRING 'con BTC' btc=STRING;
 
 PaymentCondition:
 	'si:' ('@' collector=[Subject]) level=FactsLevel facts=Facts 'el siguiente producto o servicio:' description=STRING ;
@@ -39,6 +39,6 @@ Facts:
 	'{' (fact+=STRING ("," fact+=STRING)*) '}';
 
 SupervisedBy:
-	'Operación supervisada por el agente ' agent=Subject;
+	'Operación supervisada por el agente' agent=Subject;
 
 	
