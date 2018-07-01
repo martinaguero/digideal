@@ -14,20 +14,21 @@ public class SourceBuilder {
 		sb.append(Tools.msg.getString("contract_header") + source.getName() + " <br/>");
 		sb.append(Tools.msg.getString("contract_intro") + " ");
 		sb.append(Tools.msg.getString("contract_mr_mrs") + " " + view.getNamePayer() + " ");
-		sb.append(Tools.msg.getString("contract_identified_by_payer") + " " + view.getNickPayerValid() + " { "
-				+ view.getAddressPayer() + " , " + view.getEmailPayer() + " } " + Tools.msg.getString("contract_and")
+		sb.append(Tools.msg.getString("contract_identified_by_payer") + " " + view.getNickPayerValid() + " { \" "
+				+ view.getAddressPayer() + " \" , \" " + view.getEmailPayer() + " \" } " + Tools.msg.getString("contract_and")
 				+ " ");
 		sb.append(Tools.msg.getString("contract_mr_mrs") + " " + view.getNameCollector() + " ");
-		sb.append(Tools.msg.getString("contract_identified_by_collector") + " " + view.getNickCollectorValid() + " { "
-				+ view.getAddressCollector() + " , " + view.getEmailCollector() + " } " + ", ");
+		sb.append(Tools.msg.getString("contract_identified_by_collector") + " " + view.getNickCollectorValid() + " { \" "
+				+ view.getAddressCollector() + " \" , \" " + view.getEmailCollector() + " \" } ");
 		sb.append(Tools.msg.getString("contract_establishes") + " " + view.getNickPayerValid() + " "
 				+ Tools.msg.getString("contract_will_pay") + " " + view.getNickCollectorValid() + " ");
-		sb.append(Tools.msg.getString("contract_the_sum") + " " + view.getSelectedCurrency() + " " + view.getQuantity()
-				+ " " + Tools.msg.getString("contract_with") + " BTC " + view.getBtc() + " ");
+		sb.append(Tools.msg.getString("contract_the_sum") + " \"" + view.getSelectedCurrency() + " " + view.getQuantity()
+				+ "\" " + Tools.msg.getString("contract_with") + " BTC \"" + view.getBtc() + "\" ");
 		sb.append(Tools.msg.getString("contract_if") + " " + view.getNickCollectorValid() + " "
-				+ Tools.msg.getString("contract_delivers") + " <i> " + view.getAddress() + " </i> ");
-		sb.append(Tools.msg.getString("contract_this") + " <i> " + view.getItem() + ". </i>");
-		sb.append(Tools.msg.getString("contract_supervised") + " " + view.getAgentNick() + " .");
+				+ Tools.msg.getString("contract_delivers") + " <i> { \" " + view.getAddress() + " \" } </i> ");
+		sb.append(Tools.msg.getString("contract_this") + " <i> \"" + view.getItem() + "\" . </i>");
+		sb.append(Tools.msg.getString("contract_supervised") + " " + view.getAgentNick() + " . { \" ");
+		sb.append(view.getAgentAddress() + " \" , \" " + view.getAgentEmail() + " \" } ");
 
 		source.setText(sb.toString());
 		return source;
@@ -53,6 +54,7 @@ public class SourceBuilder {
 			tokens[i] = tokens[i].replace("<i>", "");
 			tokens[i] = tokens[i].replace("</i>", "");
 			tokens[i] = tokens[i].replace("¡", ",");
+			tokens[i] = tokens[i].replace(".", "");
 		}
 		StringBuilder sb = build(tokens);
 		source.setText(sb.toString());
