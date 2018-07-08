@@ -8,11 +8,8 @@ el siguiente producto o servicio: "torrejas de arróz con salsa" Operación superv
 
 
 
-CONTRATO #DOS "El presente contrato entre el Sr/a martin jorge en adelante el comprador, 
-identificado por " @aguero { " mkQ7wFkReXVXTNQpi57zwTATY4kFG6KuPF ", " mail@gmaicom " } " y el Sr/a hola martin 
-en adelante el vendedor, identificado por " @sol { " mkQ7wFkReXVXTNQpi57zwTATY4kFG6KuPF ", " mail@holamco " } ", establece
-que " @aguero pagará a @sol la suma de "BTC 1" con BTC "1" si: @sol entrega en: { " amenabar 2020 buenos aires " } 
-el siguiente producto o servicio: "torrejas de arróz con salsa" Operación supervisada por el agente @digideal { " mkQ7wFkReXVXTNQpi57zwTATY4kFG6KuPF ", " digidealservices@gmailcom " } 
+
+CONTRATO #1531083407043 \"El presente contrato entre el Sr/a martin jorge en adelante el comprador, identificado por \" @martin { \" mkQ7wFkReXVXTNQpi57zwTATY4kFG6KuPF \", \" mail@gmaicom \" } \" y el Sr/a hola martin en adelante el vendedor, identificado por \" @mi_apodo { \" mkQ7wFkReXVXTNQpi57zwTATY4kFG6KuPF \", \" mail@holamco \" } \", establece que \" @martin pagará a @mi_apodo la suma de \"USD 1\" con BTC \"000014767\" si: @mi_apodo entrega en: { \" amenabar 2020 buenos aires \" } el siguiente producto o servicio: \"un frasco de pasta de maní\" Operación supervisada por el agente @digideal { \" mkQ7wFkReXVXTNQpi57zwTATY4kFG6KuPF \", \" digidealservices@gmailcom \" } 
 
 
 

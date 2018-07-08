@@ -1,12 +1,7 @@
 package org.trimatek.digideal.ui.beans;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -17,20 +12,15 @@ import java.util.Optional;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.PrimeFaces;
-import org.primefaces.context.RequestContext;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.trimatek.digideal.ui.Config;
+import org.trimatek.digideal.ui.comm.SendSource;
 import org.trimatek.digideal.ui.model.Address;
 import org.trimatek.digideal.ui.model.Source;
 import org.trimatek.digideal.ui.utils.Geocoder;
 import org.trimatek.digideal.ui.utils.SourceBuilder;
 import org.trimatek.digideal.ui.utils.Tools;
 import org.trimatek.digideal.ui.utils.Validators;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 @ManagedBean
 public class ContractView {
@@ -64,7 +54,6 @@ public class ContractView {
 	private String itemStyle;
 	private String address;
 	private String addressStyle;
-	private final String BTC_PRICE_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	private double BTC_PER_DOLLAR = 0.00013828;
 	private Source source;
 	private boolean dataAuthentic;
@@ -91,7 +80,7 @@ public class ContractView {
 
 	Runnable updateBtc = () -> {
 		try {
-			URL obj = new URL(BTC_PRICE_URL);
+			URL obj = new URL(Config.BTC_PRICE_URL);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 			con.setRequestMethod("GET");
 			con.setRequestProperty("User-Agent", "Mozilla/5.0");
@@ -419,8 +408,7 @@ public class ContractView {
 	}
 
 	public void confirmDraftAction() {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		System.out.println(gson.toJson(SourceBuilder.formatToGo(source)));
+		SendSource.exec(source);
 		file = Tools.getPdf(source);
 		source = null;
 		setDataAuthentic(false);
