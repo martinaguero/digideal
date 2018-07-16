@@ -37,7 +37,7 @@ public class CreateTransaction extends Action {
 	private static String buildParams(Contract cnt) throws IOException {
 		long feeInSts = Calc.calcFee(Calc.calcBytes(1, 2));
 		BigDecimal feeInBtc = Calc.satoshiToBtc(feeInSts);
-		BigDecimal forCollector = cnt.getSts().subtract(feeInBtc.add(feeInBtc));
+		BigDecimal forCollector = cnt.getBtc().subtract(feeInBtc.add(feeInBtc));
 		BigDecimal forAgent = feeInBtc;
 		String result = " createrawtransaction \"[{\\\"txid\\\":\\\"" + cnt.getUnspentTxId() + "\\\",\\\"vout\\\":"
 				+ cnt.getUnspentVout() + "}]\" \"{\\\"" + cnt.getValue("collector.address") + "\\\":" + forCollector

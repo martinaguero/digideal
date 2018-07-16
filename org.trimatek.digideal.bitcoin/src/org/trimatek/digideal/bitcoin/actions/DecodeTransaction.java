@@ -39,9 +39,9 @@ public class DecodeTransaction extends Action {
 			for (JsonElement e : vouts) {
 				JsonObject o = e.getAsJsonObject();
 				BigDecimal sent = o.get("value").getAsBigDecimal();
-				BigDecimal sts = new BigDecimal(contract.getValue("btc"));
-				if (sent.compareTo(sts) == 0) {
-					contract.setSts(sts);
+				BigDecimal btc = new BigDecimal(contract.getValue("btc"));
+				if (sent.compareTo(btc) == 0) {
+					contract.setBtc(btc);
 					contract.setUnspentVout(o.get("n").getAsInt());
 					JsonObject scriptPubKey = o.getAsJsonObject("scriptPubKey");
 					contract.setUnspentOutputScript(scriptPubKey.get("hex").getAsString());

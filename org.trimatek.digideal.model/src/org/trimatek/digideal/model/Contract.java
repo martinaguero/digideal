@@ -30,7 +30,7 @@ public class Contract implements Serializable {
 	private Source source;
 	private byte[] instructions;
 	private String receiptCode;
-	private BigDecimal sts;
+	private BigDecimal btc;
 	private int requiredSignatures;
 	//
 	private String multisigAddress;
@@ -136,12 +136,12 @@ public class Contract implements Serializable {
 		this.unspentRaw = unspentRaw;
 	}
 
-	public BigDecimal getSts() {
-		return sts;
+	public BigDecimal getBtc() {
+		return btc;
 	}
 
-	public void setSts(BigDecimal sts) {
-		this.sts = sts;
+	public void setBtc(BigDecimal btc) {
+		this.btc = btc;
 	}
 
 	public void addPayTransaction(Transaction transaction) {

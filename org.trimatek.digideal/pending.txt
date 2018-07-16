@@ -5,4 +5,5 @@
 5.integración REST (AGREGADO)
 6.delay para enviar la transacción de pago
 7.contrato en dólares (AGREGADO)
-8.fee variable
+8.fee variable -> servicio REST
+9.semilla para ID de contrato

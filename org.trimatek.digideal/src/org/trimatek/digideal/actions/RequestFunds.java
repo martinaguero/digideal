@@ -27,7 +27,7 @@ public class RequestFunds extends Action {
 		logger.log(Level.SEVERE, "Message could not be send");
 		return null;
 	}
-	
+
 	private static MimeMessage setupMail(Contract cnt) throws Exception {
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
@@ -37,10 +37,9 @@ public class RequestFunds extends Action {
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
 		email.setSubject("[DD] Funds request");
-		email.setText("<html><body><p>Please send STS " + cnt.getValue("btc") + " to address: <br><b>"
-				+ cnt.getMultisigAddress() + "</b><br> in order to proceed with the contract requirements."
-				+ "</p></body></html>");
-		return email;	
+		email.setText("Please send BTC " + cnt.getValue("btc") + " to address: " + cnt.getMultisigAddress()
+				+ " in order to proceed with the contract requirements.");
+		return email;
 	}
 
 }
