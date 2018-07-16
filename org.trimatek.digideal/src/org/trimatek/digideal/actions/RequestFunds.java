@@ -38,7 +38,8 @@ public class RequestFunds extends Action {
 		email.setRecipients(RecipientType.TO, to);
 		email.setSubject("[DD] Funds request");
 		email.setText("Please send BTC " + cnt.getValue("btc") + " to address: " + cnt.getMultisigAddress()
-				+ " in order to proceed with the contract requirements.");
+				+ " in order to proceed with the contract requirements."
+				+ "\n\n Then, please reply this message with the send transaction ID.");
 		return email;
 	}
 

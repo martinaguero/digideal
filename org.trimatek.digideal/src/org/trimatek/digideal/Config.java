@@ -10,5 +10,6 @@ public class Config {
 	public static final int TAMANIO_QR = 350;
 	public static final List<String> VALID_QR_EXT = List.of("jpg","png","jpeg","bmp","gif");
 	public static final String MAIL_SUBJECT_HEADER = "[DD]";
+	public static final int SCHEDULER_RATE_SEC = 20;
 
 }

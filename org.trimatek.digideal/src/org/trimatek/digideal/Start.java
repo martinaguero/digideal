@@ -2,6 +2,7 @@ package org.trimatek.digideal;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -35,15 +36,18 @@ public class Start implements Launcher {
 	}
 	
 	private void startWorkflow() {
-		// Contract cnt = new Contract("","D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\QUINTO.properties");
-		// cnt.setRequiredSignatures(1);
-
-		Contract cnt = Repository.getInstance().loadContract(6);
-		exe = Executors.newScheduledThreadPool(5);
-		Workflow wf = new Workflow(cnt);
-
-		ScheduledFuture<?> future = exe.scheduleAtFixedRate(wf, 0, 20, TimeUnit.SECONDS);
-
+		
+		//Contract cnt = Repository.getInstance().loadContract(5);
+		
+		ScheduledFuture<?> future = null;
+		exe = Executors.newScheduledThreadPool(10);
+		List<Contract> undone = Repository.getInstance().loadUndoneContracts();
+		
+		for (Contract cnt : undone) {
+			Workflow wf = new Workflow(cnt);
+			future = exe.scheduleAtFixedRate(wf, 0, Config.SCHEDULER_RATE_SEC, TimeUnit.SECONDS);
+		}
+		
 		while (!exe.isShutdown()) {
 			if (future.isDone()) {
 				future.cancel(false);

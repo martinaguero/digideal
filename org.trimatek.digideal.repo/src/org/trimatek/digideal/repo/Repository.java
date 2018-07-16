@@ -1,6 +1,7 @@
 package org.trimatek.digideal.repo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -28,7 +29,7 @@ public class Repository {
 		properties.put("javax.persistence.jdbc.user", USR);
 		properties.put("javax.persistence.jdbc.password", PSW);
 		emf = Persistence.createEntityManagerFactory(URL, properties);
-		em = emf.createEntityManager();	
+		em = emf.createEntityManager();
 	}
 
 	public static Repository getInstance() {
@@ -47,7 +48,7 @@ public class Repository {
 	public Contract loadContract(long id) {
 		return em.find(Contract.class, id);
 	}
-	
+
 	public void save(Source d) {
 		em.getTransaction().begin();
 		em.persist(d);
@@ -57,6 +58,14 @@ public class Repository {
 	public void shutdown() {
 		em.close();
 		emf.close();
+	}
+
+	public List<Contract> loadUndoneContracts() {
+		em.getTransaction().begin();
+		List<Contract> results = em.createNamedQuery("loadUndoneContracts", Contract.class).setMaxResults(10)
+				.getResultList();
+		em.getTransaction().commit();
+		return results;
 	}
 
 }

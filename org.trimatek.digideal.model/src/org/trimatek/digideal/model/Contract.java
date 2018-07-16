@@ -14,11 +14,13 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import org.trimatek.digideal.model.utils.Tools;
 
 @Entity
+@NamedQuery(name = "loadUndoneContracts", query = "SELECT c FROM Contract c WHERE c.statusName != 'Done' ORDER BY c.id")
 public class Contract implements Serializable {
 
 	private static final long serialVersionUID = 1L;

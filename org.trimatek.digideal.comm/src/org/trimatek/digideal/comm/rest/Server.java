@@ -1,6 +1,10 @@
 package org.trimatek.digideal.comm.rest;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.trimatek.digideal.compiler.actions.Compile;
+import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Source;
 import org.trimatek.digideal.model.Launcher;
@@ -17,6 +21,8 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
 public class Server extends AbstractVerticle implements Launcher {
+	
+	protected final static Logger logger = Logger.getLogger(Server.class.getName());
 
 	public static void main(String args[]) {
 		Server server = new Server();
@@ -49,7 +55,9 @@ public class Server extends AbstractVerticle implements Launcher {
 				result -> {
 					if (result.succeeded()) {
 						startFuture.complete();
+						logger.log(Level.INFO, "DigiDeal REST server ready");
 					} else {
+						logger.log(Level.INFO, "DigiDeal REST server init fail");
 						startFuture.fail(result.cause());
 					}
 				});
