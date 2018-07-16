@@ -25,7 +25,7 @@ public class GetUnspentRaw extends Action {
 			done = Boolean.TRUE;
 			return contract;
 		} else {
-			logger.log(Level.INFO, "Execution failed");
+			logger.log(Level.WARNING, err);			
 			return null;
 		}
 	}

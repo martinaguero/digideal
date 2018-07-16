@@ -45,7 +45,7 @@ public class Server extends AbstractVerticle implements Launcher {
 		router.route("/api/drafts*").handler(BodyHandler.create());
 		router.post("/api/drafts").handler(this::addOne);
 
-		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", 8080),
+		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", 9090),
 				result -> {
 					if (result.succeeded()) {
 						startFuture.complete();

@@ -39,7 +39,7 @@ public class DecodeTransaction extends Action {
 			for (JsonElement e : vouts) {
 				JsonObject o = e.getAsJsonObject();
 				BigDecimal sent = o.get("value").getAsBigDecimal();
-				BigDecimal sts = new BigDecimal(contract.getValue("sts"));
+				BigDecimal sts = new BigDecimal(contract.getValue("btc"));
 				if (sent.compareTo(sts) == 0) {
 					contract.setSts(sts);
 					contract.setUnspentVout(o.get("n").getAsInt());

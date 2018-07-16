@@ -1,5 +1,8 @@
-1.código en minúsculas no lo valida SOLUCIONADO
-2.enviar un mail al vendedor avisando que se liberó el pago y otro al comprador AGREGADO
-3.cambiar a STS
-4.cambiar la comisión
-5.integración REST AGREGADO
+1.código en minúsculas no lo valida (SOLUCIONADO)
+2.enviar un mail al vendedor avisando que se liberó el pago y otro al comprador (AGREGADO)
+3.cambiar a STS 
+4.cambiar la comisión (CANCELADO)
+5.integración REST (AGREGADO)
+6.delay para enviar la transacción de pago
+7.contrato en dólares (AGREGADO)
+8.fee variable

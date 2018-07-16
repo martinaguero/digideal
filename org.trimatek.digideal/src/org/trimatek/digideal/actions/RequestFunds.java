@@ -37,7 +37,7 @@ public class RequestFunds extends Action {
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
 		email.setSubject("[DD] Funds request");
-		email.setText("<html><body><p>Please send STS " + cnt.getValue("sts") + " to address: <br><b>"
+		email.setText("<html><body><p>Please send STS " + cnt.getValue("btc") + " to address: <br><b>"
 				+ cnt.getMultisigAddress() + "</b><br> in order to proceed with the contract requirements."
 				+ "</p></body></html>");
 		return email;	
