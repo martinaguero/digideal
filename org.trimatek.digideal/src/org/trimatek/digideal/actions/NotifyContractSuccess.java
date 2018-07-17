@@ -17,16 +17,16 @@ public class NotifyContractSuccess extends Action {
 
 	@Override
 	public Contract exec(Contract contract) throws Exception {
-		
+
 		logger.log(Level.INFO, "Ready to notify contract success");
 		SendMessage.exec(setupPayerMail(contract));
 		SendMessage.exec(setupCollectorMail(contract));
 		logger.log(Level.INFO, "Messages sent successfully");
 		done = Boolean.TRUE;
-		
+
 		return contract;
 	}
-	
+
 	private static MimeMessage setupPayerMail(Contract cnt) throws Exception {
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
@@ -35,10 +35,10 @@ public class NotifyContractSuccess extends Action {
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
 		email.setSubject(Config.MAIL_SUBJECT_HEADER + " Contract payed");
-		email.setText("Contract #" + cnt.getValue("id") + " payed with txid: " + cnt.getSpentTxId() );
-		return email;	
+		email.setText("Contract #" + cnt.getValue("id") + " payed with txid: " + cnt.getSpentTxId());
+		return email;
 	}
-	
+
 	private static MimeMessage setupCollectorMail(Contract cnt) throws Exception {
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
@@ -47,8 +47,9 @@ public class NotifyContractSuccess extends Action {
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("collector.email"));
 		email.setRecipients(RecipientType.TO, to);
 		email.setSubject(Config.MAIL_SUBJECT_HEADER + " Contract payed");
-		email.setText("Contract #" + cnt.getValue("id") + " funds received with txid: " + cnt.getSpentTxId());
-		return email;	
+		email.setText("Contract SN: " + cnt.getValue("id") + " funds released with txid: \n" 
+		+ cnt.getSpentTxId());
+		return email;
 	}
 
 }

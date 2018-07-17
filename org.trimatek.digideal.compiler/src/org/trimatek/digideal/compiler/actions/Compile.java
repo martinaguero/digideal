@@ -40,6 +40,7 @@ public class Compile extends Action implements Runnable {
 				logger.log(Level.INFO, "Execution success: source compiled");
 				contract.setInstructions(sourcePath + Context.COMPILED_EXT);
 				contract.setStatusName("New");
+				contract.setRunning(Boolean.FALSE);
 				contract.setRequiredSignatures(1);
 				Repository.getInstance().save(contract);
 				done = Boolean.TRUE;

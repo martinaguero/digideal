@@ -8,6 +8,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.trimatek.digideal.comm.rest.Server;
 import org.trimatek.digideal.model.Contract;
@@ -17,18 +19,19 @@ import org.trimatek.digideal.workflow.Workflow;
 
 public class Start implements Launcher {
 
-	private ScheduledExecutorService exe;
+	protected final static Logger logger = Logger.getLogger(Start.class.getName());
+	
 	private Server server;
 
 	public void init() {
 		
-		startServer();
+		startREST();
 		startWorkflow();
 		
 		
 	}
 	
-	private void startServer() {
+	private void startREST() {
 		
 		server = new Server();
 		server.init();
@@ -37,22 +40,12 @@ public class Start implements Launcher {
 	
 	private void startWorkflow() {
 		
-		//Contract cnt = Repository.getInstance().loadContract(5);
+		logger.log(Level.INFO, "Starting Workflow Runner");
+		ScheduledExecutorService exe = Executors.newScheduledThreadPool(1);
 		
-		ScheduledFuture<?> future = null;
-		exe = Executors.newScheduledThreadPool(10);
-		List<Contract> undone = Repository.getInstance().loadUndoneContracts();
+		exe.scheduleAtFixedRate(new WorkflowRunner(), 0, 1, TimeUnit.MINUTES);
+		logger.log(Level.INFO, "Workflow Runner reload rate " + 1 + " " + TimeUnit.MINUTES);
 		
-		for (Contract cnt : undone) {
-			Workflow wf = new Workflow(cnt);
-			future = exe.scheduleAtFixedRate(wf, 0, Config.SCHEDULER_RATE_SEC, TimeUnit.SECONDS);
-		}
-		
-		while (!exe.isShutdown()) {
-			if (future.isDone()) {
-				future.cancel(false);
-			}
-		}
 	}
 
 	public static void main(String[] args)
@@ -61,6 +54,35 @@ public class Start implements Launcher {
 		Start s = new Start();
 		s.init();
 
+	}
+	
+	class WorkflowRunner implements Runnable {
+		
+		ScheduledExecutorService exe = Executors.newScheduledThreadPool(10);
+		ScheduledFuture<?> future = null;
+		
+		@Override
+		public void run() {
+			
+			if (future != null && future.isDone()) {
+				future.cancel(false);
+			}
+			
+			logger.log(Level.INFO, "Loading undone contracts");
+			List<Contract> undone = Repository.getInstance().loadUndoneContracts();
+			logger.log(Level.INFO, "Round undone contracts: " + undone.size()); 
+			
+			for (Contract cnt : undone) {
+				cnt.setRunning(Boolean.TRUE);
+				Repository.getInstance().save(cnt);
+				Workflow wf = new Workflow(cnt);
+				future = exe.scheduleAtFixedRate(wf, 0, 20, TimeUnit.SECONDS);
+			}
+			
+		}
+		
+		
+		
 	}
 
 }

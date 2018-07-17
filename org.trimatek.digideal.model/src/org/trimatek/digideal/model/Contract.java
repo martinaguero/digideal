@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 import org.trimatek.digideal.model.utils.Tools;
 
 @Entity
-@NamedQuery(name = "loadUndoneContracts", query = "SELECT c FROM Contract c WHERE c.statusName != 'Done' ORDER BY c.id")
+@NamedQuery(name = "loadUndoneContracts", query = "SELECT c FROM Contract c WHERE c.statusName != 'Done' and c.running = FALSE ORDER BY c.id")
 public class Contract implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -48,6 +48,7 @@ public class Contract implements Serializable {
 	private String spentTxId;
 	//
 	private String statusName;
+	private Boolean running;
 	//
 	@Embedded
 	private Receipt receipt;
@@ -208,4 +209,13 @@ public class Contract implements Serializable {
 	public void setInstructions(String propertiesFilePath) throws IOException {
 		instructions = Tools.readBytes(propertiesFilePath);
 	}
+
+	public Boolean getRunning() {
+		return running;
+	}
+
+	public void setRunning(Boolean running) {
+		this.running = running;
+	}
+
 }
