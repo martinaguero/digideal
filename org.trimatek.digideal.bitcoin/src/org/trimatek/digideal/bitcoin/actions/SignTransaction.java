@@ -12,7 +12,6 @@ import org.trimatek.digideal.model.Transaction;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-
 public class SignTransaction extends Action {
 
 	public Contract exec(Contract contract) throws IOException {
@@ -27,7 +26,8 @@ public class SignTransaction extends Action {
 		if (err.isEmpty()) {
 			logger.log(Level.INFO, "Execution success");
 			JsonObject json = new Gson().fromJson(in, JsonObject.class);
-			contract.addPayTransaction(new Transaction(contract.getValue("agent.address"),json.get("hex").getAsString()));
+			contract.addPayTransaction(
+					new Transaction(contract.getValue("agent.address"), json.get("hex").getAsString()));
 			done = Boolean.TRUE;
 			return contract;
 		} else {
@@ -38,10 +38,11 @@ public class SignTransaction extends Action {
 	}
 
 	private static String buildParams(Contract cnt) throws IOException {
+		Transaction unspentTx = cnt.getLastUnspentTransaction();
 		return " signrawtransaction " + cnt.getLastPayTransaction().getRaw() + " \"[{\\\"txid\\\":\\\""
-				+ cnt.getUnspentTxId() + "\\\",\\\"vout\\\":" + cnt.getUnspentVout() + ",\\\"scriptPubKey\\\":\\\""
-				+ cnt.getUnspentOutputScript() + "\\\",\\\"redeemScript\\\":\\\"" + cnt.getRedeemScript() + "\\\"}]\""
-				+ " \"[\\\"" + Context.AGENT_PRIVATE_KEY + "\\\"]";		
+				+ unspentTx.getTxId() + "\\\",\\\"vout\\\":" + unspentTx.getVout() + ",\\\"scriptPubKey\\\":\\\""
+				+ unspentTx.getOutputScript() + "\\\",\\\"redeemScript\\\":\\\"" + cnt.getRedeemScript() + "\\\"}]\""
+				+ " \"[\\\"" + Context.AGENT_PRIVATE_KEY + "\\\"]";
 	}
 
 }

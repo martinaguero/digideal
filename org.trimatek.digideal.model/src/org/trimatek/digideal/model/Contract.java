@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -38,10 +39,8 @@ public class Contract implements Serializable {
 	private String multisigAddress;
 	private String redeemScript;
 	//
-	private String unspentTxId;
-	private String unspentRaw;
-	private String unspentOutputScript;
-	private int unspentVout;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
+	private Set<Transaction> unspentTransactions;
 	//
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Transaction> payTransactions;
@@ -105,38 +104,6 @@ public class Contract implements Serializable {
 
 	public void setRedeemScript(String redeemScript) {
 		this.redeemScript = redeemScript;
-	}
-
-	public String getUnspentTxId() {
-		return unspentTxId;
-	}
-
-	public void setUnspentTxId(String unspentTxId) {
-		this.unspentTxId = unspentTxId;
-	}
-
-	public String getUnspentOutputScript() {
-		return unspentOutputScript;
-	}
-
-	public void setUnspentOutputScript(String unspentOutputScript) {
-		this.unspentOutputScript = unspentOutputScript;
-	}
-
-	public int getUnspentVout() {
-		return unspentVout;
-	}
-
-	public void setUnspentVout(int unspentVout) {
-		this.unspentVout = unspentVout;
-	}
-
-	public String getUnspentRaw() {
-		return unspentRaw;
-	}
-
-	public void setUnspentRaw(String unspentRaw) {
-		this.unspentRaw = unspentRaw;
 	}
 
 	public BigDecimal getBtc() {
@@ -216,6 +183,27 @@ public class Contract implements Serializable {
 
 	public void setRunning(Boolean running) {
 		this.running = running;
+	}
+	
+	public void addUnspentTransaction(Transaction transaction) {
+		if (unspentTransactions == null) {
+			unspentTransactions = new LinkedHashSet<Transaction>();
+		}
+		unspentTransactions.add(transaction);
+	}
+
+	public Set<Transaction> getUnspentTransactions() {
+		return unspentTransactions;
+	}
+	
+	public Transaction getLastUnspentTransaction() {
+		return (Transaction) getUnspentTransactions().toArray()[getUnspentTransactions().size() - 1];		
+	}
+	
+	public Transaction removeLastUnspentTransaction() {
+		Transaction t = getLastUnspentTransaction();
+		unspentTransactions.remove(t);
+		return t;
 	}
 
 }

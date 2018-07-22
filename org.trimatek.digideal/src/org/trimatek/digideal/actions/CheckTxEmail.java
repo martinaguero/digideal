@@ -11,9 +11,8 @@ import org.trimatek.digideal.comm.mail.LoadMessages;
 import org.trimatek.digideal.comm.mail.ModifyMessageLabel;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.model.State;
+import org.trimatek.digideal.model.Transaction;
 import org.trimatek.digideal.tools.Mail;
-import org.trimatek.digideal.workflow.WaitingFunds;
 
 public class CheckTxEmail extends Action {
 
@@ -27,7 +26,7 @@ public class CheckTxEmail extends Action {
 		for (Message message : messages) {
 			tx = getTx(Mail.getMessageTextContent(message));			
 			if(tx != null) {
-				cnt.setUnspentTxId(tx);
+				cnt.addUnspentTransaction(new Transaction(tx));
 				msgId = message.getHeader(Config.MAIL_ID)[0];
 				break;
 			}

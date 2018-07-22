@@ -14,8 +14,15 @@ public class Transaction implements Serializable {
 	@Id
 	@GeneratedValue
 	private long id;
+	private String txId;
 	private String signedBy;
 	private String raw;
+	private String outputScript;
+	private int vout;
+	
+	public Transaction(String txId) {
+		this.txId = txId;
+	}
 
 	public Transaction(String signedBy, String raw) {
 		this.signedBy = signedBy;
@@ -40,6 +47,30 @@ public class Transaction implements Serializable {
 
 	public void setRaw(String raw) {
 		this.raw = raw;
+	}
+
+	public String getTxId() {
+		return txId;
+	}
+
+	public void setTxId(String txId) {
+		this.txId = txId;
+	}
+
+	public String getOutputScript() {
+		return outputScript;
+	}
+
+	public void setOutputScript(String outputScript) {
+		this.outputScript = outputScript;
+	}
+
+	public int getVout() {
+		return vout;
+	}
+
+	public void setVout(int vout) {
+		this.vout = vout;
 	}
 
 }
