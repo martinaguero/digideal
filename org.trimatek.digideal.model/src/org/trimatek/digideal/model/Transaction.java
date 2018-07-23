@@ -1,6 +1,7 @@
 package org.trimatek.digideal.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ public class Transaction implements Serializable {
 	private String raw;
 	private String outputScript;
 	private int vout;
+	private BigDecimal value;
 	
 	public Transaction(String txId) {
 		this.txId = txId;
@@ -72,5 +74,15 @@ public class Transaction implements Serializable {
 	public void setVout(int vout) {
 		this.vout = vout;
 	}
+
+	public BigDecimal getValue() {
+		return value;
+	}
+
+	public void setValue(BigDecimal value) {
+		this.value = value;
+	}
+	
+	
 
 }

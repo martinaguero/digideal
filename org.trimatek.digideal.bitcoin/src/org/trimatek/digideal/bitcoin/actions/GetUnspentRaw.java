@@ -1,6 +1,7 @@
 package org.trimatek.digideal.bitcoin.actions;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.logging.Level;
 
 import org.trimatek.digideal.bitcoin.entities.Context;
@@ -22,8 +23,9 @@ public class GetUnspentRaw extends Action {
 
 		if (err.isEmpty()) {
 			logger.log(Level.INFO, "Execution success");
-			Transaction tx = contract.removeLastUnspentTransaction();
+			Transaction tx = contract.removeLastUnspentTransaction();			
 			tx.setRaw(in);
+			contract.setBtc(new BigDecimal(contract.getValue("btc")));
 			contract.addUnspentTransaction(tx);
 			done = Boolean.TRUE;
 			return contract;

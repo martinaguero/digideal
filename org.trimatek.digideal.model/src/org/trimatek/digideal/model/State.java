@@ -49,6 +49,6 @@ public abstract class State {
 		return pending.size() == 0 && completed.size() != 0 ? true : false;
 	}
 	
-	public abstract String getNextName();
+	public abstract String getNextName() throws Exception;
 
 }

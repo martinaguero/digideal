@@ -36,20 +36,21 @@ public class DecodeTransaction extends Action {
 			logger.log(Level.INFO, "Execution success");
 			JsonObject json = new Gson().fromJson(in, JsonObject.class);
 			JsonArray vouts = json.getAsJsonArray("vout");
-			for (JsonElement e : vouts) {
+			for (JsonElement e : vouts) { 
 				JsonObject o = e.getAsJsonObject();
-				BigDecimal sent = o.get("value").getAsBigDecimal();
-				BigDecimal btc = new BigDecimal(contract.getValue("btc"));
-				if (sent.compareTo(btc) == 0) {
-					contract.setBtc(btc);
-					Transaction tx = contract.removeLastUnspentTransaction();
-					tx.setVout(o.get("n").getAsInt());
-					JsonObject scriptPubKey = o.getAsJsonObject("scriptPubKey");
-					tx.setOutputScript(scriptPubKey.get("hex").getAsString());
-					contract.addUnspentTransaction(tx);
-					done = Boolean.TRUE;
-					return contract;
-				}
+				JsonObject scriptPubKey = o.getAsJsonObject("scriptPubKey");
+				JsonArray addresses = scriptPubKey.getAsJsonArray("addresses");
+				for (JsonElement a : addresses) {
+					if(compare(a.toString(),contract.getMultisigAddress())){
+						Transaction tx = contract.removeLastUnspentTransaction();
+						tx.setValue(o.get("value").getAsBigDecimal());
+						tx.setVout(o.get("n").getAsInt());
+						tx.setOutputScript(scriptPubKey.get("hex").getAsString());
+						contract.addUnspentTransaction(tx);
+						done = Boolean.TRUE;
+						return contract;						
+					}
+				}			
 			}
 		} else {
 			logger.log(Level.INFO, "Execution failed");
@@ -59,6 +60,11 @@ public class DecodeTransaction extends Action {
 
 	private static String buildParams(Transaction tx) throws IOException {
 		return " decoderawtransaction " + tx.getRaw();
+	}
+	
+	private static boolean compare(String fromJson, String multisigAddress) {
+		fromJson = fromJson.replace("\"", "");
+		return fromJson.equals(multisigAddress);
 	}
 
 }

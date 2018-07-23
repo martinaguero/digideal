@@ -38,11 +38,21 @@ public class SignTransaction extends Action {
 	}
 
 	private static String buildParams(Contract cnt) throws IOException {
-		Transaction unspentTx = cnt.getLastUnspentTransaction();
-		return " signrawtransaction " + cnt.getLastPayTransaction().getRaw() + " \"[{\\\"txid\\\":\\\""
-				+ unspentTx.getTxId() + "\\\",\\\"vout\\\":" + unspentTx.getVout() + ",\\\"scriptPubKey\\\":\\\""
-				+ unspentTx.getOutputScript() + "\\\",\\\"redeemScript\\\":\\\"" + cnt.getRedeemScript() + "\\\"}]\""
+		return " signrawtransaction " + cnt.getLastPayTransaction().getRaw() + " \"[" + getUnspents(cnt)+"]\""
 				+ " \"[\\\"" + Context.AGENT_PRIVATE_KEY + "\\\"]";
+	}
+
+	private static String getUnspents(Contract cnt) {
+		StringBuilder sb = new StringBuilder();
+		int c = 0;
+		for (Transaction tx : cnt.getUnspentTransactions()) {
+			if (c > 0) { sb.append(","); }
+			sb.append("{\\\"txid\\\":\\\"" + tx.getTxId() + "\\\",\\\"vout\\\":" + tx.getVout()
+					+ ",\\\"scriptPubKey\\\":\\\"" + tx.getOutputScript() + "\\\",\\\"redeemScript\\\":\\\""
+					+ cnt.getRedeemScript() + "\\\"}");
+			c++;
+		}
+		return sb.toString();
 	}
 
 }

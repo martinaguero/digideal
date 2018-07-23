@@ -1,9 +1,12 @@
 1.código en minúsculas no lo valida (SOLUCIONADO)
 2.enviar un mail al vendedor avisando que se liberó el pago y otro al comprador (AGREGADO)
-3.cambiar a STS 
+3.cambiar a STS (MODIFICADO)
 4.cambiar la comisión (CANCELADO)
 5.integración REST (AGREGADO)
 6.delay para enviar la transacción de pago
 7.contrato en dólares (AGREGADO)
 8.fee variable -> servicio REST
-9.semilla para ID de contrato
+9.semilla para ID de contrato http://www.baeldung.com/java-uuid
+10.enviar funds request con QR para wallet
+11.agregar id de contrato invisible en los mails: https://support.vision6.com.au/hc/en-us/articles/204211680-Adding-Invisible-Pre-Header-Text-to-Your-Email
+12.revisar cálculo de pagos (SOLUCIONADO)
