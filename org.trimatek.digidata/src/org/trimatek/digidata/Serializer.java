@@ -30,5 +30,9 @@ public class Serializer {
 		serial = lastEpoch + "" + counter;
 		return Long.toString(Long.valueOf(serial), 36).toUpperCase();
 	}
+	
+	public static void main(String args[]) throws InterruptedException {
+		System.out.println(Serializer.getInstance().newSerial());
+	}
 
 }
