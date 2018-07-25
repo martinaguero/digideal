@@ -3,16 +3,13 @@ grammar org.trimatek.digideal.Contract with org.eclipse.xtext.common.Terminals
 generate contract "http://www.trimatek.org/digideal/Contract"
 
 Contract:
-	'CONTRATO #' cid=ID paragraph+=Sentence*;
+	'CONTRATO' cid=SERIAL paragraph+=Sentence*;
 
 Sentence:
-	sentenceType=STRING | Subject | Reference | PayTo | PaymentCondition | SupervisedBy;
+	sentenceType=STRING | Subject | Reference | PayTo | PaymentCondition | SupervisedBy | Date;
 
 Subject:
 	'@' name=ID '{' address=STRING ',' email=Email '}';
-
-PublicKey:
-	ID;
 
 Email:
 	STRING;
@@ -40,5 +37,11 @@ Facts:
 
 SupervisedBy:
 	'Operación supervisada por el agente' agent=Subject;
+	
+Date:
+	'En la fecha:' date=STRING
+;
+
+terminal SERIAL: '#'('A'..'Z'|'0'..'9')*;
 
 	

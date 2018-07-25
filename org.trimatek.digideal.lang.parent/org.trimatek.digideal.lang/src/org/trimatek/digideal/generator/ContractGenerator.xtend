@@ -15,6 +15,7 @@ import org.trimatek.digideal.contract.FactsLevel
 import org.trimatek.digideal.contract.PayTo
 import org.trimatek.digideal.contract.PaymentCondition
 import org.trimatek.digideal.contract.SupervisedBy
+import org.trimatek.digideal.contract.Date
 
 /**
  * Generates code from your model files on save.
@@ -26,13 +27,13 @@ class ContractGenerator extends AbstractGenerator {
 	override void doGenerate(Resource res, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		for (c : res.allContents.toIterable.filter(Contract)) {
 //			fsa.generateFile("contract/" + c.cid.toFirstUpper + ".properties", c.compile)
-			fsa.generateFile(c.cid.toFirstUpper + ".properties", c.compile)
+			fsa.generateFile(c.cid.toFirstUpper.replace("#","") + ".properties", c.compile)
 		}
 	}
 
 	def compile(Contract cnt) {
 		'''
-id = «cnt.cid»
+id = «cnt.cid.replace("#","")»
 «FOR sentence : cnt.paragraph»
 	«IF sentence instanceof PayTo»
 		«(sentence as PayTo).compile»
@@ -42,6 +43,9 @@ id = «cnt.cid»
 	«ENDIF»
 	«IF sentence instanceof PaymentCondition»
 		«(sentence as PaymentCondition).compile»
+	«ENDIF»
+	«IF sentence instanceof Date»
+		«(sentence as Date).compile»
 	«ENDIF»
    «ENDFOR»
 		'''
@@ -92,6 +96,12 @@ payment.condition = «payCond.description»
 		''' 	
 facts = «facts.fact»
  		''' 			 
+	}
+	
+	def compile(Date d) {
+		''' 
+date = «d.date»
+  		'''
 	}
 
 }
