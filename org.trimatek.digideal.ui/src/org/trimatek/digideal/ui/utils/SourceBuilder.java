@@ -2,6 +2,7 @@ package org.trimatek.digideal.ui.utils;
 
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.beans.ContractView;
+import org.trimatek.digideal.ui.comm.GetSerial;
 import org.trimatek.digideal.ui.model.Source;
 
 public class SourceBuilder {
@@ -9,7 +10,7 @@ public class SourceBuilder {
 	static public Source getSource(ContractView view) {
 		StringBuilder sb = new StringBuilder();
 		Source source = new Source();
-		source.setName("CNTNAME");
+		source.setName(GetSerial.exec(null));
 
 		sb.append(Tools.msg.getString("contract_header") + source.getName() + " <br/>");
 		sb.append(Tools.msg.getString("contract_intro") + " ");

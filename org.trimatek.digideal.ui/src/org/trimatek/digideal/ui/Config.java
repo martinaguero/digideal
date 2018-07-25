@@ -14,5 +14,6 @@ public class Config {
 	public final static String NAVIGATION_RESULT = "result";
 	public final static String BTC_PRICE_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	public final static String DIGIDEAL_URL = "http://localhost:9090/api/drafts/";
+	public final static String SERIAL_URL = "http://trimatek.org:8282/digidata/serial/";
 
 }

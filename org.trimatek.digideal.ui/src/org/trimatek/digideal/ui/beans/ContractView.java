@@ -393,7 +393,7 @@ public class ContractView {
 		if (address.isPresent()) {
 			System.out.println(address.get().toString());
 			String errors = Validators.validateAddress(address.get());
-			if (errors.equals("")) {
+			if (errors.equals("")) {				
 				source = SourceBuilder.getSource(this);
 			} else {
 				source = new Source();
