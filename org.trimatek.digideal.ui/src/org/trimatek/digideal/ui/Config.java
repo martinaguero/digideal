@@ -1,5 +1,7 @@
 package org.trimatek.digideal.ui;
 
+import java.text.SimpleDateFormat;
+
 public class Config {
 	
 	public final static String REQUIRED_FIELD = "background-color:#ffffcc;";
@@ -15,5 +17,6 @@ public class Config {
 	public final static String BTC_PRICE_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	public final static String DIGIDEAL_URL = "http://localhost:9090/api/drafts/";
 	public final static String SERIAL_URL = "http://trimatek.org:8282/digidata/serial/";
+	public final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
 }

@@ -1,16 +1,20 @@
 package org.trimatek.digideal.ui.utils;
 
+import static org.trimatek.digideal.ui.Config.DATE_FORMAT;
+
+import java.util.Date;
+
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.beans.ContractView;
 import org.trimatek.digideal.ui.comm.GetSerial;
 import org.trimatek.digideal.ui.model.Source;
 
 public class SourceBuilder {
-
-	static public Source getSource(ContractView view) {
+	
+		static public Source getSource(ContractView view) {
 		StringBuilder sb = new StringBuilder();
 		Source source = new Source();
-		source.setName(GetSerial.exec(null));
+		source.setName(GetSerial.exec(null).trim());
 
 		sb.append(Tools.msg.getString("contract_header") + source.getName() + " <br/>");
 		sb.append(Tools.msg.getString("contract_intro") + " ");
@@ -30,6 +34,7 @@ public class SourceBuilder {
 		sb.append(Tools.msg.getString("contract_this") + " <i> \"" + view.getItem() + "\" · </i>");
 		sb.append(Tools.msg.getString("contract_supervised") + " " + view.getAgentNick() + " · { \" ");
 		sb.append(view.getAgentAddress() + " \" , \" " + view.getAgentEmail() + " \" }");
+		sb.append(Tools.msg.getString("contract_date") + " \"" + getToday() + "\" · ");
 
 		source.setText(sb.toString());
 		return source;
@@ -74,6 +79,10 @@ public class SourceBuilder {
 			}
 		}
 		return sb;
+	}
+	
+	private static String getToday() {
+		return DATE_FORMAT.format(new Date());
 	}
 
 }

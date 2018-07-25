@@ -51,7 +51,7 @@ public class Compile extends Action implements Runnable {
 				contract = null;
 			}
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, e.getMessage());
+			logger.log(Level.SEVERE, "Error while compiling source. Message: " + e.getMessage());
 		}
 
 	}
