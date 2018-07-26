@@ -39,7 +39,7 @@ SupervisedBy:
 	'Operación supervisada por el agente' agent=Subject;
 	
 Date:
-	'En la fecha:' date=STRING
+	'Creado el:' date=STRING
 ;
 
 terminal SERIAL: '#'('A'..'Z'|'0'..'9')*;
