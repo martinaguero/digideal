@@ -67,6 +67,24 @@ public class SourceBuilder {
 		source.setText(sb.toString());
 		return source;
 	}
+	
+	public static String formatPDF(Source source) {
+		String spaces = "                                            ";
+		String[] tokens = source.getText().split(" ");
+		for (int i = 0; i < tokens.length; i++) {
+			tokens[i] = tokens[i].replaceAll(Config.EMAIL_REGEX, "");
+			tokens[i] = tokens[i].replaceAll(Config.BTC_ADDRESS_REGEX, "");
+			tokens[i] = tokens[i].replaceAll("[{},]", "");
+			tokens[i] = tokens[i].replaceAll("\"", "");
+			tokens[i] = tokens[i].replaceAll("¡", ",");
+			tokens[i] = tokens[i].replaceAll("·", ".");
+			tokens[i] = tokens[i].replaceAll("<br/>", spaces);
+			tokens[i] = tokens[i].replaceAll("<i>", "");
+			tokens[i] = tokens[i].replaceAll("</i>", "");
+		}
+		StringBuilder sb = build(tokens);
+		return sb.toString();
+	}
 
 	private static StringBuilder build(String[] tokens) {
 		StringBuilder sb = new StringBuilder();

@@ -5,7 +5,9 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,6 +20,7 @@ import org.trimatek.digideal.ui.comm.SendSource;
 import org.trimatek.digideal.ui.model.Address;
 import org.trimatek.digideal.ui.model.Source;
 import org.trimatek.digideal.ui.utils.Geocoder;
+import org.trimatek.digideal.ui.utils.PDFBuilder;
 import org.trimatek.digideal.ui.utils.SourceBuilder;
 import org.trimatek.digideal.ui.utils.Tools;
 import org.trimatek.digideal.ui.utils.Validators;
@@ -393,7 +396,7 @@ public class ContractView {
 		if (address.isPresent()) {
 			System.out.println(address.get().toString());
 			String errors = Validators.validateAddress(address.get());
-			if (errors.equals("")) {				
+			if (errors.equals("")) {
 				source = SourceBuilder.getSource(this);
 			} else {
 				source = new Source();
@@ -408,8 +411,8 @@ public class ContractView {
 	}
 
 	public void confirmDraftAction() {
+		file = PDFBuilder.getPdf(SourceBuilder.formatPDF(source), source.getName(), buildSignature());
 		SendSource.exec(source);
-		file = Tools.getPdf(source);
 		source = null;
 		setDataAuthentic(false);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
@@ -430,6 +433,10 @@ public class ContractView {
 
 	public String getTooltipCollector() {
 		return getNickCollectorValid() + " {" + getAddressCollector() + "," + getEmailCollector() + "}";
+	}
+
+	public String getTooltipAgent() {
+		return getAgentNick() + " {" + getAgentAddress() + "," + getAgentEmail() + "}";
 	}
 
 	public boolean getPreviewDisabled() {
@@ -461,6 +468,14 @@ public class ContractView {
 
 	public String getConfirmDraftDisabled() {
 		return source != null && source.getName() != null ? "false" : "true";
+	}
+
+	private List<String> buildSignature() {
+		List<String> signature = new ArrayList<String>();
+		signature.add(getTooltipPayer());
+		signature.add(getTooltipCollector());
+		signature.add(getTooltipAgent());
+		return signature;
 	}
 
 }
