@@ -52,19 +52,21 @@ public class RequestFunds extends Action {
 		MimeBodyPart htmlPart = new MimeBodyPart();
 		byte[] qr = Generators.genQRCodeImage(genQRSendTo(cnt), Config.TAMANIO_QR, Config.TAMANIO_QR);
 		htmlPart.setText(
-				"<html><body>" + "<div style=\"display:none;\"> " + cnt.getValue("id") + " </div>" + "<p>"
-						+ "Please send BTC " + cnt.getValue("btc") + " to address: \n" + cnt.getMultisigAddress() + "\n"
-						+ "in order to proceed with contract SN: " + cnt.getValue("id") + " requirements. \n\n"
-						+ "Then, please reply this message with the transaction ID." + "</p></body></html>",
+				"<html><body><p>"
+						+ "Please send BTC " + cnt.getValue("btc") + " to address: <br/>" + cnt.getMultisigAddress() + "<br/>"
+						+ "in order to proceed with contract SN: " + cnt.getValue("id") + " requirements. <br/><br/>"
+						+ "Then, please reply this message with the transaction ID." + "</p><br/>"
+						+ "<div style=\"display:none;\"> " + cnt.getValue("id") + " </div></body></html>",
 				"US-ASCII", "html");
 		content.addBodyPart(htmlPart);
 		content.addBodyPart(Tools.addImage(qr, cnt.getValue("id") + ".png"));
+		email.setContent(content);
 
 		return email;
 	}
 
 	private static String genQRSendTo(Contract cnt) throws IOException {
-		return "bitcoin:" + cnt.getValue("collector.address") + "?amount=" + cnt.getValue("btc");
+		return "bitcoin:" + cnt.getMultisigAddress() + "?amount=" + cnt.getValue("btc");
 	}
 
 	public static void main(String args[]) throws FileNotFoundException, IOException, WriterException {
