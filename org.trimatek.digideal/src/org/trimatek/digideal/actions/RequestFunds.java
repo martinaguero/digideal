@@ -18,6 +18,7 @@ import org.trimatek.digideal.comm.mail.SendMessage;
 import org.trimatek.digideal.comm.mail.Tools;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.tools.Dialogs;
 import org.trimatek.digideal.tools.Generators;
 
 import com.google.zxing.WriterException;
@@ -51,15 +52,15 @@ public class RequestFunds extends Action {
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
 		byte[] qr = Generators.genQRCodeImage(genQRSendTo(cnt), Config.TAMANIO_QR, Config.TAMANIO_QR);
-		htmlPart.setText(
-				"<html><body><p>"
-						+ "Please send BTC " + cnt.getValue("btc") + " to address: <br/>" + cnt.getMultisigAddress() + "<br/>"
-						+ "in order to proceed with contract SN: " + cnt.getValue("id") + " requirements. <br/><br/>"
-						+ "Then, please reply this message with the transaction ID." + "</p><br/>"
-						+ "<div style=\"display:none;\"> " + cnt.getValue("id") + " </div></body></html>",
-				"US-ASCII", "html");
+		htmlPart.setText("<html><body><p>" + "Please send BTC " + cnt.getValue("btc") + " to address: <br/>"
+				+ cnt.getMultisigAddress() + "<br/>" + "in order to proceed with contract SN: " + cnt.getValue("id")
+				+ " requirements. <br/><br/>" + "Then, please reply this message with the transaction ID." + "</p><br/>"
+				+ "<div style=\"display:none;\"> " + cnt.getValue("id") + " </div></body></html>", "US-ASCII", "html");
 		content.addBodyPart(htmlPart);
 		content.addBodyPart(Tools.addImage(qr, cnt.getValue("id") + ".png"));
+		content.addBodyPart(Tools.addPdf(cnt.getSource().getPdf(),
+				Dialogs.msg.getString("contract_header") + cnt.getValue("id") + ".pdf"));
+
 		email.setContent(content);
 
 		return email;

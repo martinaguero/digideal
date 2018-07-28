@@ -1,6 +1,8 @@
 package org.trimatek.digideal.ui.beans;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
@@ -10,10 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.comm.SendSource;
@@ -28,6 +33,7 @@ import org.trimatek.digideal.ui.utils.Validators;
 @ManagedBean
 public class ContractView {
 
+	protected final static Logger logger = Logger.getLogger(ContractView.class.getName());
 	private String namePayer;
 	private String namePayerStyle;
 	private String nickPayer;
@@ -411,20 +417,23 @@ public class ContractView {
 	}
 
 	public void confirmDraftAction() {
-		file = PDFBuilder.getPdf(SourceBuilder.formatPDF(source), source.getName(), buildSignature());
+		source.setPdf(PDFBuilder.getPdf(SourceBuilder.formatPDF(source), source.getName(), buildSignature()));		
 		SendSource.exec(source);
-		source = null;
-		setDataAuthentic(false);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.NAVIGATION_RESULT);
 	}
 
 	public StreamedContent getFile() {
+		file = new DefaultStreamedContent(new ByteArrayInputStream(source.getPdf()), "application/pdf",
+				(Tools.msg.getString("contract_header") + source.getName() + ".pdf"));
 		return file;
 	}
 
 	public void closeResultAction() {
-
+		source = null;
+		setDataAuthentic(false);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.NAVIGATION_INDEX);
 	}
 
 	public String getTooltipPayer() {

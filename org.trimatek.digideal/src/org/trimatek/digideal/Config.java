@@ -12,5 +12,6 @@ public class Config {
 	public static final String MAIL_SUBJECT_HEADER = "[DD]";
 	public static final int SCHEDULER_RATE_SEC = 20;
 	public static final int RELOAD_CONTRACTS_RATE_MIN = 1;
+	public final static String MESSAGES_BUNDLE = "org.trimatek.digideal.messages";
 
 }

@@ -5,7 +5,8 @@ public class Source {
 	private long id;
 	private String name;
 	private String text;
-	
+	private byte[] pdf;
+
 	public String getText() {
 		return text;
 	}
@@ -28,6 +29,14 @@ public class Source {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public byte[] getPdf() {
+		return pdf;
+	}
+
+	public void setPdf(byte[] pdf) {
+		this.pdf = pdf;
 	}
 
 }

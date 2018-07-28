@@ -2,6 +2,8 @@ package org.trimatek.digideal.ui.comm;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.model.Source;
@@ -13,6 +15,7 @@ import com.google.gson.GsonBuilder;
 public class SendSource {
 
 	private Source source;
+	protected final static Logger logger = Logger.getLogger(SendSource.class.getName());
 
 	Runnable sendSource = () -> {
 		try {
@@ -22,14 +25,13 @@ public class SendSource {
 			con.addRequestProperty("Content-Type", "application/" + "POST");
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String sourceSerial = gson.toJson(SourceBuilder.formatToGo(source));
-			System.out.println("Sending:\n");
-			System.out.println(sourceSerial);
 			con.setRequestProperty("Content-Length", Integer.toString(sourceSerial.length()));
+			logger.log(Level.INFO, "Ready to send contract: " + source.getName());
 			con.getOutputStream().write(sourceSerial.getBytes("UTF8"));
 			int responseCode = con.getResponseCode();
-			System.out.println("Response Code : " + responseCode);
+			logger.log(Level.INFO, "Response Code : " + responseCode);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			logger.log(Level.SEVERE, "Error while sending contract. Message: " + e.getMessage());
 		}
 	};
 

@@ -1,6 +1,5 @@
 package org.trimatek.digideal.ui.utils;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,8 +11,6 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 public class PDFBuilder {
 
@@ -21,9 +18,9 @@ public class PDFBuilder {
 	private static final float FONT_SIZE = 12;
 	private static final float LEADING = -1.9f * FONT_SIZE;
 
-	public static StreamedContent getPdf(String draft, String contractId, List<String> signatures) {
+	public static byte[] getPdf(String draft, String contractId, List<String> signatures) {
 
-		StreamedContent file = null;
+		byte[] file = null;
 		try {
 			PDDocument document = new PDDocument();
 			PDPage page = new PDPage();
@@ -45,8 +42,7 @@ public class PDFBuilder {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			document.save(out);
 
-			file = new DefaultStreamedContent(new ByteArrayInputStream(out.toByteArray()), "application/pdf",
-					(Tools.msg.getString("contract_header") + contractId + ".pdf"));
+			file = out.toByteArray();
 
 			document.close();
 		} catch (IOException e) {

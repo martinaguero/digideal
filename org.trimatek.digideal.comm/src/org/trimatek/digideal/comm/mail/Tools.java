@@ -56,5 +56,14 @@ public class Tools {
 		imagePart.setFileName(fileName);
 		return imagePart;
 	}
+	
+	public static BodyPart addPdf(byte[] pdf, String fileName) throws MessagingException {
+		InternetHeaders headers = new InternetHeaders();
+		headers.addHeader("Content-Type", "application/pdf");
+		MimeBodyPart pdfPart = new MimeBodyPart(headers, pdf);
+		pdfPart.setDisposition(MimeBodyPart.ATTACHMENT);
+		pdfPart.setFileName(fileName);
+		return pdfPart;
+	}
 
 }
