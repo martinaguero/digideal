@@ -53,7 +53,7 @@ public class ReRequestFunds extends Action {
 				"<html><body><p>Have been received BTC " + cnt.getLastUnspentTransaction().getValue()
 						+ " Please send BTC " + dif + " left to address: <br/>" + cnt.getMultisigAddress() + "\n"
 						+ "in order to proceed with contract requirements. <br/><br/>"
-						+ "Then, please reply this message with the transaction ID.\" + \"</p><br/>"
+						+ "Then, please reply this message with the transaction ID. </p><br/>"
 						+ "<div style=\"display:none;\"> " + cnt.getValue("id") + " </div></body></html>",
 				"US-ASCII", "html");
 
@@ -67,10 +67,6 @@ public class ReRequestFunds extends Action {
 
 	private static BigDecimal calcDifference(Contract cnt) throws IOException {
 		return new BigDecimal(cnt.getValue("btc")).subtract(Calc.addTransactions(cnt.getUnspentTransactions()));
-	}
-
-	private static String genQRSendTo(Contract cnt, BigDecimal amount) throws IOException {
-		return "bitcoin:" + cnt.getMultisigAddress() + "?amount=" + amount;
 	}
 
 }

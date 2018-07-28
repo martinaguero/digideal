@@ -15,3 +15,4 @@
 15.enviar el PDF por REST (AGREGADO)
 16.matchear el SN del contrato con la TX en el mail
 17.avisar a collector cuando payer pagó el total
+18.app lectora de QR
