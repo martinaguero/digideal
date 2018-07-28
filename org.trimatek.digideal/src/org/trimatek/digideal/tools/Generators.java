@@ -5,11 +5,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+
+import org.trimatek.digideal.model.Contract;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
@@ -72,6 +75,11 @@ public class Generators {
 		QRCodeReader reader = new QRCodeReader();
 		Result result = reader.decode(bitmap);
 		return result.getText();
+	}
+
+	public static String genQRSendTo(Contract cnt, BigDecimal amount) throws IOException {
+		String btc = amount != null ? amount.toString() : cnt.getValue("btc");
+		return "bitcoin:" + cnt.getMultisigAddress() + "?amount=" + btc;
 	}
 
 }
