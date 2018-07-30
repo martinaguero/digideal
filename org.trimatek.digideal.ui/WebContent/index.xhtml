@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
-	<title>JSF Tree Selection Example</title>
+	<title><h:outputText value="#{msg.form_title}"/></title>
 	<link rel="stylesheet" href="./css/style.css" />
 	<link rel="stylesheet" href="./css/showcase.css" />
 </h:head>
@@ -16,14 +16,13 @@
 	<h:form>
 		<p:panelGrid style="margin-top:40px">
 			<p:row style="height: 110px">
-				<p:column style="font-weight: bold;">Quienes</p:column>
+				<p:column style="font-weight: bold;"><h:outputText value="#{msg.form_whom}"/></p:column>
 				<p:column>
 					<p:panelGrid>
 						<p:row>
 							<div style="margin-left: auto; margin-right: 0;">
 								<div class="ui-inputgroup">
-									<span class="ui-inputgroup-addon">El presente contrato
-										entre </span>
+									<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_this}"/></span>
 									<p:growl id="msgs" showDetail="true" escape="false" />
 								</div>
 							</div>
@@ -32,17 +31,17 @@
 							<div
 								style="margin-left: auto; margin-right: 0; margin-top: 10px;">
 								<div class="ui-inputgroup">
-									<span class="ui-inputgroup-addon"> el Sr/a.</span>
-									<p:inputText id="namePayer" placeholder="nombre y apellido"
+									<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_mrmrs}"/></span>
+									<p:inputText id="namePayer" placeholder="#{msg.form_name_surname}" 
 										value="#{contractView.namePayer}"
 										style="#{contractView.namePayerStyle}">
 										<p:ajax update="msgs,namePayer,preview" event="blur"
 											listener="#{contractView.validatePayerName}" />
 									</p:inputText>
-									<span class="ui-inputgroup-addon"> en adelante </span>
+									<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_now_on}"/></span>
 									<p:inputText styleClass="nick" id="nickPayer"
 										value="#{contractView.nickPayer}"
-										placeholder="apodo del comprador" maxlength="16"
+										placeholder="#{msg.form_payer_nick}" maxlength="16"
 										style="#{contractView.nickPayerStyle}">
 										<p:ajax event="blur"
 											update="nickPayer,payer,msgs,nickPayer,preview"
@@ -51,7 +50,7 @@
 									<span class="ui-inputgroup-addon"> {</span>
 									<p:inputText
 										pt:data-tooltip="#{contractView.addressPayerTooltip}"
-										id="addressPayer" placeholder="bitcoin address" maxlength="35"
+										id="addressPayer" placeholder="#{msg.form_payer_bitcoin_address}" maxlength="35"
 										value="#{contractView.addressPayer}"
 										style="#{contractView.addressPayerStyle}">
 										<p:ajax update="msgs,addressPayer,preview" event="blur"
@@ -60,26 +59,26 @@
 
 									<span class="ui-inputgroup-addon"> ,</span>
 									<p:inputText id="emailPayer" value="#{contractView.emailPayer}"
-										placeholder="email" style="#{contractView.emailPayerStyle}">
+										placeholder="#{msg.form_payer_email}" style="#{contractView.emailPayerStyle}">
 										<p:ajax update="msgs,emailPayer,preview" event="blur"
 											listener="#{contractView.validatePayerEmail}" />
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> }</span> <span
-										class="ui-inputgroup-addon"> y </span>
+										class="ui-inputgroup-addon"><h:outputText value="#{msg.form_and}"/></span>
 								</div>
 							</div>
 							<div style="margin-left: auto; margin-right: 0;">
 								<div class="ui-inputgroup">
-									<span class="ui-inputgroup-addon"> el Sr/a. </span>
-									<p:inputText id="nameCollector" placeholder="nombre y apellido"
+									<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_mrmrs}"/></span>
+									<p:inputText id="nameCollector" placeholder="#{msg.form_name_surname}"
 										value="#{contractView.nameCollector}"
 										style="#{contractView.nameCollectorStyle}">
 										<p:ajax update="msgs,nameCollector,preview" event="blur"
 											listener="#{contractView.validateCollectorName}" />
 									</p:inputText>
-									<span class="ui-inputgroup-addon"> en adelante </span>
+									<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_now_on}"/></span>
 									<p:inputText styleClass="nick" id="nickCollector"
-										placeholder="apodo del vendedor" maxlength="16"
+										placeholder="#{msg.form_collector_nick}" maxlength="16"
 										value="#{contractView.nickCollector}"
 										style="#{contractView.nickCollectorStyle}">
 										<p:ajax event="blur"
@@ -89,7 +88,7 @@
 									<span class="ui-inputgroup-addon"> {</span>
 									<p:inputText
 										pt:data-tooltip="#{contractView.addressCollectorTooltip}"
-										id="addressCollector" placeholder="bitcoin address"
+										id="addressCollector" placeholder="#{msg.form_collector_bitcoin_address}"
 										maxlength="35" value="#{contractView.addressCollector}"
 										style="#{contractView.addressCollectorStyle}">
 										<p:ajax update="msgs,addressCollector,preview" event="blur"
@@ -97,7 +96,7 @@
 									</p:inputText>
 									<span class="ui-inputgroup-addon"> ,</span>
 									<p:inputText id="emailCollector"
-										value="#{contractView.emailCollector}" placeholder="email"
+										value="#{contractView.emailCollector}" placeholder="#{msg.form_collector_email}"
 										style="#{contractView.emailCollectorStyle}">
 										<p:ajax update="msgs,emailCollector,preview" event="blur"
 											listener="#{contractView.validateCollectorEmail}" />
@@ -110,17 +109,17 @@
 				</p:column>
 			</p:row>
 			<p:row style="height: 50px">
-				<p:column style="font-weight: bold;">Cuánto</p:column>
+				<p:column style="font-weight: bold;"><h:outputText value="#{msg.form_how_much}"/></p:column>
 				<p:column>
 					<div style="margin-left: auto; margin-right: 0;">
 						<div class="ui-inputgroup">
-							<span class="ui-inputgroup-addon">establece que </span>
+							<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_establishes_that}"/></span>
 							<p:inputText styleClass="nick" id="payer"
 								value="#{contractView.nickPayerValid}" readonly="true" />
-							<span class="ui-inputgroup-addon"> pagará a </span>
+							<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_will_pay}"/></span>
 							<p:inputText styleClass="nick" id="collector"
 								value="#{contractView.nickCollectorValid}" readonly="true" />
-							<span class="ui-inputgroup-addon"> la suma de </span>
+							<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_sum_of}"/></span>
 							<p:selectOneMenu id="currencies"
 								value="#{contractView.selectedCurrency}" style="width:30px">
 								<p:ajax listener="#{contractView.onCurrencyChange}"
@@ -132,7 +131,7 @@
 								<p:ajax event="blur" update="btc,money,preview"
 									listener="#{contractView.handleQuantity}" />
 							</p:inputText>
-							<span class="ui-inputgroup-addon"> equivalentes a </span>
+							<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_equivalent_to}"/></span>
 							<p:inputText id="btc" value="BTC #{contractView.btc}"
 								readonly="true" style="width:125px" />
 						</div>
@@ -140,26 +139,26 @@
 				</p:column>
 			</p:row>
 			<p:row style="height: 80px">
-				<p:column style="font-weight: bold;">Condición</p:column>
+				<p:column style="font-weight: bold;"><h:outputText value="#{msg.form_condition}"/></p:column>
 				<p:column>
 					<div style="margin-left: auto; margin-right: 0;">
 						<div class="ui-inputgroup">
-							<span class="ui-inputgroup-addon">si </span>
+							<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_if}"/></span>
 							<p:inputTextarea id="collector-cond" rows="3" cols="10"
 								value="#{contractView.nickCollector}" readonly="true" />
-							<span class="ui-inputgroup-addon"> entrega en </span>
+							<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_delivers_in}"/></span>
 							<p:inputTextarea styleClass="textArea" rows="3" cols="36"
 								id="address" value="#{contractView.address}"
 								style="#{contractView.addressStyle}"
-								placeholder="ejemplo: Av. Cabildo 2204 piso 10 dto C - Buenos Aires - Argentina">
+								placeholder="#{msg.form_example_address}">
 								<p:ajax event="blur" update="address,msgs,preview"
 									listener="#{contractView.validateAddress}" />
 							</p:inputTextarea>
-							<span class="ui-inputgroup-addon"> el siguiente </span>
-							<p:inputTextarea styleClass="textArea" rows="3" cols="45"
+							<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_the_next}"/></span>
+							<p:inputTextarea styleClass="textArea" rows="3" cols="43"
 								id="item" value="#{contractView.item}"
 								style="#{contractView.itemStyle}"
-								placeholder="descripción del artículo o servicio incluyendo cantidad">
+								placeholder="#{msg.form_example_product_service}">
 								<p:ajax event="blur" update="item,msgs,preview"
 									listener="#{contractView.validateItem}" />
 							</p:inputTextarea>
@@ -168,12 +167,11 @@
 				</p:column>
 			</p:row>
 			<p:row style="height: 50px">
-				<p:column style="font-weight: bold;">Garante</p:column>
+				<p:column style="font-weight: bold;"><h:outputText value="#{msg.form_guarantor}"/></p:column>
 				<p:column>
 					<div style="margin-left: auto; margin-right: 0;">
 						<div class="ui-inputgroup">
-							<span class="ui-inputgroup-addon">operación supervisada
-								por el agente </span>
+							<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_supervised_by}"/></span>
 							<p:inputText id="nickagent" value="#{contractView.agentNick}"
 								readonly="true" styleClass="nick" />
 							<span class="ui-inputgroup-addon"> {</span>
