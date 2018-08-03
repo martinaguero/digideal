@@ -7,4 +7,5 @@ module org.trimatek.digideal.bitcoin {
 	requires java.logging;
 	requires org.trimatek.digideal.model;
 	requires java.sql;
+	requires org.bouncycastle.provider;
 }
