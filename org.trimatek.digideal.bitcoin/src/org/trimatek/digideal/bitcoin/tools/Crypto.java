@@ -5,53 +5,58 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.Security;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 public class Crypto {
 
+	private static Crypto INSTANCE;
+	private MessageDigest sha256;
+	private MessageDigest ripeMd160;
+	private final static Logger logger = Logger.getLogger(Crypto.class.getName());
+
+	private Crypto() {
+		Security.addProvider(new BouncyCastleProvider());
+		try {
+			sha256 = MessageDigest.getInstance("SHA-256");
+			ripeMd160 = MessageDigest.getInstance("RipeMD160", "BC");
+		} catch (NoSuchAlgorithmException e) {
+			logger.log(Level.SEVERE, e.getMessage());
+		} catch (NoSuchProviderException e) {
+			logger.log(Level.SEVERE, e.getMessage());
+		}
+	}
+
+	public static Crypto getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Crypto();
+		}
+		return INSTANCE;
+	}
+
+	public String toAddress(String publicKey, boolean mainnet) {
+		byte[] sha1 = sha256.digest(BinAscii.unhexlify(publicKey));
+		byte[] ripe = ripeMd160.digest(sha1);
+		String hexa = bytesToHex(ripe);
+		hexa = mainnet ? "00" + hexa : "6f" + hexa;
+		byte[] sha3 = sha256.digest(sha256.digest(BinAscii.unhexlify(hexa)));
+		byte[] checksum = subByte(sha3, 4);
+		byte[] address = append(BinAscii.unhexlify(hexa), checksum);
+		return Base58.encode(address);
+	}
+
 	public static void main(String args[])
 			throws NoSuchAlgorithmException, UnsupportedEncodingException, NoSuchProviderException {
 
-		// String pub =
-		// "0250863ad64a87ae8a2fe83c1af1a8403cb53f53e486d8511dad8a04887e5b2352";
-		String pub = "02809f0aa04ba008462915afa2635dd28f6b8ed37e400984440404a641bfaeb4ae";
+		System.out.println(Crypto.getInstance()
+				.toAddress("02809f0aa04ba008462915afa2635dd28f6b8ed37e400984440404a641bfaeb4ae", false));
+		// Resultado: mya3L6VEpN2rWR7x4PAbbf9KBvTsYRXUh4
 
-		MessageDigest digest = MessageDigest.getInstance("SHA-256");
-		byte[] encodedhash = digest.digest(BinAscii.unhexlify(pub));
-
-		System.out.println(bytesToHex(encodedhash));
-
-		Security.addProvider(new BouncyCastleProvider());
-
-		MessageDigest rmd = MessageDigest.getInstance("RipeMD160", "BC");
-		byte[] r1 = rmd.digest(encodedhash);
-
-		String paso3 = bytesToHex(r1);
-		System.out.println(paso3);
-
-		// String paso4 = "00" + paso3;
-		String paso4 = "6f" + paso3;
-
-		System.out.println(paso4);
-
-		byte[] sha = digest.digest(BinAscii.unhexlify(paso4));
-
-		String paso5 = bytesToHex(sha);
-
-		System.out.println(paso5);
-
-		byte[] sha2 = digest.digest(BinAscii.unhexlify(paso5));
-
-		String paso6 = bytesToHex(sha2);
-
-		System.out.println(paso6);
-
-		byte[] checksum = subByte(sha2, 4);
-		System.out.println(bytesToHex(checksum));
-
-		byte[] address = append(BinAscii.unhexlify(paso4), checksum);
-		System.out.println(Base58.encode(address));
+		System.out.println(Crypto.getInstance()
+				.toAddress("0250863ad64a87ae8a2fe83c1af1a8403cb53f53e486d8511dad8a04887e5b2352", true));
+		// Resultado: 1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs
 
 	}
 
