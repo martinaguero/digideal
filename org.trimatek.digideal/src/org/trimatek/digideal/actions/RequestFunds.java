@@ -1,6 +1,5 @@
 package org.trimatek.digideal.actions;
 
-import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -50,11 +49,13 @@ public class RequestFunds extends Action {
 
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
-		byte[] qr = Generators.genQRCodeImage(Generators.genQRSendTo(cnt,null), Config.TAMANIO_QR, Config.TAMANIO_QR);
+		String qrString = Generators.genQRSendTo(cnt,null);
+		byte[] qr = Generators.genQRCodeImage(qrString, Config.TAMANIO_QR, Config.TAMANIO_QR);
 		
 		htmlPart.setText(
 				"<html><body><p> The attached contract has been created.<br/>" + "Please send BTC "
 						+ cnt.getValue("btc") + " to address: <br/>" + cnt.getMultisigAddress() + "<br/>"
+						+ "<a href=\"url\">" + qrString + "</a><br/>"
 						+ "in order to proceed with contract: " + cnt.getValue("id") + " requirements. <br/><br/>"
 						+ "Then, please reply this message with the transaction ID." + "</p><br/>"
 						+ "<div style=\"display:none;\"> " + cnt.getValue("id") + " </div></body></html>",

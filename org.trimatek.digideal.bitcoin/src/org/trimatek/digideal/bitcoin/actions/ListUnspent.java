@@ -1,0 +1,90 @@
+package org.trimatek.digideal.bitcoin.actions;
+
+import static org.trimatek.digideal.bitcoin.entities.Context.DELTA;
+import static org.trimatek.digideal.bitcoin.entities.Context.MAX_CONF;
+import static org.trimatek.digideal.bitcoin.entities.Context.MIN_CONF;
+
+import java.io.IOException;
+import java.util.logging.Level;
+
+import org.trimatek.digideal.bitcoin.actions.tx.RetrieveAndMatchTask;
+import org.trimatek.digideal.bitcoin.entities.Context;
+import org.trimatek.digideal.bitcoin.tools.ReadStream;
+import org.trimatek.digideal.model.Action;
+import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.Task;
+import org.trimatek.digideal.model.Transaction;
+import org.trimatek.digideal.model.utils.Tools;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+public class ListUnspent extends Action {
+
+	public ListUnspent(Task task) {
+		super(task);
+	}
+
+	public Contract exec(Contract contract) throws IOException, InterruptedException {
+		int min = MIN_CONF;
+		Runtime rt = Runtime.getRuntime();
+		logger.log(Level.INFO, "Ready to run ListUnspent for " + contract.getValue("id"));
+
+		while (min != MAX_CONF) {
+			int max = min + DELTA;
+			Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(contract.getMultisigAddress(), min, max));
+
+			ReadStream s1 = new ReadStream("stdin", pr.getInputStream());
+			ReadStream s2 = new ReadStream("stderr", pr.getErrorStream());
+			s1.start();
+			s2.start();
+			pr.waitFor();
+
+			String in = s1.getStream();
+			String err = s2.getStream();
+
+			if (err != null && err.isEmpty()) {
+				JsonArray txs = new Gson().fromJson(in, JsonArray.class);
+				logger.log(Level.INFO, "Execution success. In confirmations rage [" + min + "," + max + "] retrieved "
+						+ txs.size() + " transactions.");
+				for (JsonElement t : txs) {
+					JsonObject o = t.getAsJsonObject();
+					String txid = o.getAsJsonPrimitive("txid").toString().replace("\"", "");
+					if (!Tools.contains(txid, contract.getUnspentTransactions())) {
+						Transaction tx = getTask().with(contract.getValue("payer.address"))
+								.exec(new Transaction(txid));
+						if (tx != null) {
+							logger.log(Level.INFO, "1 unspent transaction found.");
+							contract.addUnspentTransaction(tx);
+							done = Boolean.TRUE;
+							return contract;
+						}
+					}
+				}
+			} else {
+				logger.log(Level.SEVERE, err);
+			}
+			min = min + DELTA;
+		}
+		logger.log(Level.INFO, "0 unspent transaction found.");
+		return null;
+	}
+
+	private static String buildParams(String multisig, int minconf, int maxConf) throws IOException {
+		return " listunspent " + minconf + " " + maxConf + " \"[\\\"" + multisig + "\\\"]\"";
+	}
+	
+	public static void main(String args[]) throws IOException, InterruptedException {
+		Contract c = new Contract(null, "D:\\Temp\\digideal\\71IULOO.properties");
+		c.setMultisigAddress("2MvLksDGh9xxBME1do621AXpkeYoRKVYbiq");
+		ListUnspent lu = new ListUnspent(new RetrieveAndMatchTask());
+		c = lu.exec(c);
+		if(c!=null) {
+			System.out.println("OK!!!!!");
+		}
+
+	}
+
+}

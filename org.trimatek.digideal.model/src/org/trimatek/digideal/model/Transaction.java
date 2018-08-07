@@ -19,9 +19,11 @@ public class Transaction implements Serializable {
 	private String signedBy;
 	private String raw;
 	private String outputScript;
+	private String scriptSigAsm;
+	private String vinAddress;
 	private int vout;
 	private BigDecimal value;
-	
+
 	public Transaction(String txId) {
 		this.txId = txId;
 	}
@@ -82,7 +84,21 @@ public class Transaction implements Serializable {
 	public void setValue(BigDecimal value) {
 		this.value = value;
 	}
-	
-	
+
+	public String getScriptSigAsm() {
+		return scriptSigAsm;
+	}
+
+	public void setScriptSigAsm(String scriptSigAsm) {
+		this.scriptSigAsm = scriptSigAsm;
+	}
+
+	public String getVinAddress() {
+		return vinAddress;
+	}
+
+	public void setVinAddress(String vinAddress) {
+		this.vinAddress = vinAddress;
+	}
 
 }

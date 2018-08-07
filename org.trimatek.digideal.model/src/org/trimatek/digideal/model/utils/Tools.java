@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Set;
+
+import org.trimatek.digideal.model.Transaction;
 
 public class Tools {
 
@@ -12,4 +15,15 @@ public class Tools {
 		return Files.readAllBytes(source);
 	}
 
+	public static boolean contains(String txid, Set<Transaction> transactions) {
+		if (transactions != null) {
+			for (Transaction tx : transactions) {
+				if (tx.getTxId().equals(txid)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 }

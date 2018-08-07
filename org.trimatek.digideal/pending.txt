@@ -15,4 +15,6 @@
 15.enviar el PDF por REST (AGREGADO)
 16.matchear el SN del contrato con la TX en el mail
 17.avisar a collector cuando payer pagó el total
-18.app lectora de QR
+18.app lectora de QR https://www.sitepoint.com/scanning-qr-code-cordova/
+http://simonmacdonald.blogspot.com/2011/12/on-third-day-of-phonegapping-getting.html
+https://www.lifewire.com/scan-qr-codes-on-smartphone-4154658

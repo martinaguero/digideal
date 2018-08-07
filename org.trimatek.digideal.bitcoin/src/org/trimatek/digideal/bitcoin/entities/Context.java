@@ -13,5 +13,9 @@ public class Context {
 	public static final double COIN_VALUE = Math.pow(10, SMALLEST_UNIT_EXPONENT);
 	public static final String AGENT_PUBLIC_KEY = "0314977363f96e1d7fed75205f22d933d5cf38997e19fc50ba65115ef00a91e68f";
 	public static final String AGENT_PRIVATE_KEY = "cSJ3ZcLCT1AfUiFwCTW1fUK5EdoJkikMAJmj35MLn9qRGBxtcj7P";
+	public static final int MAX_CONF = 1000;
+	public static final int MIN_CONF = 0;
+	public static final int DELTA = 100;
+	public static final boolean MAINNET = false;
 
 }

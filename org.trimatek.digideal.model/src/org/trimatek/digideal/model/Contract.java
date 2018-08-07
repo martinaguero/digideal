@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -184,7 +183,7 @@ public class Contract implements Serializable {
 	public void setRunning(Boolean running) {
 		this.running = running;
 	}
-	
+
 	public void addUnspentTransaction(Transaction transaction) {
 		if (unspentTransactions == null) {
 			unspentTransactions = new LinkedHashSet<Transaction>();
@@ -195,11 +194,11 @@ public class Contract implements Serializable {
 	public Set<Transaction> getUnspentTransactions() {
 		return unspentTransactions;
 	}
-	
+
 	public Transaction getLastUnspentTransaction() {
-		return (Transaction) getUnspentTransactions().toArray()[getUnspentTransactions().size() - 1];		
+		return (Transaction) getUnspentTransactions().toArray()[getUnspentTransactions().size() - 1];
 	}
-	
+
 	public Transaction removeLastUnspentTransaction() {
 		Transaction t = getLastUnspentTransaction();
 		unspentTransactions.remove(t);
