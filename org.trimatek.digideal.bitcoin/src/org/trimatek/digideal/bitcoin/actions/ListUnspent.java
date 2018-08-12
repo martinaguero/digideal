@@ -12,7 +12,6 @@ import org.trimatek.digideal.bitcoin.entities.Context;
 import org.trimatek.digideal.bitcoin.tools.ReadStream;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.model.Task;
 import org.trimatek.digideal.model.Transaction;
 import org.trimatek.digideal.model.utils.Tools;
 
@@ -22,10 +21,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class ListUnspent extends Action {
-
-	public ListUnspent(Task task) {
-		super(task);
-	}
 
 	public Contract exec(Contract contract) throws IOException, InterruptedException {
 		int min = MIN_CONF;
@@ -53,14 +48,11 @@ public class ListUnspent extends Action {
 					JsonObject o = t.getAsJsonObject();
 					String txid = o.getAsJsonPrimitive("txid").toString().replace("\"", "");
 					if (!Tools.contains(txid, contract.getUnspentTransactions())) {
-						Transaction tx = getTask().with(contract.getValue("payer.address"))
-								.exec(new Transaction(txid));
-						if (tx != null) {
-							logger.log(Level.INFO, "1 unspent transaction found.");
-							contract.addUnspentTransaction(tx);
-							done = Boolean.TRUE;
-							return contract;
-						}
+						Transaction tx = new Transaction(txid);
+						contract.addUnspentTransaction(tx);
+						logger.log(Level.INFO, "1 unspent transaction found.");
+						done = Boolean.TRUE;
+						return contract;
 					}
 				}
 			} else {
@@ -70,18 +62,19 @@ public class ListUnspent extends Action {
 		}
 		logger.log(Level.INFO, "0 unspent transaction found.");
 		return null;
+
 	}
 
 	private static String buildParams(String multisig, int minconf, int maxConf) throws IOException {
 		return " listunspent " + minconf + " " + maxConf + " \"[\\\"" + multisig + "\\\"]\"";
 	}
-	
+
 	public static void main(String args[]) throws IOException, InterruptedException {
 		Contract c = new Contract(null, "D:\\Temp\\digideal\\71IULOO.properties");
 		c.setMultisigAddress("2MvLksDGh9xxBME1do621AXpkeYoRKVYbiq");
-		ListUnspent lu = new ListUnspent(new RetrieveAndMatchTask());
+		ListUnspent lu = new ListUnspent();
 		c = lu.exec(c);
-		if(c!=null) {
+		if (c != null) {
 			System.out.println("OK!!!!!");
 		}
 

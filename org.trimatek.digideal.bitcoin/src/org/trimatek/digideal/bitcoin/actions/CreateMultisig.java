@@ -36,9 +36,7 @@ public class CreateMultisig extends Action {
 	}
 
 	private static String buildParams(Contract cnt, int minReqSig) throws IOException {
-//		return " createmultisig " + minReqSig + " \"[\\\"" + cnt.getValue("payer.public.key") + "\\\",\\\""
-//		+ cnt.getValue("collector.public.key") + "\\\",\\\"" + cnt.getValue("agent.public.key") + "\\\"]\"";
-		return " createmultisig " + minReqSig + " \"[\\\"" + Context.AGENT_PUBLIC_KEY + "\\\"]\"";
+		return " createmultisig " + minReqSig + " \"[\\\"" + cnt.getAddress() + "\\\"]\"";
 	}
 
 }

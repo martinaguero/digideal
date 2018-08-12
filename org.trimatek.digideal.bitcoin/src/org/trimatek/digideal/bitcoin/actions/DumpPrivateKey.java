@@ -8,19 +8,20 @@ import org.trimatek.digideal.bitcoin.tools.Translators;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 
-public class GetPrivateKey extends Action {
+public class DumpPrivateKey extends Action {
 
 	@Override
 	public Contract exec(Contract contract) throws Exception {
 		Runtime rt = Runtime.getRuntime();
-		logger.log(Level.INFO, "Ready to run GetPrivateKey for " + contract.getValue("id"));
-		Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(contract.getValue("agent.address")));
+		logger.log(Level.INFO, "Ready to run DumpPrivateKey for " + contract.getValue("id"));
+		Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(contract.getAddress()));
 
 		String err = Translators.toString(pr.getErrorStream());
 		String in = Translators.toString(pr.getInputStream());
 
 		if (err.isEmpty()) {
 			logger.log(Level.INFO, "Execution success");
+			contract.setPrivateKey(in);
 			done = Boolean.TRUE;
 			return contract;
 		} else {
@@ -30,8 +31,8 @@ public class GetPrivateKey extends Action {
 		}
 	}
 
-	private static String buildParams(String publicKey) throws IOException {
-		return " dumpprivkey " + publicKey;
+	private static String buildParams(String address) throws IOException {
+		return " dumpprivkey " + address;
 
 	}
 

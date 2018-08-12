@@ -58,6 +58,10 @@ public class Crypto {
 				.toAddress("0250863ad64a87ae8a2fe83c1af1a8403cb53f53e486d8511dad8a04887e5b2352", true));
 		// Resultado: 1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs
 
+		System.out.println(Crypto.getInstance()
+				.toAddress("024aa7c2c05e5feca1f70c18b379d3db65339e164c9d9233077cbb3080ecd44b2d", false));
+		// Resultado: 1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs
+
 	}
 
 	private static String bytesToHex(byte[] hash) {

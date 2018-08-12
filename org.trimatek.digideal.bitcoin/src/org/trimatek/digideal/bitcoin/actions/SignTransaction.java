@@ -39,7 +39,7 @@ public class SignTransaction extends Action {
 
 	private static String buildParams(Contract cnt) throws IOException {
 		return " signrawtransaction " + cnt.getLastPayTransaction().getRaw() + " \"[" + getUnspents(cnt)+"]\""
-				+ " \"[\\\"" + Context.AGENT_PRIVATE_KEY + "\\\"]";
+				+ " \"[\\\"" + cnt.getPrivateKey() + "\\\"]";
 	}
 
 	private static String getUnspents(Contract cnt) {

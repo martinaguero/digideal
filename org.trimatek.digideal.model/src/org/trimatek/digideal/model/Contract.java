@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.trimatek.digideal.model.utils.Tools;
 
@@ -35,6 +36,9 @@ public class Contract implements Serializable {
 	private BigDecimal btc;
 	private int requiredSignatures;
 	//
+	private String address;
+	@Transient
+	private String privateKey;
 	private String multisigAddress;
 	private String redeemScript;
 	//
@@ -203,6 +207,22 @@ public class Contract implements Serializable {
 		Transaction t = getLastUnspentTransaction();
 		unspentTransactions.remove(t);
 		return t;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPrivateKey() {
+		return privateKey;
+	}
+
+	public void setPrivateKey(String privateKey) {
+		this.privateKey = privateKey;
 	}
 
 }

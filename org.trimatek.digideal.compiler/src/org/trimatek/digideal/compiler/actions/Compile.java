@@ -2,6 +2,7 @@ package org.trimatek.digideal.compiler.actions;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Level;
@@ -42,6 +43,7 @@ public class Compile extends Action implements Runnable {
 				contract.setStatusName("New");
 				contract.setRunning(Boolean.FALSE);
 				contract.setRequiredSignatures(1);
+				contract.setBtc(new BigDecimal(contract.getValue("btc")));
 				Repository.getInstance().save(contract);
 				done = Boolean.TRUE;
 
