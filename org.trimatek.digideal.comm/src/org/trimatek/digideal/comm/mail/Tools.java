@@ -10,6 +10,7 @@ import javax.mail.Session;
 import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
 import com.google.api.services.gmail.Gmail;
@@ -56,7 +57,7 @@ public class Tools {
 		imagePart.setFileName(fileName);
 		return imagePart;
 	}
-	
+
 	public static BodyPart addPdf(byte[] pdf, String fileName) throws MessagingException {
 		InternetHeaders headers = new InternetHeaders();
 		headers.addHeader("Content-Type", "application/pdf");

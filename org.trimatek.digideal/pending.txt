@@ -13,10 +13,11 @@
 13.embeber QR
 14.averiguar si es posible detectar fondos enviados a la multisigaddress (AGREGADO)
 15.enviar el PDF por REST (AGREGADO)
-16.matchear el SN del contrato con la TX en el mail
-17.avisar a collector cuando payer pagó el total
+16.matchear el SN del contrato con la TX en el mail(CANCELADO)
+17.avisar a collector cuando payer pagó el total(AGREGADO)
 18.app lectora de QR https://www.sitepoint.com/scanning-qr-code-cordova/
 http://simonmacdonald.blogspot.com/2011/12/on-third-day-of-phonegapping-getting.html
 https://www.lifewire.com/scan-qr-codes-on-smartphone-4154658
 19.esperar a que la transacción tenga unas 3 confirmaciones
 20.en el mail de confirmación exitosa del contrato, agregar la url para ver la tx de pago
+21.formatear emails: https://github.com/leemunroe/responsive-html-email-template

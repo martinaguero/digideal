@@ -12,7 +12,9 @@ import javax.mail.internet.MimeMultipart;
 
 import org.trimatek.digideal.Config;
 import org.trimatek.digideal.comm.mail.SendMessage;
+import org.trimatek.digideal.comm.mail.Template;
 import org.trimatek.digideal.comm.mail.Tools;
+import org.trimatek.digideal.comm.mail.utils.TemplateFactory;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.tools.Dialogs;
@@ -45,23 +47,28 @@ public class RequestFunds extends Action {
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject("[DD] Funds request for contract ID: " + cnt.getValue("id"));
+		email.setSubject(Dialogs.msg.getString("email_subject_prefix") + " "
+				+ Dialogs.msg.getString("email_request_funds_subject"));
 
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
-		String qrString = Generators.genQRSendTo(cnt,null);
+		String qrString = Generators.genQRSendTo(cnt, null);
 		byte[] qr = Generators.genQRCodeImage(qrString, Config.TAMANIO_QR, Config.TAMANIO_QR);
-		
-		htmlPart.setText(
-				"<html><body><p> The attached contract has been created.<br/>" + "Please send BTC "
-						+ cnt.getValue("btc") + " to address: <br/>" + cnt.getMultisigAddress() + "<br/>"
-						+ "<a href=\"url\">" + qrString + "</a><br/>"
-						+ "in order to proceed with contract: " + cnt.getValue("id") + " requirements. <br/><br/>"
-						+ "Then, please reply this message with the transaction ID." + "</p><br/>"
-						+ "<div style=\"display:none;\"> " + cnt.getValue("id") + " </div></body></html>",
-				"US-ASCII", "html");
-		
+
+		Template t = TemplateFactory.getEmailTemplate();
+		t.setHi(Dialogs.msg.getString("email_hi") + " @" + cnt.getValue("payer.name") + "</b>");
+		String content1 = Dialogs.msg.getString("email_request_funds_payer_content1_a") + " " + cnt.getValue("btc")
+				+ " " + Dialogs.msg.getString("email_request_funds_payer_content1_b") + " " + cnt.getMultisigAddress()
+				+ "<br/> " + Dialogs.msg.getString("email_request_funds_payer_content1_c") + " @"
+				+ cnt.getValue("collector.name") + ".";
+		t.setPreview(content1);
+		t.setContent1(content1);
+		t.setContent2("");
+		t.setSalutation(Dialogs.msg.getString("email_salutation"));
+		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
+
 		content.addBodyPart(htmlPart);
+
 		content.addBodyPart(Tools.addImage(qr, cnt.getValue("id") + ".png"));
 		content.addBodyPart(Tools.addPdf(cnt.getSource().getPdf(),
 				Dialogs.msg.getString("contract_header") + cnt.getValue("id") + ".pdf"));
@@ -78,13 +85,20 @@ public class RequestFunds extends Action {
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("collector.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject("[DD] New contract with ID: " + cnt.getValue("id"));
+		email.setSubject(Dialogs.msg.getString("email_subject_prefix") + " "
+				+ Dialogs.msg.getString("email_request_funds_subject")); 
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
 
-		htmlPart.setText("<html><body><p>" + "The attached contract has been created.<br/>"
-				+ "Please wait to our notification in order to deliver the requested product or service.</p><br/>"
-				+ "<div style=\"display:none;\"> " + cnt.getValue("id") + " </div></body></html>", "US-ASCII", "html");
+		Template t = TemplateFactory.getEmailTemplate();
+		t.setHi(Dialogs.msg.getString("email_hi") + " @" + cnt.getValue("collector.name") + "</b>");
+		String content1 = Dialogs.msg.getString("email_request_funds_collector_content1");
+		t.setPreview(content1);
+		t.setContent1(content1);
+		t.setContent2("");
+		t.setSalutation(Dialogs.msg.getString("email_salutation"));
+		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
+
 		content.addBodyPart(htmlPart);
 
 		content.addBodyPart(Tools.addPdf(cnt.getSource().getPdf(),
@@ -92,7 +106,5 @@ public class RequestFunds extends Action {
 		email.setContent(content);
 		return email;
 	}
-
-
 
 }

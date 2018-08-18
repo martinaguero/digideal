@@ -13,12 +13,12 @@ import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.tools.Dialogs;
 
-public class NotifyContractSuccess extends Action {
+public class NotifyFundsAvailability extends Action {
 
 	@Override
 	public Contract exec(Contract contract) throws Exception {
 
-		logger.log(Level.INFO, "Ready to notify contract success");
+		logger.log(Level.INFO, "Ready to notify funds availability");
 		SendMessage.exec(setupPayerMail(contract));
 		SendMessage.exec(setupCollectorMail(contract));
 		logger.log(Level.INFO, "Messages sent successfully");
@@ -35,8 +35,8 @@ public class NotifyContractSuccess extends Action {
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
 		email.setSubject(
-				Dialogs.msg.getString("email_subject_prefix") + ":" + cnt.getValue("id") + "] Contract payed");
-		email.setText("Contract #" + cnt.getValue("id") + " payed with txid: " + cnt.getSpentTxId());
+				Dialogs.msg.getString("email_subject_prefix") + ":" + cnt.getValue("id") + "] Funds available");
+		email.setText("Required funds received by agent.");
 		return email;
 	}
 
@@ -48,9 +48,9 @@ public class NotifyContractSuccess extends Action {
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("collector.email"));
 		email.setRecipients(RecipientType.TO, to);
 		email.setSubject(
-				Dialogs.msg.getString("email_subject_prefix") + ":" + cnt.getValue("id") + "] Contract payed");
-		email.setText("Contract SN: " + cnt.getValue("id") + " funds released with txid: \n" 
-		+ cnt.getSpentTxId());
+				Dialogs.msg.getString("email_subject_prefix") + ":" + cnt.getValue("id") + "] Funds available");
+		email.setText(
+				"Required funds received by agent. Please deliver product or service and reply with the receipt in order to release them.");
 		return email;
 	}
 

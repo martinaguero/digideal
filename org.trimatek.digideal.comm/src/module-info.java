@@ -1,5 +1,6 @@
 module org.trimatek.digideal.comm {
 	exports org.trimatek.digideal.comm.mail;
+	exports org.trimatek.digideal.comm.mail.utils;
 	exports org.trimatek.digideal.comm.rest;
 
 	requires org.trimatek.digideal.model;
