@@ -14,19 +14,20 @@ import javax.mail.internet.MimeMultipart;
 
 import org.trimatek.digideal.Config;
 import org.trimatek.digideal.comm.mail.SendMessage;
+import org.trimatek.digideal.comm.mail.Template;
 import org.trimatek.digideal.comm.mail.Tools;
+import org.trimatek.digideal.comm.mail.utils.TemplateFactory;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.model.State;
+import static org.trimatek.digideal.tools.Dialogs.msg;
 import org.trimatek.digideal.tools.Generators;
-import org.trimatek.digideal.workflow.WaitingFunds;
 
 public class SendReceiptCode extends Action {
 
 	@Override
 	public Contract exec(Contract cnt) throws Exception {
 
-		logger.log(Level.INFO, "Ready to send receive code");
+		logger.log(Level.INFO, "Ready to send receipt code");
 		cnt.setReceiptCode(Generators.genNewDeliveryCode());
 		byte[] qr = Generators.genQRCodeImage(genQRGmail(cnt), Config.TAMANIO_QR, Config.TAMANIO_QR);
 		Object result = SendMessage.exec(setupMail(cnt, qr, cnt.getReceiptCode()));
@@ -60,13 +61,20 @@ public class SendReceiptCode extends Action {
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject("[DD] Receipt code");
+		email.setSubject(msg.getString("email_subject_prefix") + " " + msg.getString("email_funds_available_subject"));
 
 		MimeMultipart content = new MimeMultipart("related");
-
 		MimeBodyPart htmlPart = new MimeBodyPart();
-		htmlPart.setText("" + "<html>" + " <body>" + "  <p><b>" + code + "</b></p>" + " </body>" + "</html>",
-				"US-ASCII", "html");
+
+		Template t = TemplateFactory.getEmailTemplate();
+		t.setHi(msg.getString("email_hi") + " @" + cnt.getValue("payer.name") + "</b>");
+		String content1 = msg.getString("email_send_receipt_code_content1") + " <b>" + code + "</b>";
+		t.setPreview(content1);
+		t.setContent1(content1);
+		t.setContent2(msg.getString("email_content2") + cnt.getValue("id"));
+		t.setSalutation(msg.getString("email_salutation"));
+		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
+
 		content.addBodyPart(htmlPart);
 		content.addBodyPart(Tools.addImage(qr, code + ".png"));
 		email.setContent(content);
@@ -79,18 +87,16 @@ public class SendReceiptCode extends Action {
 	}
 
 	public static void main(String args[]) {
-/*
-		try {
-			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
-			cnt.setUnspentTxId("25fb4dc0542b8071cb7150504971e81faf5d3ced86f22e09519fb4080a8c0732");
-			State funds = new WaitingFunds(cnt);
-			funds.run();
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
+		/*
+		 * try { Contract cnt = new Contract("",
+		 * "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
+		 * cnt.setUnspentTxId(
+		 * "25fb4dc0542b8071cb7150504971e81faf5d3ced86f22e09519fb4080a8c0732"); State
+		 * funds = new WaitingFunds(cnt); funds.run();
+		 * 
+		 * } catch (Exception e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 	}
 
 }

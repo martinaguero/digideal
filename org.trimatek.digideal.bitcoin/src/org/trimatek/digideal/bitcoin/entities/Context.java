@@ -17,5 +17,7 @@ public class Context {
 	public static final int MIN_CONF = 0;
 	public static final int DELTA = 100;
 	public static final boolean MAINNET = false;
+	public static final String TX_TRACK_TESTNET = "https://www.blocktrail.com/tBTC/tx/";
+	public static final String TX_TRACK_MAINNET = "https://www.blocktrail.com/BTC/tx/";
 
 }

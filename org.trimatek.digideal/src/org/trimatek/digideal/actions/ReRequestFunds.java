@@ -1,5 +1,7 @@
 package org.trimatek.digideal.actions;
 
+import static org.trimatek.digideal.tools.Dialogs.msg;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Properties;
@@ -15,7 +17,9 @@ import javax.mail.internet.MimeMultipart;
 import org.trimatek.digideal.Config;
 import org.trimatek.digideal.bitcoin.tools.Calc;
 import org.trimatek.digideal.comm.mail.SendMessage;
+import org.trimatek.digideal.comm.mail.Template;
 import org.trimatek.digideal.comm.mail.Tools;
+import org.trimatek.digideal.comm.mail.utils.TemplateFactory;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.tools.Generators;
@@ -45,23 +49,31 @@ public class ReRequestFunds extends Action {
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject("[DD] New funds request for contract ID: " + cnt.getValue("id"));
+		email.setSubject(msg.getString("email_subject_prefix") + " " + msg.getString("email_rerequest_funds_subject"));
 
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
-		htmlPart.setText(
-				"<html><body><p>Have been received BTC " + cnt.getLastUnspentTransaction().getValue()
-						+ " Please send BTC " + dif + " left to address: <br/>" + cnt.getMultisigAddress() + "\n"
-						+ "in order to proceed with contract requirements. <br/><br/>"
-						+ "Then, please reply this message with the transaction ID. </p><br/>"
-						+ "<div style=\"display:none;\"> " + cnt.getValue("id") + " </div></body></html>",
-				"US-ASCII", "html");
 
+		Template t = TemplateFactory.getEmailTemplate();
+		t.setHi(msg.getString("email_hi") + " @" + cnt.getValue("payer.name") + "</b>");
+		String content1 = msg.getString("email_btc") + " "
+				+ cnt.getLastUnspentTransaction().getValue() + " " + msg.getString("email_rerequest_funds_content1_a")
+				+ "<br/> " + msg.getString("email_rerequest_funds_content1_b") + " <b>"
+				+ msg.getString("email_btc") + " " + dif + "</b> "
+				+ msg.getString("email_rerequest_funds_content1_c") + "<br/>" + cnt.getMultisigAddress() + "<br/>"
+				+ msg.getString("email_rerequest_funds_content1_d");
+
+		t.setPreview(content1);
+		t.setContent1(content1);
+		t.setContent2(msg.getString("email_content2") + cnt.getValue("id"));
+		t.setSalutation(msg.getString("email_salutation"));
+		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 		content.addBodyPart(htmlPart);
+
 		byte[] qr = Generators.genQRCodeImage(Generators.genQRSendTo(cnt, dif), Config.TAMANIO_QR, Config.TAMANIO_QR);
 		content.addBodyPart(Tools.addImage(qr, cnt.getValue("id") + ".png"));
+		
 		email.setContent(content);
-
 		return email;
 	}
 
