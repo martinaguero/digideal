@@ -9,9 +9,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 public class FeeLookup {
 
 	private final static Logger logger = Logger.getLogger(FeeLookup.class.getName());
@@ -67,16 +64,19 @@ public class FeeLookup {
 	}
 
 	private void updateFees(String predictions) {
-		ObjectNode object;
-		try {
-			object = new ObjectMapper().readValue(predictions, ObjectNode.class);
-			lastFast = object.get("fastestFee").asText();
-			lastMid = object.get("halfHourFee").asText();
-			lastSlow = object.get("hourFee").asText();
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, e.getMessage());
+		predictions = predictions.replace("{", "");
+		predictions = predictions.replace("}", "");
+		predictions = predictions.replace("\"", "");
+		String data[] = predictions.split(",");
+		for (String s : data) {
+			if (s.contains("fastestFee")) {
+				lastFast = s.substring(s.indexOf(":") + 1);
+			} else if (s.contains("halfHourFee")) {
+				lastMid = s.substring(s.indexOf(":") + 1);
+			} else {
+				lastSlow = s.substring(s.indexOf(":") + 1);
+			}
 		}
-
 	}
 
 	public enum FEES {
