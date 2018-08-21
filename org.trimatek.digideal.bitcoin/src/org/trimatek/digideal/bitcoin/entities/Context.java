@@ -19,5 +19,7 @@ public class Context {
 	public static final boolean MAINNET = false;
 	public static final String TX_TRACK_TESTNET = "https://www.blocktrail.com/tBTC/tx/";
 	public static final String TX_TRACK_MAINNET = "https://www.blocktrail.com/BTC/tx/";
+	public static final String FEE_URL = "http://trimatek.org:8282/digidata/fee/fast";
+	public static final String FEE_HIST_URL = "http://trimatek.org:8282/digidata/fee/fast/hist";
 
 }
