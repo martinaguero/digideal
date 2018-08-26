@@ -26,6 +26,7 @@ public class FeeLookup {
 	private BigDecimal histoSlow = new BigDecimal(0);
 	private int count = 0;
 	private Instant updateTime;
+	private StringBuffer errors = new StringBuffer();
 
 	private FeeLookup() {
 		ScheduledExecutorService exe = Executors.newScheduledThreadPool(1);
@@ -59,6 +60,7 @@ public class FeeLookup {
 			}
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, e.getMessage());
+			errors.append(e.getMessage());
 		}
 	};
 
@@ -110,6 +112,10 @@ public class FeeLookup {
 
 	public enum FEES {
 		FAST, MID, SLOW;
+	}
+	
+	public String getErrors() {
+		return errors.toString();
 	}
 
 }
