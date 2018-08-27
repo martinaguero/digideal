@@ -4,6 +4,8 @@ import static org.trimatek.digideal.ui.Config.DATE_FORMAT;
 
 import java.util.Date;
 
+import javax.faces.context.FacesContext;
+
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.beans.ContractView;
 import org.trimatek.digideal.ui.comm.GetSerial;
@@ -14,28 +16,29 @@ public class SourceBuilder {
 		static public Source getSource(ContractView view) {
 		StringBuilder sb = new StringBuilder();
 		Source source = new Source();
+		source.setLocale(view.getLocale().toString());
 		source.setName(GetSerial.exec(null).trim());
 
-		sb.append(Tools.msg.getString("contract_header") + source.getName() + " <br/>");
-		sb.append(Tools.msg.getString("contract_intro") + " ");
-		sb.append(Tools.msg.getString("contract_mr_mrs") + " " + view.getNamePayer() + " ");
-		sb.append(Tools.msg.getString("contract_identified_by_payer") + " " + view.getNickPayerValid() + " { \" "
-				+ view.getAddressPayer() + " \" , \" " + view.getEmailPayer() + " \" } " + Tools.msg.getString("contract_and")
+		sb.append(Tools.read("contract_header",source.getLocale()) + source.getName() + " <br/>");
+		sb.append(Tools.read("contract_intro",source.getLocale()) + " ");
+		sb.append(Tools.read("contract_mr_mrs",source.getLocale()) + " " + view.getNamePayer() + " ");
+		sb.append(Tools.read("contract_identified_by_payer",source.getLocale()) + " " + view.getNickPayerValid() + " { \" "
+				+ view.getAddressPayer() + " \" , \" " + view.getEmailPayer() + " \" } " + Tools.read("contract_and",source.getLocale())
 				+ " ");
-		sb.append(Tools.msg.getString("contract_mr_mrs") + " " + view.getNameCollector() + " ");
-		sb.append(Tools.msg.getString("contract_identified_by_collector") + " " + view.getNickCollectorValid() + " { \" "
+		sb.append(Tools.read("contract_mr_mrs",source.getLocale()) + " " + view.getNameCollector() + " ");
+		sb.append(Tools.read("contract_identified_by_collector",source.getLocale()) + " " + view.getNickCollectorValid() + " { \" "
 				+ view.getAddressCollector() + " \" , \" " + view.getEmailCollector() + " \" } ");
-		sb.append(Tools.msg.getString("contract_establishes") + " " + view.getNickPayerValid() + " "
-				+ Tools.msg.getString("contract_will_pay") + " " + view.getNickCollectorValid() + " ");
-		sb.append(Tools.msg.getString("contract_the_sum") + " \"" + view.getSelectedCurrency() + " " + view.getQuantity()
-				+ "\" " + Tools.msg.getString("contract_with") + " BTC \"" + view.getBtc() + "\" ");
-		sb.append(Tools.msg.getString("contract_if") + " " + view.getNickCollectorValid() + " "
-				+ Tools.msg.getString("contract_delivers") + " <i> { \" " + view.getAddress() + " \" } </i> ");
-		sb.append(Tools.msg.getString("contract_this") + " <i> \"" + view.getItem() + "\" · </i>");
-		sb.append(Tools.msg.getString("contract_supervised") + " " + view.getAgentNick() + " · { \" ");
+		sb.append(Tools.read("contract_establishes",source.getLocale()) + " " + view.getNickPayerValid() + " "
+				+ Tools.read("contract_will_pay",source.getLocale()) + " " + view.getNickCollectorValid() + " ");
+		sb.append(Tools.read("contract_the_sum",source.getLocale()) + " \"" + view.getSelectedCurrency() + " " + view.getQuantity()
+				+ "\" " +Tools.read("contract_with",source.getLocale()) + " BTC \"" + view.getBtc() + "\" ");
+		sb.append(Tools.read("contract_if",source.getLocale()) + " " + view.getNickCollectorValid() + " "
+				+ Tools.read("contract_delivers",source.getLocale()) + " <i> { \" " + view.getAddress() + " \" } </i> ");
+		sb.append(Tools.read("contract_this",source.getLocale()) + " <i> \"" + view.getItem() + "\" · </i>");
+		sb.append(Tools.read("contract_supervised",source.getLocale()) + " " + view.getAgentNick() + " · { \" ");
 		sb.append(view.getAgentAddress() + " \" , \" " + view.getAgentEmail() + " \" }");
-		sb.append(Tools.msg.getString("contract_date") + " \"" + getToday() + "\" · ");
-
+		sb.append(Tools.read("contract_date",source.getLocale()) + " \"" + getToday() + "\" · ");
+//Tools.msg.get
 		source.setText(sb.toString());
 		return source;
 	}

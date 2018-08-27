@@ -115,7 +115,11 @@ public class FeeLookup {
 	}
 	
 	public String getErrors() {
-		return errors.toString();
+		return getInstance().errors.toString();
+	}
+	
+	public void addError(String error) {
+		getInstance().errors.append(error);
 	}
 
 }

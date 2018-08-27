@@ -2,7 +2,6 @@ package org.trimatek.digideal.ui.beans;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
@@ -10,9 +9,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
@@ -67,6 +66,7 @@ public class ContractView {
 	private Source source;
 	private boolean dataAuthentic;
 	private StreamedContent file;
+	private Locale locale;
 
 	public ContractView() {
 		currencies = new HashMap<String, String>();
@@ -214,7 +214,7 @@ public class ContractView {
 	}
 
 	public void validatePayerEmail() {
-		if (Validators.validateEmail(getEmailPayer(), Tools.msg.getString("error_payer_email"))) {
+		if (Validators.validateEmail(getEmailPayer(), Tools.read("error_payer_email", getLocale().toString()))) {
 			emailPayerStyle = null;
 			setEmailPayer(emailPayer.toLowerCase());
 		} else {
@@ -248,7 +248,7 @@ public class ContractView {
 	}
 
 	public void validateCollectorEmail() {
-		if (Validators.validateEmail(getEmailCollector(), Tools.msg.getString("error_collector_email"))) {
+		if (Validators.validateEmail(getEmailCollector(), Tools.read("error_collector_email", getLocale().toString()))) {
 			emailCollectorStyle = null;
 			setEmailCollector(emailCollector.toLowerCase());
 		} else {
@@ -417,7 +417,7 @@ public class ContractView {
 	}
 
 	public void confirmDraftAction() {
-		source.setPdf(PDFBuilder.getPdf(SourceBuilder.formatPDF(source), source.getName(), buildSignature()));		
+		source.setPdf(PDFBuilder.getPdf(SourceBuilder.formatPDF(source), source.getName(), buildSignature()));
 		SendSource.exec(source);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.NAVIGATION_RESULT);
@@ -425,7 +425,7 @@ public class ContractView {
 
 	public StreamedContent getFile() {
 		file = new DefaultStreamedContent(new ByteArrayInputStream(source.getPdf()), "application/pdf",
-				(Tools.msg.getString("contract_header") + source.getName() + ".pdf"));
+				(Tools.read("contract_header", source.getLocale()) + source.getName() + ".pdf"));
 		return file;
 	}
 
@@ -485,6 +485,13 @@ public class ContractView {
 		signature.add(getTooltipCollector());
 		signature.add(getTooltipAgent());
 		return signature;
+	}
+
+	public Locale getLocale() {
+		if (locale == null) {
+			locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+		}
+		return locale;
 	}
 
 }

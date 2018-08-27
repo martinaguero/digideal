@@ -33,7 +33,7 @@ public class Compile extends Action implements Runnable {
 			writer.close();
 
 			if (Files.exists(Paths.get(sourcePath + Context.SOURCE_EXT))) {
-				Process pr = rt.exec(buildParams(sourcePath));
+				Process pr = rt.exec(buildParams(contract.getSource().getLocale(), sourcePath));
 				err = Translators.toString(pr.getErrorStream());
 				res = Translators.toString(pr.getInputStream());
 			}
@@ -66,8 +66,10 @@ public class Compile extends Action implements Runnable {
 		return this.contract;
 	}
 
-	private static String buildParams(String sourcePath) throws IOException {
-		return Context.PATH_TO_JRE8 + " -jar " + Context.PATH_TO_COCO + " " + sourcePath + Context.SOURCE_EXT;
+	private static String buildParams(String locale, String sourcePath) throws IOException {
+		String lang = locale.contains("_") ? locale.substring(locale.indexOf("_")) : "_" + locale;
+		return Context.PATH_TO_JRE8 + " -jar " + Context.PATH_TO_COCO + lang + ".jar " + sourcePath
+				+ Context.SOURCE_EXT;
 	}
 
 }

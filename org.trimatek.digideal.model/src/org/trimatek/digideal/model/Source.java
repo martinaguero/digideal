@@ -12,6 +12,7 @@ public class Source {
 	private long id;
 	private String name;
 	private String text;
+	private String locale;
 	private byte[] pdf;
 
 	public String getText() {
@@ -36,6 +37,14 @@ public class Source {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
 	}
 
 	public byte[] getPdf() {

@@ -37,32 +37,33 @@ public class Validators {
 
 	public static String validateAddress(Address address) {
 		StringBuilder sb = new StringBuilder();
+		String locale = FacesContext.getCurrentInstance().getViewRoot().getLocale().toString();
 		if (address == null) {
 			sb.append("<br/>");
-			sb.append(Tools.msg.getString("error_address_not_parseable"));
+			sb.append(Tools.read("error_address_not_parseable",locale));
 		} else {
 			if (address.getROUTE() == null) {
 				sb.append("<br/>");
-				sb.append(Tools.msg.getString("error_street_not_found"));
+				sb.append(Tools.read("error_street_not_found",locale));
 			}
 			if (address.getSTREET_NUMBER() == null) {
 				sb.append("<br/>");
-				sb.append(Tools.msg.getString("error_street_number_not_found"));
+				sb.append(Tools.read("error_street_number_not_found",locale));
 			}
 			if (address.getPOSTAL_CODE() == null) {
 				sb.append("<br/>");
-				sb.append(Tools.msg.getString("error_postal_code_not_found"));
+				sb.append(Tools.read("error_postal_code_not_found",locale));
 			}
 			if (address.getADMINISTRATIVE_AREA_LEVEL_1() == null) {
 				sb.append("<br/>");
-				sb.append(Tools.msg.getString("error_city_not_found"));
+				sb.append(Tools.read("error_city_not_found",locale));
 			}
 			if (address.getCOUNTRY() == null) {
 				sb.append("<br/>");
-				sb.append(Tools.msg.getString("error_country_not_found"));
+				sb.append(Tools.read("error_country_not_found",locale));
 			}
 		}
-		return sb.length() > 0 ? Tools.msg.getString("error_address") + sb.toString() : "";
+		return sb.length() > 0 ? Tools.read("error_address",locale) + sb.toString() : "";
 	}
 
 	public static boolean validateSentenceLength(String target, String message, int minWords) {

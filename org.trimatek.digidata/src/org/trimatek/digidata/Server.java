@@ -21,7 +21,7 @@ public class Server extends AbstractVerticle {
 	public void start(Future<Void> fut) {
 
 		Router router = Router.router(vertx);
-		FeeLookup feeLockup = FeeLookup.getInstance();
+		FeeLookup feeLookup = FeeLookup.getInstance();
 
 		router.route("/digidata/serial").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
@@ -32,43 +32,43 @@ public class Server extends AbstractVerticle {
 		router.route("/digidata/fee/fast").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
 			response.setStatusCode(200);
-			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLockup.getFee(FEES.FAST));
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getFee(FEES.FAST));
 		});
 		
 		router.route("/digidata/fee/slow").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
 			response.setStatusCode(200);
-			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLockup.getFee(FEES.SLOW));
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getFee(FEES.SLOW));
 		});
 		
 		router.route("/digidata/fee/mid").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
 			response.setStatusCode(200);
-			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLockup.getFee(FEES.MID));
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getFee(FEES.MID));
 		});
 		
 		router.route("/digidata/fee/fast/hist").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
 			response.setStatusCode(200);
-			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLockup.getHisto(FEES.FAST));
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getHisto(FEES.FAST));
 		});
 		
 		router.route("/digidata/fee/slow/hist").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
 			response.setStatusCode(200);
-			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLockup.getHisto(FEES.SLOW));
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getHisto(FEES.SLOW));
 		});
 		
 		router.route("/digidata/fee/mid/hist").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
 			response.setStatusCode(200);
-			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLockup.getHisto(FEES.MID));
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getHisto(FEES.MID));
 		});
 		
 		router.route("/digidata/fee/err").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
 			response.setStatusCode(200);
-			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLockup.getErrors());
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getErrors());
 		});
 
 		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", PORT),
@@ -92,8 +92,4 @@ public class Server extends AbstractVerticle {
 		});
 	}
 
-//	private void serialGen(RoutingContext routingContext) {
-//		routingContext.response().setStatusCode(201).putHeader("content-type", "text/plain; charset=utf-8")
-//				.end(Serializer.getInstance().newSerial());
-//	}
 }

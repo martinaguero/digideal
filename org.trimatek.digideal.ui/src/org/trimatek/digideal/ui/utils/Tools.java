@@ -3,13 +3,18 @@ package org.trimatek.digideal.ui.utils;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.trimatek.digideal.ui.Config;
 
 public class Tools {
 
-	public final static ResourceBundle msg = ResourceBundle.getBundle(Config.MESSAGES_BUNDLE);
+	//public final static ResourceBundle msg = ResourceBundle.getBundle(Config.MESSAGES_BUNDLE);
+	
+	public static String read(String key, String lang) {
+		return ResourceBundle.getBundle(Config.MESSAGES_BUNDLE,Locale.forLanguageTag(lang)).getString(key);
+	}
 
 	public static List<String> getFieldNames(Field[] fields) {
 		List<String> fieldNames = new ArrayList<>();
