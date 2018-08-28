@@ -3,7 +3,7 @@ grammar org.trimatek.digideal.Contract with org.eclipse.xtext.common.Terminals
 generate contract "http://www.trimatek.org/digideal/Contract"
 
 Contract:
-	'CONTRATO' cid=SERIAL paragraph+=Sentence*;
+	'DigiDeal' cid=SERIAL paragraph+=Sentence*;
 
 Sentence:
 	sentenceType=STRING | Subject | Reference | PayTo | PaymentCondition | SupervisedBy | Date;
