@@ -1,7 +1,5 @@
 package org.trimatek.digideal.actions;
 
-import static org.trimatek.digideal.tools.Dialogs.msg;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Properties;
@@ -22,6 +20,7 @@ import org.trimatek.digideal.comm.mail.Tools;
 import org.trimatek.digideal.comm.mail.utils.TemplateFactory;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.tools.Dialogs;
 import org.trimatek.digideal.tools.Generators;
 
 public class ReRequestFunds extends Action {
@@ -42,6 +41,7 @@ public class ReRequestFunds extends Action {
 
 	private static MimeMessage setupMail(Contract cnt) throws Exception {
 		Properties props = new Properties();
+		String locale = cnt.getSource().getLocale();
 		Session session = Session.getDefaultInstance(props, null);
 		MimeMessage email = new MimeMessage(session);
 		BigDecimal dif = calcDifference(cnt);
@@ -49,24 +49,24 @@ public class ReRequestFunds extends Action {
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject(msg.getString("email_subject_prefix") + " " + msg.getString("email_rerequest_funds_subject"));
+		email.setSubject(Dialogs.read("email_subject_prefix",locale) + " " + Dialogs.read("email_rerequest_funds_subject",locale));
 
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
 
 		Template t = TemplateFactory.getEmailTemplate();
-		t.setHi(msg.getString("email_hi") + " @" + cnt.getValue("payer.name") + "</b>");
-		String content1 = msg.getString("email_btc") + " "
-				+ cnt.getLastUnspentTransaction().getValue() + " " + msg.getString("email_rerequest_funds_content1_a")
-				+ "<br/> " + msg.getString("email_rerequest_funds_content1_b") + " <b>"
-				+ msg.getString("email_btc") + " " + dif + "</b> "
-				+ msg.getString("email_rerequest_funds_content1_c") + "<br/>" + cnt.getMultisigAddress() + "<br/>"
-				+ msg.getString("email_rerequest_funds_content1_d");
+		t.setHi(Dialogs.read("email_hi",locale) + " @" + cnt.getValue("payer.name") + "</b>");
+		String content1 = Dialogs.read("email_btc",locale) + " "
+				+ cnt.getLastUnspentTransaction().getValue() + " " + Dialogs.read("email_rerequest_funds_content1_a",locale)
+				+ "<br/> " + Dialogs.read("email_rerequest_funds_content1_b",locale) + " <b>"
+				+ Dialogs.read("email_btc",locale) + " " + dif + "</b> "
+				+ Dialogs.read("email_rerequest_funds_content1_c",locale) + "<br/>" + cnt.getMultisigAddress() + "<br/>"
+				+ Dialogs.read("email_rerequest_funds_content1_d",locale);
 
 		t.setPreview(content1);
 		t.setContent1(content1);
-		t.setContent2(msg.getString("email_content2") + cnt.getValue("id"));
-		t.setSalutation(msg.getString("email_salutation"));
+		t.setContent2(Dialogs.read("email_content2",locale) + cnt.getValue("id"));
+		t.setSalutation(Dialogs.read("email_salutation",locale));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 		content.addBodyPart(htmlPart);
 

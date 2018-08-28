@@ -19,7 +19,7 @@ import org.trimatek.digideal.comm.mail.Tools;
 import org.trimatek.digideal.comm.mail.utils.TemplateFactory;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
-import static org.trimatek.digideal.tools.Dialogs.msg;
+import org.trimatek.digideal.tools.Dialogs;
 import org.trimatek.digideal.tools.Generators;
 
 public class SendReceiptCode extends Action {
@@ -55,24 +55,25 @@ public class SendReceiptCode extends Action {
 
 	private static MimeMessage setupMail(Contract cnt, byte[] qr, String code) throws Exception {
 		Properties props = new Properties();
+		String locale = cnt.getSource().getLocale();
 		Session session = Session.getDefaultInstance(props, null);
 		MimeMessage email = new MimeMessage(session);
 
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject(msg.getString("email_subject_prefix") + " " + msg.getString("email_funds_available_subject"));
+		email.setSubject(Dialogs.read("email_subject_prefix",locale) + " " + Dialogs.read("email_funds_available_subject",locale));
 
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
 
 		Template t = TemplateFactory.getEmailTemplate();
-		t.setHi(msg.getString("email_hi") + " @" + cnt.getValue("payer.name") + "</b>");
-		String content1 = msg.getString("email_send_receipt_code_content1") + " <b>" + code + "</b>";
+		t.setHi(Dialogs.read("email_hi",locale) + " @" + cnt.getValue("payer.name") + "</b>");
+		String content1 = Dialogs.read("email_send_receipt_code_content1",locale) + " <b>" + code + "</b>";
 		t.setPreview(content1);
 		t.setContent1(content1);
-		t.setContent2(msg.getString("email_content2") + cnt.getValue("id"));
-		t.setSalutation(msg.getString("email_salutation"));
+		t.setContent2(Dialogs.read("email_content2",locale) + cnt.getValue("id"));
+		t.setSalutation(Dialogs.read("email_salutation",locale));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);

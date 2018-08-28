@@ -15,7 +15,8 @@ import org.trimatek.digideal.comm.mail.Template;
 import org.trimatek.digideal.comm.mail.utils.TemplateFactory;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
-import static org.trimatek.digideal.tools.Dialogs.msg;
+import org.trimatek.digideal.tools.Dialogs;
+
 import static org.trimatek.digideal.tools.Dialogs.setTwitterColor;
 
 public class NotifyFundsAvailability extends Action {
@@ -33,26 +34,27 @@ public class NotifyFundsAvailability extends Action {
 
 	private static MimeMessage setupCollectorMail(Contract cnt) throws Exception {
 		Properties props = new Properties();
+		String locale = cnt.getSource().getLocale();
 		Session session = Session.getDefaultInstance(props, null);
 		MimeMessage email = new MimeMessage(session);
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("collector.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject(msg.getString("email_subject_prefix") + " " + msg.getString("email_funds_available_subject"));
+		email.setSubject(Dialogs.read("email_subject_prefix",locale) + " " + Dialogs.read("email_funds_available_subject",locale));
 
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
 
 		Template t = TemplateFactory.getEmailTemplate();
-		t.setHi(msg.getString("email_hi") + " @" + cnt.getValue("collector.name") + "</b>");
-		String content1 = msg.getString("email_funds_available_collector_content1_a") + "<br/>"
-				+ msg.getString("email_funds_available_collector_content1_b") + " "
+		t.setHi(Dialogs.read("email_hi",locale) + " @" + cnt.getValue("collector.name") + "</b>");
+		String content1 = Dialogs.read("email_funds_available_collector_content1_a",locale) + "<br/>"
+				+ Dialogs.read("email_funds_available_collector_content1_b",locale) + " "
 				+ setTwitterColor(" @" + cnt.getValue("payer.name") + " ")
-				+ msg.getString("email_funds_available_collector_content1_c");
+				+ Dialogs.read("email_funds_available_collector_content1_c",locale);
 		t.setPreview(content1);
 		t.setContent1(content1);
-		t.setContent2(msg.getString("email_content2") + cnt.getValue("id"));
-		t.setSalutation(msg.getString("email_salutation"));
+		t.setContent2(Dialogs.read("email_content2",locale) + cnt.getValue("id"));
+		t.setSalutation(Dialogs.read("email_salutation",locale));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);

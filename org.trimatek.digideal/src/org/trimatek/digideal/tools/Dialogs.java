@@ -1,12 +1,17 @@
 package org.trimatek.digideal.tools;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.trimatek.digideal.Config;
 
 public class Dialogs {
 
-	public final static ResourceBundle msg = ResourceBundle.getBundle(Config.MESSAGES_BUNDLE);
+	//public final static ResourceBundle msg = ResourceBundle.getBundle(Config.MESSAGES_BUNDLE);
+	
+	public static String read(String key, String lang) {
+		return ResourceBundle.getBundle(Config.MESSAGES_BUNDLE,Locale.forLanguageTag(lang)).getString(key);
+	}
 
 	public static String setTwitterColor(String text) {
 		return "<font color=\"#1da1f2\">" + text + "</font>";

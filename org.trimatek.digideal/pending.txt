@@ -5,7 +5,7 @@
 5.integración REST (AGREGADO)
 6.delay para enviar la transacción de pago
 7.contrato en dólares (AGREGADO)
-8.fee variable -> servicio REST
+8.fee variable -> servicio REST (AGREGADO)
 9.semilla para ID de contrato (AGREGADO)
 10.enviar funds request con QR para wallet (AGREGADO) -> agregar para ReRequest (AGREGADO)
 11.agregar id de contrato invisible en los mails (AGREGADO) ->agregar para ReRequest (AGREGADO)
@@ -20,3 +20,7 @@
 20.en el mail de confirmación exitosa del contrato, agregar la url para ver la tx de pago (AGREGADO)
 21.formatear emails: https://github.com/leemunroe/responsive-html-email-template (AGREGADO)
 22.obtener código de mail html/multipart
+23.crear parser en inglés(AGREGADO)
+24.mails multilanguage(AGREGADO)
+25.corregir el combo de moneda
+26.mejorar el parser de código de recibo
