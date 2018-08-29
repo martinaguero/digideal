@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -71,18 +72,22 @@ public class FeeLookup {
 		String data[] = predictions.split(",");
 		if (data.length > 0) {
 			count++;
-		}
-		for (String s : data) {
-			if (s.contains("fastestFee")) {
-				lastFast = s.substring(s.indexOf(":") + 1);
-				histoFast = (histoFast.add(new BigDecimal(lastFast)));
-			} else if (s.contains("halfHourFee")) {
-				lastMid = s.substring(s.indexOf(":") + 1);
-				histoMid = histoMid.add(new BigDecimal(lastMid));
-			} else {
-				lastSlow = s.substring(s.indexOf(":") + 1);
-				histoSlow = histoSlow.add(new BigDecimal(lastSlow));
+			for (String s : data) {
+				if (s.contains("fastestFee")) {
+					lastFast = s.substring(s.indexOf(":") + 1);
+					histoFast = (histoFast.add(new BigDecimal(lastFast)));
+				} else if (s.contains("halfHourFee")) {
+					lastMid = s.substring(s.indexOf(":") + 1);
+					histoMid = histoMid.add(new BigDecimal(lastMid));
+				} else {
+					lastSlow = s.substring(s.indexOf(":") + 1);
+					histoSlow = histoSlow.add(new BigDecimal(lastSlow));
+				}
 			}
+		} else {
+			String msg = "Empty predictions response";
+			errors.append(LocalDateTime.now() + ": " + msg);
+			logger.log(Level.SEVERE, msg);
 		}
 	}
 
@@ -105,6 +110,7 @@ public class FeeLookup {
 	}
 
 	public String getHisto(FEES option) {
+		logger.log(Level.INFO, "New historic prediction request. SAMPLES: " + count + " - MID: " + histoMid);
 		return option.compareTo(FEES.FAST) == 0 ? histoFast.divide(new BigDecimal(count)).intValue() + ""
 				: option.compareTo(FEES.SLOW) == 0 ? histoSlow.divide(new BigDecimal(count)).intValue() + ""
 						: histoMid.divide(new BigDecimal(count)).intValue() + "";
@@ -113,11 +119,11 @@ public class FeeLookup {
 	public enum FEES {
 		FAST, MID, SLOW;
 	}
-	
+
 	public String getErrors() {
 		return getInstance().errors.toString();
 	}
-	
+
 	public void addError(String error) {
 		getInstance().errors.append(error);
 	}
