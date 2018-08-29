@@ -79,10 +79,10 @@ public class Server extends AbstractVerticle {
 			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getHisto(FEES.MID));
 		});
 
-		router.route("/digidata/fee/err").handler(routingContext -> {
+		router.route("/digidata/fee/status").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
 			response.setStatusCode(200);
-			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getErrors());
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getStatus());
 		});
 
 		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", PORT),

@@ -3,6 +3,7 @@ package org.trimatek.digidata.fee;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Instant;
@@ -27,7 +28,6 @@ public class FeeLookup {
 	private BigDecimal histoSlow = new BigDecimal(0);
 	private int count = 0;
 	private Instant updateTime;
-	private StringBuffer errors = new StringBuffer();
 
 	private FeeLookup() {
 		ScheduledExecutorService exe = Executors.newScheduledThreadPool(1);
@@ -61,7 +61,6 @@ public class FeeLookup {
 			}
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, e.getMessage());
-			errors.append(e.getMessage());
 		}
 	};
 
@@ -85,9 +84,7 @@ public class FeeLookup {
 				}
 			}
 		} else {
-			String msg = "Empty predictions response";
-			errors.append(LocalDateTime.now() + ": " + msg);
-			logger.log(Level.SEVERE, msg);
+			logger.log(Level.SEVERE, "Empty predictions response");
 		}
 	}
 
@@ -110,22 +107,38 @@ public class FeeLookup {
 	}
 
 	public String getHisto(FEES option) {
-		logger.log(Level.INFO, "New historic prediction request. SAMPLES: " + count + " - MID: " + histoMid);
-		return option.compareTo(FEES.FAST) == 0 ? histoFast.divide(new BigDecimal(count)).intValue() + ""
-				: option.compareTo(FEES.SLOW) == 0 ? histoSlow.divide(new BigDecimal(count)).intValue() + ""
-						: histoMid.divide(new BigDecimal(count)).intValue() + "";
+		logger.log(Level.INFO, "New historic prediction request. Current status:\n"
+				+ new Status(histoFast, histoMid, histoSlow, count).toString());
+		return option.compareTo(FEES.FAST) == 0 ? histoFast.divide(new BigDecimal(count), 0, RoundingMode.HALF_UP) + ""
+				: option.compareTo(FEES.SLOW) == 0
+						? histoSlow.divide(new BigDecimal(count), 0, RoundingMode.HALF_UP) + ""
+						: histoMid.divide(new BigDecimal(count), 0, RoundingMode.HALF_UP) + "";
 	}
 
 	public enum FEES {
 		FAST, MID, SLOW;
 	}
 
-	public String getErrors() {
-		return getInstance().errors.toString();
+	public String getStatus() {
+		return new Status(histoFast, histoMid, histoSlow, count).toString();
 	}
 
-	public void addError(String error) {
-		getInstance().errors.append(error);
+	private class Status {
+		private BigDecimal FAST, MID, SLOW;
+		private int samples;
+
+		public Status(BigDecimal fast, BigDecimal mid, BigDecimal slow, int samples) {
+			FAST = fast;
+			MID = mid;
+			SLOW = slow;
+			this.samples = samples;
+		}
+
+		public String toString() {
+			String out = "FAST: \t\t" + FAST + "\n" + "MID: \t\t" + MID + "\n" + "SLOW: \t\t" + SLOW + "\n"
+					+ "Samples: \t" + samples;
+			return out;
+		}
 	}
 
 }
