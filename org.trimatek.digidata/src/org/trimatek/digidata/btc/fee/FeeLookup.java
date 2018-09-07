@@ -1,4 +1,4 @@
-package org.trimatek.digidata.fee;
+package org.trimatek.digidata.btc.fee;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -7,7 +7,6 @@ import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -15,12 +14,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.trimatek.digidata.Config;
+
 public class FeeLookup {
 
 	private final static Logger logger = Logger.getLogger(FeeLookup.class.getName());
-	private final static String EARN_URL = "https://bitcoinfees.earn.com/api/v1/fees/recommended";
-	private final static int MINUTES_TO_UPDATE = 30;
-	private final static int HOURS_TO_UPDATE_HISTORIC = 2;
 	private static FeeLookup INSTANCE;
 	private String lastFast, lastMid, lastSlow;
 	private BigDecimal histoFast = new BigDecimal(0);
@@ -31,7 +29,7 @@ public class FeeLookup {
 
 	private FeeLookup() {
 		ScheduledExecutorService exe = Executors.newScheduledThreadPool(1);
-		exe.scheduleAtFixedRate(updatePrediction, 0, HOURS_TO_UPDATE_HISTORIC, TimeUnit.HOURS);
+		exe.scheduleAtFixedRate(updatePrediction, 0, Config.BTC_FEE_HOURS_TO_UPDATE_HISTORIC, TimeUnit.HOURS);
 	}
 
 	public static FeeLookup getInstance() {
@@ -44,7 +42,7 @@ public class FeeLookup {
 	Runnable updatePrediction = () -> {
 		StringBuffer response = new StringBuffer();
 		try {
-			URL url = new URL(EARN_URL);
+			URL url = new URL(Config.BTC_FEE_PREDICTION_EARN_URL);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 			con.setRequestProperty("User-Agent", "Mozilla/5.0");
@@ -89,8 +87,9 @@ public class FeeLookup {
 	}
 
 	private boolean requiresUpdate() {
-		return updateTime == null || ChronoUnit.MINUTES.between(Instant.now(), updateTime) > MINUTES_TO_UPDATE ? true
-				: false;
+		return updateTime == null
+				|| ChronoUnit.MINUTES.between(Instant.now(), updateTime) > Config.BTC_FEE_MINUTES_TO_UPDATE ? true
+						: false;
 	}
 
 	public String getFee(FEES option) {

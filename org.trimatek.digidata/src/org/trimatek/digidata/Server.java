@@ -6,8 +6,9 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import org.trimatek.digidata.fee.FeeLookup;
-import org.trimatek.digidata.fee.FeeLookup.FEES;
+import org.trimatek.digidata.btc.fee.FeeLookup;
+import org.trimatek.digidata.btc.fee.FeeLookup.FEES;
+import org.trimatek.digidata.btc.fee.RateLookup;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
@@ -24,7 +25,7 @@ public class Server extends AbstractVerticle {
 		if (null != inputStream) {
 			try {
 				LogManager.getLogManager().readConfiguration(inputStream);
-				
+
 			} catch (IOException e) {
 				Logger.getGlobal().log(Level.SEVERE, "init logging system", e);
 			}
@@ -36,6 +37,7 @@ public class Server extends AbstractVerticle {
 
 		Router router = Router.router(vertx);
 		FeeLookup feeLookup = FeeLookup.getInstance();
+		RateLookup rateLookup = RateLookup.getInstance();
 
 		router.route("/digidata/serial").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
@@ -85,6 +87,18 @@ public class Server extends AbstractVerticle {
 			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getStatus());
 		});
 
+		router.route("/digidata/rate/btc/usd").handler(routingContext -> {
+			HttpServerResponse response = routingContext.response();
+			response.setStatusCode(200);
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(rateLookup.getUsdRate());
+		});
+
+		router.route("/digidata/help").handler(routingContext -> {
+			HttpServerResponse response = routingContext.response();
+			response.setStatusCode(200);
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(printHelp());
+		});
+
 		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", PORT),
 				result -> {
 					if (result.succeeded()) {
@@ -108,6 +122,17 @@ public class Server extends AbstractVerticle {
 				ar.cause().printStackTrace();
 			}
 		});
+	}
+
+	private String printHelp() {
+		return "/digidata/serial \t\t\t Unique serial from: base36(epoch+counter)\n"
+				+ "/digidata/fee/[fast/mid/slow] \t\t Fee prediction for confirmation from: "
+				+ Config.BTC_FEE_PREDICTION_EARN_URL + " updated every " + Config.BTC_FEE_MINUTES_TO_UPDATE
+				+ " minutes\n" + "/digidata/fee/[fast/mid/slow]/hist \t Historic fee prediction from: "
+				+ Config.BTC_FEE_PREDICTION_EARN_URL + " updated every " + Config.BTC_FEE_HOURS_TO_UPDATE_HISTORIC
+				+ " hours\n" + "/digidata/fee/status \t\t\t Sum of historic fee prediction received samples\n"
+				+ "/digidata/rate/btc/usd \t\t\t Exchange rate from: " + Config.BTC_USD_RATE_BCINFO_URL
+				+ " updated every " + Config.BTC_RATE_HOURS_UPDATE + " hours\n";
 	}
 
 }

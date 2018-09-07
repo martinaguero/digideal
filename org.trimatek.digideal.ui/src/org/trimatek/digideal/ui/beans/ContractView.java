@@ -7,11 +7,12 @@ import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
@@ -62,16 +63,16 @@ public class ContractView {
 	private String itemStyle;
 	private String address;
 	private String addressStyle;
-	private double BTC_PER_DOLLAR = 0.00013828;
+	private BigDecimal BTC_PER_DOLLAR;
 	private Source source;
 	private boolean dataAuthentic;
 	private StreamedContent file;
 	private Locale locale;
 
 	public ContractView() {
-		currencies = new HashMap<String, String>();
-		currencies.put(CurrenciesEnum.BTC.name(), CurrenciesEnum.BTC.name());
+		currencies = new LinkedHashMap<String, String>();
 		currencies.put(CurrenciesEnum.USD.name(), CurrenciesEnum.USD.name());
+		currencies.put(CurrenciesEnum.BTC.name(), CurrenciesEnum.BTC.name());
 		currencies.put(CurrenciesEnum.BRL.name(), CurrenciesEnum.BRL.name());
 		updateBtc();
 		namePayerStyle = Config.REQUIRED_FIELD;
@@ -101,11 +102,11 @@ public class ContractView {
 					response.append(inputLine);
 				}
 				in.close();
-				BTC_PER_DOLLAR = Double.parseDouble(response.toString());
-				System.out.println("Precio de BTC actualizado");
+				BTC_PER_DOLLAR = new BigDecimal(response.toString());
+				logger.log(Level.INFO, "Precio de BTC actualizado a: " + BTC_PER_DOLLAR);
 			}
 		} catch (Exception e) {
-			System.out.println("Error al consultar cotización");
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	};
 
@@ -201,10 +202,10 @@ public class ContractView {
 
 	public void handleQuantity() {
 		if (getQuantity() != null) {
-			if (CurrenciesEnum.BTC.name().equals(getSelectedCurrency()) || getSelectedCurrency() == null) {
+			if (CurrenciesEnum.BTC.name().equals(getSelectedCurrency())) {
 				setBtc(getQuantity());
 			} else {
-				BigDecimal result = new BigDecimal(Double.parseDouble(getQuantity()) * BTC_PER_DOLLAR);
+				BigDecimal result = new BigDecimal(getQuantity()).multiply(BTC_PER_DOLLAR);
 				setBtc(result.setScale(8, BigDecimal.ROUND_HALF_EVEN).toPlainString());
 			}
 			quantityStyle = null;
@@ -248,7 +249,8 @@ public class ContractView {
 	}
 
 	public void validateCollectorEmail() {
-		if (Validators.validateEmail(getEmailCollector(), Tools.read("error_collector_email", getLocale().toString()))) {
+		if (Validators.validateEmail(getEmailCollector(),
+				Tools.read("error_collector_email", getLocale().toString()))) {
 			emailCollectorStyle = null;
 			setEmailCollector(emailCollector.toLowerCase());
 		} else {

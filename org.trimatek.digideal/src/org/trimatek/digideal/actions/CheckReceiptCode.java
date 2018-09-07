@@ -2,6 +2,7 @@ package org.trimatek.digideal.actions;
 
 import java.util.List;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.mail.Message;
@@ -61,9 +62,12 @@ public class CheckReceiptCode extends Action {
 	private static String parseReceiveCode(String content) {
 		content = content.replace(" ", System.lineSeparator());
 		String[] words = content.split(System.lineSeparator());
+		Pattern pattern = Pattern.compile(Config.RECEIPT_CODE_REGEX);
+		Matcher matcher;
 		for (String w : words) {
-			if (Pattern.matches(Config.RECEIPT_CODE_REGEX, w)) {
-				return w;
+			matcher = pattern.matcher(w);
+			if (matcher.find()) {
+				return matcher.group();				
 			}
 		}
 		return null;
@@ -75,18 +79,8 @@ public class CheckReceiptCode extends Action {
 	}
 
 	public static void main(String args[]) {
-/*
-		try {
-			Contract cnt = new Contract("", "D:\\Dropbox\\Criptomonedas\\digideal\\contrato\\ABC.properties");
-			cnt.setUnspentTxId("25fb4dc0542b8071cb7150504971e81faf5d3ced86f22e09519fb4080a8c0732");
-			State delivery = new WaitingReceipt(cnt);
-			delivery.run();
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
+		String code = "asfasfasdfdsaf456aaa222fasdfadsfasdfdsafasds";
+		System.out.println(parseReceiveCode(code));
 	}
 
 }

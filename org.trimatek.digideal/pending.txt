@@ -19,8 +19,10 @@
 19.esperar a que la transacción tenga unas 3 confirmaciones
 20.en el mail de confirmación exitosa del contrato, agregar la url para ver la tx de pago (AGREGADO)
 21.formatear emails: https://github.com/leemunroe/responsive-html-email-template (AGREGADO)
-22.obtener código de mail html/multipart
+22.obtener código de mail html/multipart(SOLUCIONADO)
 23.crear parser en inglés(AGREGADO)
 24.mails multilanguage(AGREGADO)
-25.corregir el combo de moneda
-26.mejorar el parser de código de recibo
+25.corregir el combo de moneda(SOLUCIONADO)
+26.mejorar el parser de código de recibo(SOLUCIONADO)
+27.agregar al QR de código de recibo el #DigiDeal
+28.agregar logueo a DigiDeal
