@@ -13,6 +13,7 @@
 			<default-locale>es</default-locale>
 			<supported-locale>es</supported-locale>
 			<supported-locale>en</supported-locale>
+			<supported-locale>pt</supported-locale>
 		</locale-config>
 		<resource-bundle>
 			<base-name>org.trimatek.digideal.ui.messages</base-name>

@@ -26,3 +26,5 @@
 26.mejorar el parser de código de recibo(SOLUCIONADO)
 27.agregar al QR de código de recibo el #DigiDeal
 28.agregar logueo a DigiDeal
+29.crear website
+30.enlace contact-us en el mail
