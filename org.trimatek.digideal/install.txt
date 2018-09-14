@@ -1,0 +1,15 @@
+1.JDK9
+2.Bitcoin
+3.ObjectDB
+4.COCO Jars
+5.Compiler config:
+	- Temp dir
+	- COCO dir
+6.Bitcoin config:
+	- CLI dir
+	- Digidata URL
+7.GUI config:
+	- Digidata URL
+	- Digideal URL
+8.DigiDeal:
+	- Digideal PORT 

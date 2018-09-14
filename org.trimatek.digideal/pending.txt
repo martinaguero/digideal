@@ -28,3 +28,7 @@
 28.agregar logueo a DigiDeal
 29.crear website
 30.enlace contact-us en el mail
+31.agregar parser PT
+32.seguridad DB
+33.Digidata y Tomcat -> AWS
+34.Revisar org.trimatek.digideal.comm.rest.Server addOne

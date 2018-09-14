@@ -4,11 +4,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.trimatek.digideal.compiler.actions.Compile;
-import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
-import org.trimatek.digideal.model.Source;
 import org.trimatek.digideal.model.Launcher;
-import org.trimatek.digideal.repo.Repository;
+import org.trimatek.digideal.model.Source;
 
 import com.google.gson.Gson;
 
@@ -23,15 +21,20 @@ import io.vertx.ext.web.handler.BodyHandler;
 public class Server extends AbstractVerticle implements Launcher {
 	
 	protected final static Logger logger = Logger.getLogger(Server.class.getName());
+	private int PORT = 9090;
+	
+	public Server(int port) {
+		PORT = port;
+	}
 
 	public static void main(String args[]) {
-		Server server = new Server();
+		Server server = new Server(9090);
 		server.init();
 	}
 
 	public void init() {
 		Vertx vertx = Vertx.vertx();
-		vertx.deployVerticle(new Server(), ar -> {
+		vertx.deployVerticle(new Server(PORT), ar -> {
 			if (ar.failed()) {
 				ar.cause().printStackTrace();
 			}
@@ -45,13 +48,13 @@ public class Server extends AbstractVerticle implements Launcher {
 
 		router.route("/").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
-			response.putHeader("content-type", "text/html").end("<h1>Hola, soy DigiDeal</h1>");
+			response.putHeader("content-type", "text/html").end("<h1>Hi, I'm DigiDeal</h1>");
 		});
 
 		router.route("/api/drafts*").handler(BodyHandler.create());
 		router.post("/api/drafts").handler(this::addOne);
 
-		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", 9090),
+		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", PORT),
 				result -> {
 					if (result.succeeded()) {
 						startFuture.complete();
@@ -66,7 +69,7 @@ public class Server extends AbstractVerticle implements Launcher {
 
 	private void addOne(RoutingContext routingContext) {
 
-		String message = "compile fail";
+		String message = "Compile fail";
 		Source source = new Gson().fromJson(routingContext.getBodyAsString(), Source.class);
 
 		if (source != null) {
@@ -76,13 +79,6 @@ public class Server extends AbstractVerticle implements Launcher {
 		}
 
 		System.out.println(source.getText());
-
-		// compilar
-		// sino, mensaje de error a la web
-		// if(draft!=null) {// si la compilación fue exitosa, se guarda el Draft
-		// Repository.getInstance().save(new Contract(draft.getText(),null));
-		// message = "compile success";
-		// }
 
 		routingContext.response().setStatusCode(201).putHeader("content-type", "text/plain; charset=utf-8")
 				.end(message);

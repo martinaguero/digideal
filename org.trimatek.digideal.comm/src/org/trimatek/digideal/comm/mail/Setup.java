@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -21,6 +23,7 @@ import com.google.api.services.gmail.GmailScopes;
 
 public class Setup {
 
+	protected final static Logger logger = Logger.getLogger(Setup.class.getName());
 	/** Application name. */
 	private static final String APPLICATION_NAME = "DigiDeal";
 	public static final String USER = "me";
@@ -59,7 +62,9 @@ public class Setup {
 	 */
 	public static Credential authorize() throws IOException {
 		// Load client secrets.
+		logger.log(Level.INFO,"Ready to load emails credentials");
 		InputStream in = GMailResource.class.getResourceAsStream("/client_id.json");
+		logger.log(Level.INFO,"Credentials input stream is available: " +in.available());
 		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 		// Build flow and trigger user authorization request.
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
