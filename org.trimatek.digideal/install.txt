@@ -5,6 +5,7 @@
 5.Compiler config:
 	- Temp dir
 	- COCO dir
+	- JDK8 dir
 6.Bitcoin config:
 	- CLI dir
 	- Digidata URL

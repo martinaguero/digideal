@@ -62,7 +62,7 @@ public class Start implements Launcher {
 
 	public static void main(String[] args)
 			throws FileNotFoundException, IOException, InterruptedException, ExecutionException {
-
+		logger.log(Level.INFO, "////////////// DigiDeal v." + Config.DIGIDEAL_VERSION + " \\\\\\\\\\\\\\\\\\\\\\\\\\\\");
 		logger.log(Level.INFO, "Ready logging");
 		Start s = new Start();
 		s.init();

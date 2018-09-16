@@ -3,7 +3,7 @@ package org.trimatek.digideal.comm.mail;
 public class Template {
 
 	private String html;
-	
+
 	public Template(String html) {
 		this.html = html;
 	}
@@ -12,7 +12,7 @@ public class Template {
 		this.html = html;
 		return this;
 	}
-	
+
 	public String toHtml() {
 		html = html.replace("\"#{button}\"", "");
 		return html;
@@ -37,9 +37,16 @@ public class Template {
 		html = html.replace("\"#{content2}\"", content2);
 		return this;
 	}
-	
+
 	public Template setPreview(String preview) {
 		html = html.replace("\"#{preview}\"", preview);
+		return this;
+	}
+
+	public Template setSupport(String needSupport, String contactUs, String supportUrl) {
+		html = html.replace("\"#{need_support}\"", needSupport);
+		html = html.replace("\"#{contact_us}\"", contactUs);
+		html = html.replace("\"#{support_url}\"", supportUrl);
 		return this;
 	}
 

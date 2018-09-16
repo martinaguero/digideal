@@ -50,7 +50,8 @@ public class RequestFunds extends Action {
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject(Dialogs.read("email_subject_prefix",locale) + " " + Dialogs.read("email_request_funds_subject",locale));
+		email.setSubject(Dialogs.read("email_subject_prefix", locale) + " "
+				+ Dialogs.read("email_request_funds_subject", locale));
 
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
@@ -58,22 +59,25 @@ public class RequestFunds extends Action {
 		byte[] qr = Generators.genQRCodeImage(qrString, Config.TAMANIO_QR, Config.TAMANIO_QR);
 
 		Template t = TemplateFactory.getEmailTemplate();
-		t.setHi(Dialogs.read("email_hi",locale) + " @" + cnt.getValue("payer.name") + "</b>");
-		String content1 = Dialogs.read("email_request_funds_payer_content1_a",locale) + " <b>" + Dialogs.read("email_btc",locale)
-				+ " " + cnt.getValue("btc") + "</b> " + Dialogs.read("email_request_funds_payer_content1_b",locale) + " "
-				+ cnt.getMultisigAddress() + "<br/> " + Dialogs.read("email_request_funds_payer_content1_c",locale)
+		t.setHi(Dialogs.read("email_hi", locale) + " @" + cnt.getValue("payer.name") + "</b>");
+		String content1 = Dialogs.read("email_request_funds_payer_content1_a", locale) + " <b>"
+				+ Dialogs.read("email_btc", locale) + " " + cnt.getValue("btc") + "</b> "
+				+ Dialogs.read("email_request_funds_payer_content1_b", locale) + " " + cnt.getMultisigAddress()
+				+ "<br/> " + Dialogs.read("email_request_funds_payer_content1_c", locale)
 				+ setTwitterColor(" @" + cnt.getValue("collector.name")) + ".";
 		t.setPreview(content1);
 		t.setContent1(content1);
-		t.setContent2(Dialogs.read("email_content2",locale) + cnt.getValue("id"));
-		t.setSalutation(Dialogs.read("email_salutation",locale));
+		t.setContent2(Dialogs.read("email_content2", locale) + cnt.getValue("id"));
+		t.setSalutation(Dialogs.read("email_salutation", locale));
+		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
+				Dialogs.getSupportUrl(cnt.getSource().getName(),cnt.getValue("payer.email")));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);
 
 		content.addBodyPart(Tools.addImage(qr, cnt.getValue("id") + ".png"));
-		content.addBodyPart(
-				Tools.addPdf(cnt.getSource().getPdf(), Dialogs.read("contract_header",locale) + cnt.getValue("id") + ".pdf"));
+		content.addBodyPart(Tools.addPdf(cnt.getSource().getPdf(),
+				Dialogs.read("contract_header", locale) + cnt.getValue("id") + ".pdf"));
 		email.setContent(content);
 
 		return email;
@@ -88,24 +92,27 @@ public class RequestFunds extends Action {
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("collector.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject(Dialogs.read("email_subject_prefix",locale) + " " + Dialogs.read("email_request_funds_subject",locale));
+		email.setSubject(Dialogs.read("email_subject_prefix", locale) + " "
+				+ Dialogs.read("email_request_funds_subject", locale));
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
 
 		Template t = TemplateFactory.getEmailTemplate();
-		t.setHi(Dialogs.read("email_hi",locale) + " @" + cnt.getValue("collector.name") + "</b>");
-		String content1 = Dialogs.read("email_request_funds_collector_content1",locale)
+		t.setHi(Dialogs.read("email_hi", locale) + " @" + cnt.getValue("collector.name") + "</b>");
+		String content1 = Dialogs.read("email_request_funds_collector_content1", locale)
 				+ setTwitterColor(" @" + cnt.getValue("payer.name")) + ".";
 		t.setPreview(content1);
 		t.setContent1(content1);
-		t.setContent2(Dialogs.read("email_content2",locale) + cnt.getValue("id"));
-		t.setSalutation(Dialogs.read("email_salutation",locale));
+		t.setContent2(Dialogs.read("email_content2", locale) + cnt.getValue("id"));
+		t.setSalutation(Dialogs.read("email_salutation", locale));
+		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
+				Dialogs.getSupportUrl(cnt.getSource().getName(),cnt.getValue("collector.email")));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);
 
-		content.addBodyPart(
-				Tools.addPdf(cnt.getSource().getPdf(), Dialogs.read("contract_header",locale) + cnt.getValue("id") + ".pdf"));
+		content.addBodyPart(Tools.addPdf(cnt.getSource().getPdf(),
+				Dialogs.read("contract_header", locale) + cnt.getValue("id") + ".pdf"));
 		email.setContent(content);
 		return email;
 	}

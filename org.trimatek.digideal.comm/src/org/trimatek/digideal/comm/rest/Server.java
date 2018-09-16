@@ -19,10 +19,10 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
 public class Server extends AbstractVerticle implements Launcher {
-	
+
 	protected final static Logger logger = Logger.getLogger(Server.class.getName());
 	private int PORT = 9090;
-	
+
 	public Server(int port) {
 		PORT = port;
 	}
@@ -68,20 +68,23 @@ public class Server extends AbstractVerticle implements Launcher {
 	}
 
 	private void addOne(RoutingContext routingContext) {
-
-		String message = "Compile fail";
+		String result = null;
+		int status = 201;
 		Source source = new Gson().fromJson(routingContext.getBodyAsString(), Source.class);
-
 		if (source != null) {
+			logger.log(Level.INFO, "Ready to compile: " + source.getText());
 			Contract cnt = new Contract(source);
-			Compile c = new Compile(); 
+			Compile c = new Compile();
 			cnt = c.exec(cnt);
+			if (cnt != null) {
+				result = "Compile success";
+			} else {
+				result = "Compile failed";
+				status = 409;
+			}
 		}
-
-		System.out.println(source.getText());
-
-		routingContext.response().setStatusCode(201).putHeader("content-type", "text/plain; charset=utf-8")
-				.end(message);
+		routingContext.response().setStatusCode(status).putHeader("content-type", "text/plain; charset=utf-8")
+				.end(result);
 	}
 
 }
