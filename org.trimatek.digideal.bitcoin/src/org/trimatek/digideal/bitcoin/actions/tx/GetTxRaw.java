@@ -3,11 +3,11 @@ package org.trimatek.digideal.bitcoin.actions.tx;
 import java.io.IOException;
 import java.util.logging.Level;
 
-import org.trimatek.digideal.bitcoin.entities.Context;
 import org.trimatek.digideal.bitcoin.tools.Translators;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Transaction;
 import org.trimatek.digideal.model.TxAction;
+import org.trimatek.digideal.model.utils.Config;
 
 public class GetTxRaw extends TxAction {
 
@@ -15,7 +15,7 @@ public class GetTxRaw extends TxAction {
 	public Transaction exec(Transaction tx) throws IOException, InterruptedException {
 		Runtime rt = Runtime.getRuntime();
 		logger.log(Level.INFO, "Ready to run GetTxRaw for " + tx.getTxId());
-		Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(tx));
+		Process pr = rt.exec(Config.getValue("BTC_PATH_TO_CLI") + buildParams(tx));
 		
 		String err = Translators.toString(pr.getErrorStream());
 		String in = Translators.toString(pr.getInputStream());

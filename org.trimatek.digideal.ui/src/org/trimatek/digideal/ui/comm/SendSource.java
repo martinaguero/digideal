@@ -19,7 +19,7 @@ public class SendSource {
 
 	Runnable sendSource = () -> {
 		try {
-			URL url = new URL(Config.DIGIDEAL_URL);
+			URL url = new URL(Config.DIGIDEAL_SOURCE_URL);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setDoOutput(true);
 			con.addRequestProperty("Content-Type", "application/" + "POST");

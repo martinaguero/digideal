@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import org.trimatek.digideal.bitcoin.entities.Context;
 import org.trimatek.digideal.model.Transaction;
+import org.trimatek.digideal.model.utils.Config;
 
 public class Calc {
 
@@ -27,9 +28,9 @@ public class Calc {
 	}
 
 	public static int calcFee(int bytes) {
-		String result = getFeePrediction(Context.FEE_URL);
+		String result = getFeePrediction(Config.getValue("BTC_FEE_URL"));
 		if (result == null) {
-			result = getFeePrediction(Context.FEE_HIST_URL);
+			result = getFeePrediction(Config.getValue("BTC_FEE_HIST_URL"));
 		}
 		return result != null ? bytes * Integer.valueOf(result) : Context.STS_PER_BYTE;
 	}

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import javax.mail.Message;
 
-import org.trimatek.digideal.Config;
+import org.trimatek.digideal.Context;
 import org.trimatek.digideal.comm.mail.LoadMessages;
 import org.trimatek.digideal.comm.mail.ModifyMessageLabel;
 import org.trimatek.digideal.model.Action;
@@ -30,7 +30,7 @@ public class CheckReceiptCode extends Action {
 		for (Message message : messages) {
 			code = parseReceiveCode(Mail.getMessageTextContent(message));
 			if (code != null) {
-				msgId = message.getHeader(Config.MAIL_ID)[0];
+				msgId = message.getHeader(Context.MAIL_ID)[0];
 				break;
 			} /* Analiza los adjuntos
 			else {
@@ -62,7 +62,7 @@ public class CheckReceiptCode extends Action {
 	private static String parseReceiveCode(String content) {
 		content = content.replace(" ", System.lineSeparator());
 		String[] words = content.split(System.lineSeparator());
-		Pattern pattern = Pattern.compile(Config.RECEIPT_CODE_REGEX);
+		Pattern pattern = Pattern.compile(Context.RECEIPT_CODE_REGEX);
 		Matcher matcher;
 		for (String w : words) {
 			matcher = pattern.matcher(w);
@@ -75,7 +75,7 @@ public class CheckReceiptCode extends Action {
 
 	private boolean isValidExt(String fileName) {
 		fileName = fileName.toLowerCase().substring(fileName.lastIndexOf(".")+1);
-		return Config.VALID_QR_EXT.contains(fileName);
+		return Context.VALID_QR_EXT.contains(fileName);
 	}
 
 	public static void main(String args[]) {

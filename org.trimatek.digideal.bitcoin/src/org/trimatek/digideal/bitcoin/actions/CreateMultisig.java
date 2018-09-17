@@ -3,10 +3,10 @@ package org.trimatek.digideal.bitcoin.actions;
 import java.io.IOException;
 import java.util.logging.Level;
 
-import org.trimatek.digideal.bitcoin.entities.Context;
 import org.trimatek.digideal.bitcoin.tools.Translators;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.utils.Config;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -17,7 +17,7 @@ public class CreateMultisig extends Action {
 
 		Runtime rt = Runtime.getRuntime();
 		logger.log(Level.INFO, "Ready to run CreateMultisig for " + contract.getValue("id"));
-		Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(contract, contract.getRequiredSignatures()));
+		Process pr = rt.exec(Config.getValue("BTC_PATH_TO_CLI") + buildParams(contract, contract.getRequiredSignatures()));
 
 		String err = Translators.toString(pr.getErrorStream());
 		String in = Translators.toString(pr.getInputStream());

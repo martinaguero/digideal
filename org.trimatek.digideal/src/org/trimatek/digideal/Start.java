@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import org.trimatek.digideal.comm.rest.Server;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Launcher;
+import org.trimatek.digideal.model.utils.Config;
 import org.trimatek.digideal.repo.Repository;
 import org.trimatek.digideal.workflow.Workflow;
 
@@ -45,7 +46,7 @@ public class Start implements Launcher {
 
 	private void startREST() {
 
-		server = new Server(Config.REST_SERVER_PORT);
+		server = new Server(Integer.parseInt(Config.getValue("REST_SERVER_PORT")));
 		server.init();
 
 	}
@@ -62,7 +63,7 @@ public class Start implements Launcher {
 
 	public static void main(String[] args)
 			throws FileNotFoundException, IOException, InterruptedException, ExecutionException {
-		logger.log(Level.INFO, "////////////// DigiDeal v." + Config.DIGIDEAL_VERSION + " \\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+		logger.log(Level.INFO, "////////////// DigiDeal v." + Config.getValue("DIGIDEAL_VERSION") + " \\\\\\\\\\\\\\\\\\\\\\\\\\\\");
 		logger.log(Level.INFO, "Ready logging");
 		Start s = new Start();
 		s.init();

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title><h:outputText value="#{msg.form_support}" /></title>
+	<link rel="stylesheet" href="./css/style.css" />
+	<link rel="stylesheet" href="./css/showcase.css" />
+</h:head>
+<h:body>
+	<p:tooltip position="top" />
+	<h:form>
+		<p:panelGrid columns="1">
+			<h:outputText value="#{supportView.id}" />
+			<h:outputText value="#{supportView.from}" />
+		</p:panelGrid>
+		<h3 style="margin-top: 0">
+			<h:outputText value="#{msg.form_contactus}" />
+		</h3>
+		<p:inputTextarea rows="10" cols="50" value="#{supportView.request}" />
+		<p:commandButton value="#{msg.form_send}"
+			actionListener="#{supportView.sendAction}"
+			icon="ui-icon-circle-zoomin" action="thanks" />
+	</h:form>
+</h:body>
+</html>

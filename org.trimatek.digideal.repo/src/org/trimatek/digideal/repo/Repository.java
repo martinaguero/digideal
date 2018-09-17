@@ -10,15 +10,13 @@ import javax.persistence.Persistence;
 
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Source;
+import org.trimatek.digideal.model.utils.Config;
 
 public class Repository {
 
 	private EntityManager em;
 	private EntityManagerFactory emf;
 	private static Repository INSTANCE;
-	private static final String URL = "objectdb://localhost:6136/digideal.odb";
-	private static final String USR = "admin";
-	private static final String PSW = "admin";
 
 	private Repository() {
 		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Contract");
@@ -26,9 +24,9 @@ public class Repository {
 		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Transaction");
 		com.objectdb.Enhancer.enhance("org.trimatek.digideal.model.Source");
 		Map<String, String> properties = new HashMap<String, String>();
-		properties.put("javax.persistence.jdbc.user", USR);
-		properties.put("javax.persistence.jdbc.password", PSW);
-		emf = Persistence.createEntityManagerFactory(URL, properties);
+		properties.put("javax.persistence.jdbc.user", Config.getValue("DB_USR"));
+		properties.put("javax.persistence.jdbc.password", Config.getValue("DB_PSW"));
+		emf = Persistence.createEntityManagerFactory(Config.getValue("DB_URL"), properties);
 		em = emf.createEntityManager();
 	}
 

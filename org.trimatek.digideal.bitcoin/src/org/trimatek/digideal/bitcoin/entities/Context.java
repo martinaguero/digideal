@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 public class Context {
 
-	public static final String PATH_TO_CLI = "D:\\bin\\bitcoin-0.15.1\\bin\\bitcoin-cli.exe";
+//	public static final String PATH_TO_CLI = "D:\\bin\\bitcoin-0.15.1\\bin\\bitcoin-cli.exe";
 //	public static final String PATH_TO_CLI = "C:\\Users\\Administrator\\bin\\bitcoin-0.16.2\\bin\\bitcoin-cli.exe";
 	public static final int STS_PER_BYTE = 60;
 	public static final MathContext MATH_CONTEXT = new MathContext(0, RoundingMode.UNNECESSARY);
@@ -17,10 +17,10 @@ public class Context {
 	public static final int MAX_CONF = 200;
 	public static final int MIN_CONF = 0;
 	public static final int DELTA = 100;
-	public static final boolean MAINNET = false;
-	public static final String TX_TRACK_TESTNET = "https://www.blocktrail.com/tBTC/tx/";
-	public static final String TX_TRACK_MAINNET = "https://www.blocktrail.com/BTC/tx/";
-	public static final String FEE_URL = "http://trimatek.org:8282/digidata/fee/fast";
-	public static final String FEE_HIST_URL = "http://trimatek.org:8282/digidata/fee/fast/hist";
+//	public static final boolean MAINNET = false;
+//	public static final String TX_TRACK_TESTNET = "https://www.blocktrail.com/tBTC/tx/";
+//	public static final String TX_TRACK_MAINNET = "https://www.blocktrail.com/BTC/tx/";
+//	public static final String FEE_URL = "http://trimatek.org:8282/digidata/fee/fast";
+//	public static final String FEE_HIST_URL = "http://trimatek.org:8282/digidata/fee/fast/hist";
 
 }

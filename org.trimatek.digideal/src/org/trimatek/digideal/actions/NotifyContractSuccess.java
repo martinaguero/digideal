@@ -1,8 +1,5 @@
 package org.trimatek.digideal.actions;
 
-import static org.trimatek.digideal.bitcoin.entities.Context.MAINNET;
-import static org.trimatek.digideal.bitcoin.entities.Context.TX_TRACK_MAINNET;
-import static org.trimatek.digideal.bitcoin.entities.Context.TX_TRACK_TESTNET;
 import static org.trimatek.digideal.tools.Dialogs.setHiperlink;
 import static org.trimatek.digideal.tools.Dialogs.setTwitterColor;
 
@@ -22,6 +19,7 @@ import org.trimatek.digideal.comm.mail.Template;
 import org.trimatek.digideal.comm.mail.utils.TemplateFactory;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.utils.Config;
 import org.trimatek.digideal.tools.Dialogs;
 
 public class NotifyContractSuccess extends Action {
@@ -58,6 +56,8 @@ public class NotifyContractSuccess extends Action {
 		t.setContent1(content1);
 		t.setContent2(Dialogs.read("email_content2",locale) + cnt.getValue("id"));
 		t.setSalutation(Dialogs.read("email_salutation",locale));
+		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
+				Dialogs.getSupportUrl(cnt.getSource().getName(),cnt.getValue("payer.email")));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);
@@ -84,6 +84,8 @@ public class NotifyContractSuccess extends Action {
 		t.setContent1(content1);
 		t.setContent2(Dialogs.read("email_content2",locale) + cnt.getValue("id"));
 		t.setSalutation(Dialogs.read("email_salutation",locale));
+		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
+				Dialogs.getSupportUrl(cnt.getSource().getName(),cnt.getValue("collector.email")));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);
@@ -93,11 +95,11 @@ public class NotifyContractSuccess extends Action {
 
 	private String setupContent(Contract cnt) throws IOException {
 		String locale = cnt.getSource().getLocale();
-		String txUrl = MAINNET
+		String txUrl = Boolean.parseBoolean(Config.getValue("MAINNET"))
 				? setHiperlink(Dialogs.read("email_contract_success_content1_c",locale), 16,
-						TX_TRACK_MAINNET + cnt.getSpentTxId())
+						Config.getValue("BTC_TX_TRACK_MAINNET") + cnt.getSpentTxId())
 				: setHiperlink(Dialogs.read("email_contract_success_content1_c",locale), 16,
-						TX_TRACK_TESTNET + cnt.getSpentTxId());
+						Config.getValue("BTC_TX_TRACK_TESTNET") + cnt.getSpentTxId());
 		return Dialogs.read("email_contract_success_content1_a",locale)
 				+ setTwitterColor(" @" + cnt.getValue("collector.name") + " ")
 				+ Dialogs.read("email_contract_success_content1_b",locale) + " " + txUrl + ".<br/>"

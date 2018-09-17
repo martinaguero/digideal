@@ -12,7 +12,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.trimatek.digideal.Config;
+import org.trimatek.digideal.Context;
 import org.trimatek.digideal.comm.mail.SendMessage;
 import org.trimatek.digideal.comm.mail.Template;
 import org.trimatek.digideal.comm.mail.Tools;
@@ -56,7 +56,7 @@ public class RequestFunds extends Action {
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
 		String qrString = Generators.genQRSendTo(cnt, null);
-		byte[] qr = Generators.genQRCodeImage(qrString, Config.TAMANIO_QR, Config.TAMANIO_QR);
+		byte[] qr = Generators.genQRCodeImage(qrString, Context.TAMANIO_QR, Context.TAMANIO_QR);
 
 		Template t = TemplateFactory.getEmailTemplate();
 		t.setHi(Dialogs.read("email_hi", locale) + " @" + cnt.getValue("payer.name") + "</b>");

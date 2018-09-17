@@ -3,12 +3,13 @@ package org.trimatek.digideal.tools;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.trimatek.digideal.Config;
+import org.trimatek.digideal.Context;
+import org.trimatek.digideal.model.utils.Config;
 
 public class Dialogs {
 
 	public static String read(String key, String lang) {
-		return ResourceBundle.getBundle(Config.MESSAGES_BUNDLE, Locale.forLanguageTag(lang)).getString(key);
+		return ResourceBundle.getBundle(Context.MESSAGES_BUNDLE, Locale.forLanguageTag(lang)).getString(key);
 	}
 
 	public static String setTwitterColor(String text) {
@@ -21,7 +22,7 @@ public class Dialogs {
 	}
 
 	public static String getSupportUrl(String contractId, String from) {
-		return Config.CONTACT_US_URL + "?id=" + contractId + "&from=" + from;
+		return Config.getValue("UI_CONTACT_US_URL") + "?id=" + contractId + "&from=" + from;
 	}
 
 }

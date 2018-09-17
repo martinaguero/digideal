@@ -8,9 +8,9 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 
 import org.trimatek.digideal.bitcoin.tools.Translators;
-import org.trimatek.digideal.compiler.Context;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.utils.Config;
 import org.trimatek.digideal.repo.Repository;
 
 public class Compile extends Action implements Runnable {
@@ -26,20 +26,20 @@ public class Compile extends Action implements Runnable {
 
 			Runtime rt = Runtime.getRuntime();
 			logger.log(Level.INFO, "Ready to compile source");
-			String sourcePath = Context.PATH_TO_TEMP + contract.getSource().getName();
+			String sourcePath = Config.getValue("COCO_TEMP") + contract.getSource().getName();
 
-			FileWriter writer = new FileWriter(sourcePath + Context.SOURCE_EXT);
+			FileWriter writer = new FileWriter(sourcePath + Config.getValue("COCO_SRC_EXT"));
 			writer.write(contract.getSource().getText());
 			writer.close();
 
-			if (Files.exists(Paths.get(sourcePath + Context.SOURCE_EXT))) {
+			if (Files.exists(Paths.get(sourcePath + Config.getValue("COCO_SRC_EXT")))) {
 				Process pr = rt.exec(buildParams(contract.getSource().getLocale(), sourcePath));
 				err = Translators.toString(pr.getErrorStream());
 				res = Translators.toString(pr.getInputStream());
 			}
 			if (err.isEmpty()) {
 				logger.log(Level.INFO, "Execution success: source compiled");
-				contract.setInstructions(sourcePath + Context.COMPILED_EXT);
+				contract.setInstructions(sourcePath + Config.getValue("COCO_COMPILED_EXT"));
 				contract.setStatusName("New");
 				contract.setRunning(Boolean.FALSE);
 				contract.setRequiredSignatures(1);
@@ -68,8 +68,8 @@ public class Compile extends Action implements Runnable {
 
 	private static String buildParams(String locale, String sourcePath) throws IOException {
 		String lang = locale.contains("_") ? locale.substring(locale.indexOf("_")) : "_" + locale;
-		return Context.PATH_TO_JRE8 + " -jar " + Context.PATH_TO_COCO + lang + ".jar " + sourcePath
-				+ Context.SOURCE_EXT;
+		return Config.getValue("COCO_JRE") + " -jar " + Config.getValue("COCO_PATH") + lang + ".jar " + sourcePath
+				+ Config.getValue("COCO_SRC_EXT");
 	}
 
 }

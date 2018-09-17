@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import javax.mail.Message;
 
-import org.trimatek.digideal.Config;
+import org.trimatek.digideal.Context;
 import org.trimatek.digideal.comm.mail.LoadMessages;
 import org.trimatek.digideal.comm.mail.ModifyMessageLabel;
 import org.trimatek.digideal.model.Action;
@@ -27,7 +27,7 @@ public class CheckTxEmail extends Action {
 			tx = getTx(Mail.getMessageTextContent(message));			
 			if(tx != null) {
 				cnt.addUnspentTransaction(new Transaction(tx));
-				msgId = message.getHeader(Config.MAIL_ID)[0];
+				msgId = message.getHeader(Context.MAIL_ID)[0];
 				break;
 			}
 		}
@@ -45,7 +45,7 @@ public class CheckTxEmail extends Action {
 		content = content.replace(" ", System.lineSeparator());
 		String[] words = content.split(System.lineSeparator());
 		for (String w : words) {
-			if (Pattern.matches(Config.TX_REGEX, w)) {
+			if (Pattern.matches(Context.TX_REGEX, w)) {
 				return w;
 			}
 		}

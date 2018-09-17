@@ -12,7 +12,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.trimatek.digideal.Config;
+import org.trimatek.digideal.Context;
 import org.trimatek.digideal.bitcoin.tools.Calc;
 import org.trimatek.digideal.comm.mail.SendMessage;
 import org.trimatek.digideal.comm.mail.Template;
@@ -67,10 +67,12 @@ public class ReRequestFunds extends Action {
 		t.setContent1(content1);
 		t.setContent2(Dialogs.read("email_content2",locale) + cnt.getValue("id"));
 		t.setSalutation(Dialogs.read("email_salutation",locale));
+		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
+				Dialogs.getSupportUrl(cnt.getSource().getName(),cnt.getValue("payer.email")));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 		content.addBodyPart(htmlPart);
 
-		byte[] qr = Generators.genQRCodeImage(Generators.genQRSendTo(cnt, dif), Config.TAMANIO_QR, Config.TAMANIO_QR);
+		byte[] qr = Generators.genQRCodeImage(Generators.genQRSendTo(cnt, dif), Context.TAMANIO_QR, Context.TAMANIO_QR);
 		content.addBodyPart(Tools.addImage(qr, cnt.getValue("id") + ".png"));
 		
 		email.setContent(content);

@@ -55,6 +55,8 @@ public class NotifyFundsAvailability extends Action {
 		t.setContent1(content1);
 		t.setContent2(Dialogs.read("email_content2",locale) + cnt.getValue("id"));
 		t.setSalutation(Dialogs.read("email_salutation",locale));
+		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
+				Dialogs.getSupportUrl(cnt.getSource().getName(),cnt.getValue("collector.email")));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);

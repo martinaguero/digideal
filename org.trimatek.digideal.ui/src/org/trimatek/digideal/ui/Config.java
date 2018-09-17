@@ -16,7 +16,8 @@ public class Config {
 	public final static String NAVIGATION_RESULT = "result";
 	public final static String NAVIGATION_INDEX = "index";
 	public final static String BTC_PRICE_URL = "http://trimatek.org:8282/digidata/rate/btc/usd";
-	public final static String DIGIDEAL_URL = "http://localhost:9090/api/drafts/";
+	public final static String DIGIDEAL_SOURCE_URL = "http://localhost:9090/api/sources/";
+	public final static String DIGIDEAL_TICKET_URL = "http://localhost:9090/api/tickets/";
 	public final static String SERIAL_URL = "http://trimatek.org:8282/digidata/serial/";
 	public final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 

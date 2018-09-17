@@ -1,14 +1,13 @@
 package org.trimatek.digideal.bitcoin.actions;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.logging.Level;
 
-import org.trimatek.digideal.bitcoin.entities.Context;
 import org.trimatek.digideal.bitcoin.tools.ReadStream;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Transaction;
+import org.trimatek.digideal.model.utils.Config;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -21,7 +20,7 @@ public class DecodeTransaction extends Action {
 
 		Runtime rt = Runtime.getRuntime();
 		logger.log(Level.INFO, "Ready to run DecodeTransaction for " + contract.getValue("id"));
-		Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(contract.getLastUnspentTransaction()));
+		Process pr = rt.exec(Config.getValue("BTC_PATH_TO_CLI") + buildParams(contract.getLastUnspentTransaction()));
 
 		ReadStream s1 = new ReadStream("stdin", pr.getInputStream());
 		ReadStream s2 = new ReadStream("stderr", pr.getErrorStream());

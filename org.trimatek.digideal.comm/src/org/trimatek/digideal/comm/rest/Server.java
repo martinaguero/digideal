@@ -7,6 +7,8 @@ import org.trimatek.digideal.compiler.actions.Compile;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Launcher;
 import org.trimatek.digideal.model.Source;
+import org.trimatek.digideal.model.Ticket;
+import org.trimatek.digideal.repo.RepositorySupport;
 
 import com.google.gson.Gson;
 
@@ -27,11 +29,6 @@ public class Server extends AbstractVerticle implements Launcher {
 		PORT = port;
 	}
 
-	public static void main(String args[]) {
-		Server server = new Server(9090);
-		server.init();
-	}
-
 	public void init() {
 		Vertx vertx = Vertx.vertx();
 		vertx.deployVerticle(new Server(PORT), ar -> {
@@ -48,11 +45,15 @@ public class Server extends AbstractVerticle implements Launcher {
 
 		router.route("/").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
+			response.setStatusCode(200);
 			response.putHeader("content-type", "text/html").end("<h1>Hi, I'm DigiDeal</h1>");
 		});
 
-		router.route("/api/drafts*").handler(BodyHandler.create());
-		router.post("/api/drafts").handler(this::addOne);
+		router.route("/api/sources*").handler(BodyHandler.create());
+		router.post("/api/sources").handler(this::addSource);
+		
+		router.route("/api/tickets*").handler(BodyHandler.create());
+		router.post("/api/tickets").handler(this::addTicket);
 
 		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", PORT),
 				result -> {
@@ -67,7 +68,7 @@ public class Server extends AbstractVerticle implements Launcher {
 
 	}
 
-	private void addOne(RoutingContext routingContext) {
+	private void addSource(RoutingContext routingContext) {
 		String result = null;
 		int status = 201;
 		Source source = new Gson().fromJson(routingContext.getBodyAsString(), Source.class);
@@ -86,5 +87,24 @@ public class Server extends AbstractVerticle implements Launcher {
 		routingContext.response().setStatusCode(status).putHeader("content-type", "text/plain; charset=utf-8")
 				.end(result);
 	}
+	
+	private void addTicket(RoutingContext routingContext) {
+		String result = null;
+		int status = 201;
+
+		Ticket ticket = new Gson().fromJson(routingContext.getBodyAsString(), Ticket.class);
+		if (ticket != null) {
+			logger.log(Level.INFO, "New ticket for: " + ticket.getDealId());
+			RepositorySupport.getInstance().save(ticket);
+			result = "Ticket received";
+		} else {
+			result = "Ticket could not be received";
+			status = 409;
+		}
+		routingContext.response().setStatusCode(status).putHeader("content-type", "text/plain; charset=utf-8")
+				.end(result);
+	}
+	
+
 
 }

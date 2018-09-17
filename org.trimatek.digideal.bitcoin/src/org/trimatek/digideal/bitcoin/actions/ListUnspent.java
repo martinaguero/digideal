@@ -7,12 +7,11 @@ import static org.trimatek.digideal.bitcoin.entities.Context.MIN_CONF;
 import java.io.IOException;
 import java.util.logging.Level;
 
-import org.trimatek.digideal.bitcoin.actions.tx.RetrieveAndMatchTask;
-import org.trimatek.digideal.bitcoin.entities.Context;
 import org.trimatek.digideal.bitcoin.tools.ReadStream;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Transaction;
+import org.trimatek.digideal.model.utils.Config;
 import org.trimatek.digideal.model.utils.Tools;
 
 import com.google.gson.Gson;
@@ -29,7 +28,7 @@ public class ListUnspent extends Action {
 
 		while (min != MAX_CONF) {
 			int max = min + DELTA;
-			Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(contract.getMultisigAddress(), min, max));
+			Process pr = rt.exec(Config.getValue("BTC_PATH_TO_CLI") + buildParams(contract.getMultisigAddress(), min, max));
 
 			ReadStream s1 = new ReadStream("stdin", pr.getInputStream());
 			ReadStream s2 = new ReadStream("stderr", pr.getErrorStream());

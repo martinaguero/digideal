@@ -8,6 +8,11 @@
 		<managed-bean-class>org.trimatek.digideal.ui.beans.ContractView</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>supportView</managed-bean-name>
+		<managed-bean-class>org.trimatek.digideal.ui.beans.SupportView</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 	<application>
 		<locale-config>
 			<default-locale>es</default-locale>
@@ -33,6 +38,22 @@
 		<navigation-case>
 			<from-outcome>index</from-outcome>
 			<to-view-id>/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/support.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>send</from-outcome>
+			<to-view-id>/thanks.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/thanks.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>support</from-outcome>
+			<to-view-id>/support.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

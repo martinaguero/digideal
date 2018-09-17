@@ -3,10 +3,10 @@ package org.trimatek.digideal.bitcoin.actions.tx;
 import java.io.IOException;
 import java.util.logging.Level;
 
-import org.trimatek.digideal.bitcoin.entities.Context;
 import org.trimatek.digideal.bitcoin.tools.ReadStream;
 import org.trimatek.digideal.model.Transaction;
 import org.trimatek.digideal.model.TxAction;
+import org.trimatek.digideal.model.utils.Config;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -20,7 +20,7 @@ public class DecodeTxRaw extends TxAction {
 
 		Runtime rt = Runtime.getRuntime();
 		logger.log(Level.INFO, "Ready to run DecodeTxRaw for " + tx.getTxId());
-		Process pr = rt.exec(Context.PATH_TO_CLI + buildParams(tx));
+		Process pr = rt.exec(Config.getValue("BTC_PATH_TO_CLI") + buildParams(tx));
 
 		ReadStream s1 = new ReadStream("stdin", pr.getInputStream());
 		ReadStream s2 = new ReadStream("stderr", pr.getErrorStream());
