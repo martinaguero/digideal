@@ -2,15 +2,16 @@
 2.Bitcoin
 3.ObjectDB
 4.COCO Jars
-5.Compiler config:
+5.Copiar credenciales GMAIL (/$HOME$/.credentials/digideal)
+6.Compiler config:
 	- Temp dir
 	- COCO dir
 	- JDK8 dir
-6.Bitcoin config:
+7.Bitcoin config:
 	- CLI dir
 	- Digidata URL
-7.GUI config:
+8.GUI config:
 	- Digidata URL
 	- Digideal URL
-8.DigiDeal:
+9.DigiDeal:
 	- Digideal PORT 

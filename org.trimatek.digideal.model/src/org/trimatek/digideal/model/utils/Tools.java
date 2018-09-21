@@ -25,5 +25,9 @@ public class Tools {
 		}
 		return false;
 	}
-	
+
+	public static boolean isUxHost() {
+		return System.getProperty("os.name").toLowerCase().indexOf("win") > 1 ? false : true;
+	}
+
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 import org.trimatek.digideal.bitcoin.tools.ReadStream;
+import org.trimatek.digideal.bitcoin.tools.Translators;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Transaction;
@@ -21,7 +22,7 @@ public class DecodeTransaction extends Action {
 		Runtime rt = Runtime.getRuntime();
 		logger.log(Level.INFO, "Ready to run DecodeTransaction for " + contract.getValue("id"));
 		Process pr = rt.exec(Config.getValue("BTC_PATH_TO_CLI") + buildParams(contract.getLastUnspentTransaction()));
-
+/*
 		ReadStream s1 = new ReadStream("stdin", pr.getInputStream());
 		ReadStream s2 = new ReadStream("stderr", pr.getErrorStream());
 		s1.start();
@@ -30,7 +31,10 @@ public class DecodeTransaction extends Action {
 
 		String in = s1.getStream();
 		String err = s2.getStream();
-
+*/
+		String err = Translators.toString(pr.getErrorStream());
+		String in = Translators.toString(pr.getInputStream());
+		
 		if (err != null && err.isEmpty()) {
 			logger.log(Level.INFO, "Execution success");
 			JsonObject json = new Gson().fromJson(in, JsonObject.class);

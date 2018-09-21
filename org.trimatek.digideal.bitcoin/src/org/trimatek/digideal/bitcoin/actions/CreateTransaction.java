@@ -10,6 +10,7 @@ import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Transaction;
 import org.trimatek.digideal.model.utils.Config;
+import org.trimatek.digideal.model.utils.Tools;
 
 public class CreateTransaction extends Action {
 
@@ -22,7 +23,7 @@ public class CreateTransaction extends Action {
 		String err = Translators.toString(pr.getErrorStream());
 		String in = Translators.toString(pr.getInputStream());
 
-		if (err.isEmpty()) {
+		if (err != null && err.isEmpty()) {
 			logger.log(Level.INFO, "Execution success");
 			contract.addPayTransaction(new Transaction(null, in));
 			done = Boolean.TRUE;
@@ -39,9 +40,14 @@ public class CreateTransaction extends Action {
 		BigDecimal feeInBtc = Calc.satoshiToBtc(feeInSts);
 		BigDecimal forCollector = cnt.getBtc().subtract(feeInBtc.add(feeInBtc));
 		BigDecimal forAgent = feeInBtc;
-		String result = " createrawtransaction \"[" + getUnspents(cnt) + "]\" \"{\\\""
-				+ cnt.getValue("collector.address") + "\\\":" + forCollector + ",\\\"" + cnt.getValue("agent.address")
-				+ "\\\":" + forAgent + "}";
+		String result;
+		if (Tools.isUxHost()) {
+			result = " createrawtransaction [" + getUnspents(cnt) + "] {\"" + cnt.getValue("collector.address").trim()
+					+ "\":" + forCollector + ",\"" + cnt.getValue("agent.address").trim() + "\":" + forAgent + "}";
+		} else {
+			result = " createrawtransaction \"[" + getUnspents(cnt) + "]\" \"{\\\"" + cnt.getValue("collector.address")
+					+ "\\\":" + forCollector + ",\\\"" + cnt.getValue("agent.address") + "\\\":" + forAgent + "}";
+		}
 		return result;
 	}
 
@@ -52,7 +58,11 @@ public class CreateTransaction extends Action {
 			if (c > 0) {
 				sb.append(",");
 			}
-			sb.append("{\\\"txid\\\":\\\"" + t.getTxId() + "\\\",\\\"vout\\\":" + t.getVout() + "}");
+			if (Tools.isUxHost()) {
+				sb.append("{\"txid\":\"" + t.getTxId() + "\",\"vout\":" + t.getVout() + "}");
+			} else {
+				sb.append("{\\\"txid\\\":\\\"" + t.getTxId() + "\\\",\\\"vout\\\":" + t.getVout() + "}");
+			}
 			c++;
 		}
 		return sb.toString();

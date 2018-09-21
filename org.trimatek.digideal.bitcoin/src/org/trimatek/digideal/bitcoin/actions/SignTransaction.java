@@ -8,6 +8,7 @@ import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Transaction;
 import org.trimatek.digideal.model.utils.Config;
+import org.trimatek.digideal.model.utils.Tools;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -38,18 +39,33 @@ public class SignTransaction extends Action {
 	}
 
 	private static String buildParams(Contract cnt) throws IOException {
-		return " signrawtransaction " + cnt.getLastPayTransaction().getRaw() + " \"[" + getUnspents(cnt)+"]\""
-				+ " \"[\\\"" + cnt.getPrivateKey() + "\\\"]";
+		String result;
+		if (Tools.isUxHost()) {
+			result = " signrawtransaction " + cnt.getLastPayTransaction().getRaw() + " [" + getUnspents(cnt) + "]"
+					+ " [\"" + cnt.getPrivateKey() + "\"]";
+		} else {
+			result = " signrawtransaction " + cnt.getLastPayTransaction().getRaw() + " \"[" + getUnspents(cnt) + "]\""
+					+ " \"[\\\"" + cnt.getPrivateKey() + "\\\"]";
+		}
+		return result;
 	}
 
 	private static String getUnspents(Contract cnt) {
 		StringBuilder sb = new StringBuilder();
 		int c = 0;
 		for (Transaction tx : cnt.getUnspentTransactions()) {
-			if (c > 0) { sb.append(","); }
-			sb.append("{\\\"txid\\\":\\\"" + tx.getTxId() + "\\\",\\\"vout\\\":" + tx.getVout()
-					+ ",\\\"scriptPubKey\\\":\\\"" + tx.getOutputScript() + "\\\",\\\"redeemScript\\\":\\\""
-					+ cnt.getRedeemScript() + "\\\"}");
+			if (c > 0) {
+				sb.append(",");
+			}
+			if (Tools.isUxHost()) {
+				sb.append("{\"txid\":\"" + tx.getTxId() + "\",\"vout\":" + tx.getVout()
+				+ ",\"scriptPubKey\":\"" + tx.getOutputScript() + "\",\"redeemScript\":\""
+				+ cnt.getRedeemScript() + "\"}");
+			} else {
+				sb.append("{\\\"txid\\\":\\\"" + tx.getTxId() + "\\\",\\\"vout\\\":" + tx.getVout()
+						+ ",\\\"scriptPubKey\\\":\\\"" + tx.getOutputScript() + "\\\",\\\"redeemScript\\\":\\\""
+						+ cnt.getRedeemScript() + "\\\"}");
+			}
 			c++;
 		}
 		return sb.toString();

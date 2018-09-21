@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 import org.trimatek.digideal.bitcoin.tools.ReadStream;
+import org.trimatek.digideal.bitcoin.tools.Translators;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Transaction;
@@ -28,8 +29,9 @@ public class ListUnspent extends Action {
 
 		while (min != MAX_CONF) {
 			int max = min + DELTA;
-			Process pr = rt.exec(Config.getValue("BTC_PATH_TO_CLI") + buildParams(contract.getMultisigAddress(), min, max));
-
+			Process pr = rt
+					.exec(Config.getValue("BTC_PATH_TO_CLI") + buildParams(contract.getMultisigAddress(), min, max));
+/*
 			ReadStream s1 = new ReadStream("stdin", pr.getInputStream());
 			ReadStream s2 = new ReadStream("stderr", pr.getErrorStream());
 			s1.start();
@@ -38,7 +40,10 @@ public class ListUnspent extends Action {
 
 			String in = s1.getStream();
 			String err = s2.getStream();
-
+*/
+			String err = Translators.toString(pr.getErrorStream());
+			String in = Translators.toString(pr.getInputStream());
+			
 			if (err != null && err.isEmpty()) {
 				JsonArray txs = new Gson().fromJson(in, JsonArray.class);
 				logger.log(Level.INFO, "Execution success. In confirmations rage [" + min + "," + max + "] retrieved "
@@ -65,7 +70,8 @@ public class ListUnspent extends Action {
 	}
 
 	private static String buildParams(String multisig, int minconf, int maxConf) throws IOException {
-		return " listunspent " + minconf + " " + maxConf + " \"[\\\"" + multisig + "\\\"]\"";
+		return Tools.isUxHost() ? " listunspent " + minconf + " " + maxConf + " [\"" + multisig + "\"]"
+				: " listunspent " + minconf + " " + maxConf + " \"[\\\"" + multisig + "\\\"]\"";
 	}
 
 	public static void main(String args[]) throws IOException, InterruptedException {

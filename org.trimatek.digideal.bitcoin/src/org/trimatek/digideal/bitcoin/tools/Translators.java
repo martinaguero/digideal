@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class Translators {
 	
 	public static String toString(InputStream stream) throws IOException {
-		return new BufferedReader(new InputStreamReader(stream)).lines().parallel().collect(Collectors.joining("\n"));
+		return new BufferedReader(new InputStreamReader(stream)).lines().parallel().collect(Collectors.joining(System.lineSeparator()));
 	}
 
 }
