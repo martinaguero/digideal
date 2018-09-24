@@ -111,7 +111,7 @@
 			<p:row style="height: 50px">
 				<p:column style="font-weight: bold;"><h:outputText value="#{msg.form_how_much}"/></p:column>
 				<p:column>
-					<div style="margin-left: auto; margin-right: 0;">
+					<div style="margin-left: auto; margin-right: auto;">
 						<div class="ui-inputgroup">
 							<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_establishes_that}"/></span>
 							<p:inputText styleClass="nick" id="payer"
@@ -121,7 +121,7 @@
 								value="#{contractView.nickCollectorValid}" readonly="true" />
 							<span class="ui-inputgroup-addon"><h:outputText value="#{msg.form_sum_of}"/></span>
 							<p:selectOneMenu id="currencies"
-								value="#{contractView.selectedCurrency}" style="width:30px">
+								value="#{contractView.selectedCurrency}" style="width:60px">
 								<p:ajax listener="#{contractView.onCurrencyChange}"
 									update="btc,preview" />
 								<f:selectItems value="#{contractView.currencies}" />

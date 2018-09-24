@@ -14,11 +14,15 @@ public class Config {
 	public final static String NAME_REGEX = "^[^\\d]+$";
 	public final static String BTC_ADDRESS_REGEX = "^[123mn][1-9A-HJ-NP-Za-km-z]{26,35}";
 	public final static String NAVIGATION_RESULT = "result";
-	public final static String NAVIGATION_INDEX = "index";
+	public final static String NAVIGATION_INDEX = "main";
 	public final static String BTC_PRICE_URL = "http://trimatek.org:8282/digidata/rate/btc/usd";
-	public final static String DIGIDEAL_SOURCE_URL = "http://190.210.244.92:9090/api/sources/";
-	public final static String DIGIDEAL_TICKET_URL = "http://190.210.244.92:9090/api/tickets/";
+	public final static String DIGIDEAL_SOURCE_URL = "http://localhost:9090/api/sources/";
+	public final static String DIGIDEAL_TICKET_URL = "http://localhost:9090/api/tickets/";
 	public final static String SERIAL_URL = "http://trimatek.org:8282/digidata/serial/";
 	public final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+	
+	
+//	public final static String DIGIDEAL_SOURCE_URL = "http://190.210.244.92:9090/api/sources/";
+//	public final static String DIGIDEAL_TICKET_URL = "http://190.210.244.92:9090/api/tickets/";
 
 }

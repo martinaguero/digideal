@@ -13,6 +13,11 @@
 		<managed-bean-class>org.trimatek.digideal.ui.beans.SupportView</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+		<managed-bean>
+		<managed-bean-name>commonView</managed-bean-name>
+		<managed-bean-class>org.trimatek.digideal.ui.beans.CommonView</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 	<application>
 		<locale-config>
 			<default-locale>es</default-locale>
@@ -26,7 +31,23 @@
 		</resource-bundle>
 	</application>
 	<navigation-rule>
-		<from-view-id>/index.xhtml</from-view-id>
+		<from-view-id>/main.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>new</from-outcome>
+			<to-view-id>/form.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/form.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>main</from-outcome>
+			<to-view-id>/main.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/form.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>result</from-outcome>
 			<to-view-id>/result.xhtml</to-view-id>
@@ -36,8 +57,8 @@
 	<navigation-rule>
 		<from-view-id>/result.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>index</from-outcome>
-			<to-view-id>/index.xhtml</to-view-id>
+			<from-outcome>main</from-outcome>
+			<to-view-id>/main.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>

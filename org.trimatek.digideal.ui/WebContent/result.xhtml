@@ -5,12 +5,15 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<title>Result</title>
 	<link rel="stylesheet" href="./css/style.css" />
 	<link rel="stylesheet" href="./css/showcase.css" />
 </h:head>
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
 <h:body>
 	<p:tooltip position="top" />
 	<h:form id="result">
@@ -30,7 +33,7 @@
 			</div>
 			<div style="float: right;">
 				<br /> <br />
-				<p:commandButton value="#{msg.btn_accept}" type="button"
+				<p:commandButton value="#{msg.btn_start}" type="button"
 					styleClass="ui-confirmdialog-yes"
 					onclick="resultClose();PF('resultDlg').hide();"
 					icon="ui-icon-check" />
@@ -38,4 +41,6 @@
 		</p:dialog>
 	</h:form>
 </h:body>
+</ui:define>
+</ui:composition>
 </html>
