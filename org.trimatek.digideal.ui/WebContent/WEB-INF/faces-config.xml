@@ -31,7 +31,7 @@
 		</resource-bundle>
 	</application>
 	<navigation-rule>
-		<from-view-id>/main.xhtml</from-view-id>
+		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>new</from-outcome>
 			<to-view-id>/form.xhtml</to-view-id>
@@ -72,6 +72,14 @@
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/thanks.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>support</from-outcome>
+			<to-view-id>/support.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>support</from-outcome>
 			<to-view-id>/support.xhtml</to-view-id>

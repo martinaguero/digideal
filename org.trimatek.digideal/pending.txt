@@ -33,3 +33,4 @@
 33.Tomcat -> AWS(AGREGADO)
 34.Revisar org.trimatek.digideal.comm.rest.Server addOne(AGREGADO)
 35.Parametrizar rango listunspent
+36.HTTPS
