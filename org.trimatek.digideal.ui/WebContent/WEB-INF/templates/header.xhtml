@@ -26,9 +26,9 @@
 				id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false">#{msg.menu_wiki}</a>
 				<div class="dropdown-menu" aria-labelledby="dropdown01">
-					<a class="dropdown-item" href="#">Action</a> <a
-						class="dropdown-item" href="#">Another action</a> <a
-						class="dropdown-item" href="#">Something else here</a>
+					 <p:commandLink styleClass="dropdown-item" value="#{msg.menu_wiki_technology}" action="whatis" />
+					 <p:commandLink styleClass="dropdown-item" value="#{msg.menu_wiki_robot}" action="robot" />
+					 <p:commandLink styleClass="dropdown-item" value="#{msg.menu_wiki_use_cases}" action="fee" />
 				</div></li>
 			<li class="nav-item"><p:link styleClass="nav-link"
 					outcome="support" value="#{msg.menu_faq}"></p:link></li>

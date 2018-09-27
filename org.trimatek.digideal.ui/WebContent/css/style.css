@@ -99,6 +99,13 @@ img {
 	border-left-style: hidden;
 }
 
+.messagesbar {
+	height: 80px;
+	border-right-style: hidden;
+	border-bottom-style: hidden;
+	border-left-style: hidden;
+}
+
 .dialog {
 	text-align: justify;
 	float: center;

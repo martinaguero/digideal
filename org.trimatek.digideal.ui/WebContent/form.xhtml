@@ -17,11 +17,22 @@
 	<ui:define name="content">
 		<main role="main" class="container">
 		<div class="jumbotron">
+
 			<div class="container">
 				<h:body>
 					<p:tooltip position="top" />
 					<h:form id="new">
-						<p:panelGrid style="margin-top:40px">
+						<p:remoteCommand name="onload" action="#{contractView.onLoad}"
+							autoRun="true" />
+						<p:panelGrid>
+							<p:row styleClass="messagesbar">
+								<p:column style="border-right-style: hidden;"></p:column>
+								<p:column>
+									<p:messages id="msgs" showDetail="true" escape="false">
+										<p:autoUpdate />
+									</p:messages>
+								</p:column>
+							</p:row>
 							<p:row style="height: 110px">
 								<p:column style="font-weight: bold;writing-mode: sideways-lr;">
 									<h:outputText value="#{msg.form_whom}" />
@@ -33,7 +44,6 @@
 												<div class="ui-inputgroup">
 													<span class="ui-inputgroup-addon"><h:outputText
 															value="#{msg.form_this}" /></span>
-													<p:growl id="msgs" showDetail="true" escape="false" />
 												</div>
 											</div>
 										</p:row>
@@ -230,7 +240,7 @@
 										<h:panelGrid columns="4" style="margin-bottom:10px"
 											cellpadding="5">
 											<p:button type="button" value="#{msg.btn_back}"
-											 icon="fa fa-fw fa-arrow-circle-o-left" outcome="main" />
+												icon="fa fa-fw fa-arrow-circle-o-left" outcome="main" />
 											<p:outputLabel for="@next" value="#{msg.data_true}" />
 											<p:selectBooleanCheckbox id="check"
 												value="#{contractView.dataAuthentic}">

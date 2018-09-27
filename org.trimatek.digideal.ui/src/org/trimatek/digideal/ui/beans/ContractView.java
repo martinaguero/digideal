@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
@@ -148,6 +149,10 @@ public class ContractView {
 
 	public void setNickCollector(String nickCollector) {
 		this.nickCollector = nickCollector;
+	}
+	
+	public void onLoad() {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", "Por favor completar los siguientes datos para crear un acuerdo digital."));
 	}
 
 	public void handlePayerNick() {
