@@ -13,7 +13,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -32,9 +31,8 @@ import org.trimatek.digideal.ui.utils.Tools;
 import org.trimatek.digideal.ui.utils.Validators;
 
 @ManagedBean
-public class ContractView {
+public class ContractView extends CommonView {
 
-	protected final static Logger logger = Logger.getLogger(ContractView.class.getName());
 	private String namePayer;
 	private String namePayerStyle;
 	private String nickPayer;
@@ -150,13 +148,16 @@ public class ContractView {
 	public void setNickCollector(String nickCollector) {
 		this.nickCollector = nickCollector;
 	}
-	
+
 	public void onLoad() {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", "Por favor completar los siguientes datos para crear un acuerdo digital."));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, Tools.read("msg_welcome", getLocale().toString()),
+						Tools.read("msg_welcome_detail", getLocale().toString())));
 	}
 
 	public void handlePayerNick() {
-		if (Validators.validateName(getNickPayer(), "apodo de <b>comprador</b> no válido", 1)) {
+		if (Validators.validateName(getNickPayer(), Tools.read("error_nick", getLocale().toString()),
+				Tools.read("error_payer", getLocale().toString()), 1)) {
 			nickPayerValid = Validators.normalize(getNickPayer());
 			setNickPayer(nickPayerValid);
 			nickPayerStyle = null;
@@ -167,7 +168,8 @@ public class ContractView {
 	}
 
 	public void handleCollectorNick() {
-		if (Validators.validateName(getNickCollector(), "apodo de <b>vendedor</b> no válido", 1)) {
+		if (Validators.validateName(getNickCollector(), Tools.read("error_nick", getLocale().toString()),
+				Tools.read("error_collector", getLocale().toString()), 1)) {
 			nickCollectorValid = Validators.normalize(getNickCollector());
 			setNickCollector(nickCollectorValid);
 			nickCollectorStyle = null;
@@ -220,7 +222,8 @@ public class ContractView {
 	}
 
 	public void validatePayerEmail() {
-		if (Validators.validateEmail(getEmailPayer(), Tools.read("error_payer_email", getLocale().toString()))) {
+		if (Validators.validateEmail(getEmailPayer(), Tools.read("error_email", getLocale().toString()),
+				Tools.read("error_payer", getLocale().toString()))) {
 			emailPayerStyle = null;
 			setEmailPayer(emailPayer.toLowerCase());
 		} else {
@@ -229,12 +232,13 @@ public class ContractView {
 	}
 
 	public void validatePayerName() {
-		namePayerStyle = Validators.validateName(getNamePayer(), "nombre de <b>comprador</b> no válido", 2) ? null
-				: Config.REQUIRED_FIELD;
+		namePayerStyle = Validators.validateName(getNamePayer(), Tools.read("error_name", getLocale().toString()),
+				Tools.read("error_payer", getLocale().toString()), 2) ? null : Config.REQUIRED_FIELD;
 	}
 
 	public void validatePayerAddress() {
-		if (Validators.validateAddress(getAddressPayer(), "dirección de <b>comprador</b> no válido")) {
+		if (Validators.validateAddress(getAddressPayer(), Tools.read("error_address_btc", getLocale().toString()),
+				Tools.read("error_payer", getLocale().toString()))) {
 			addressPayerTooltip = getAddressPayer();
 			addressPayerStyle = null;
 		} else {
@@ -244,7 +248,8 @@ public class ContractView {
 	}
 
 	public void validateCollectorAddress() {
-		if (Validators.validateAddress(getAddressCollector(), "dirección de <b>vendedor</b> no válido")) {
+		if (Validators.validateAddress(getAddressCollector(), Tools.read("error_address_btc", getLocale().toString()),
+				Tools.read("error_collector", getLocale().toString()))) {
 			addressCollectorTooltip = getAddressCollector();
 			addressCollectorStyle = null;
 		} else {
@@ -254,8 +259,8 @@ public class ContractView {
 	}
 
 	public void validateCollectorEmail() {
-		if (Validators.validateEmail(getEmailCollector(),
-				Tools.read("error_collector_email", getLocale().toString()))) {
+		if (Validators.validateEmail(getEmailCollector(), Tools.read("error_email", getLocale().toString()),
+				Tools.read("error_collector", getLocale().toString()))) {
 			emailCollectorStyle = null;
 			setEmailCollector(emailCollector.toLowerCase());
 		} else {
@@ -264,20 +269,21 @@ public class ContractView {
 	}
 
 	public void validateCollectorName() {
-		nameCollectorStyle = Validators.validateName(getNameCollector(), "nombre de <b>vendedor</b> no válido", 2)
-				? null
-				: Config.REQUIRED_FIELD;
+		nameCollectorStyle = Validators.validateName(getNameCollector(),
+				Tools.read("error_name", getLocale().toString()), Tools.read("error_collector", getLocale().toString()),
+				2) ? null : Config.REQUIRED_FIELD;
 	}
 
 	public void validateAddress() {
-		addressStyle = Validators.validateSentenceLength(getAddress(), "dirección incompleta", 4) ? null
-				: Config.REQUIRED_FIELD;
+		addressStyle = Validators.validateSentenceLength(getAddress(),
+				Tools.read("error_address", getLocale().toString()),
+				Tools.read("error_address_uncomplete", getLocale().toString()), 4) ? null : Config.REQUIRED_FIELD;
 	}
 
 	public void validateItem() {
-		itemStyle = Validators.validateSentenceLength(getItem(), "descripción de artículo o servicio incompleta", 4)
-				? null
-				: Config.REQUIRED_FIELD;
+		itemStyle = Validators.validateSentenceLength(getItem(),
+				Tools.read("error_product", getLocale().toLanguageTag()),
+				Tools.read("error_product_uncomplete", getLocale().toString()), 4) ? null : Config.REQUIRED_FIELD;
 	}
 
 	public String getBtc() {
@@ -405,16 +411,23 @@ public class ContractView {
 	}
 
 	public void previewAction() {
-		Optional<Address> address = Geocoder.geocode(getAddress());
-		if (address.isPresent()) {
-			System.out.println(address.get().toString());
-			String errors = Validators.validateAddress(address.get());
-			if (errors.equals("")) {
-				source = SourceBuilder.getSource(this);
-			} else {
-				source = new Source();
-				source.setText(errors);
+		Optional<Address> address;
+		String errors = Tools.read("error_address_not_parseable", getLocale().toString()) + "<br/>"
+				+ Tools.read("error_address_invalid", getLocale().toString());
+		try {
+			address = Geocoder.get().geocode(getAddress());
+			if (address.isPresent()) {
+				logger.log(Level.INFO, address.get().toString());
+				errors = Validators.validateAddress(address.get());
 			}
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, e.getMessage());
+		}
+		if (errors.equals("")) {
+			source = SourceBuilder.getSource(this);
+		} else {
+			source = new Source();
+			source.setText(errors);
 		}
 	}
 

@@ -6,7 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 	<title><h:outputText value="#{msg.form_new}" /></title>
 	<link rel="stylesheet" href="./css/style.css" />
@@ -159,13 +160,13 @@
 											<span class="ui-inputgroup-addon"><h:outputText
 													value="#{msg.form_sum_of}" /></span>
 											<p:selectOneMenu id="currencies"
-												value="#{contractView.selectedCurrency}" style="width:30px">
+												value="#{contractView.selectedCurrency}">
 												<p:ajax listener="#{contractView.onCurrencyChange}"
 													update="btc,preview" />
 												<f:selectItems value="#{contractView.currencies}" />
 											</p:selectOneMenu>
 											<p:inputText id="money" value="#{contractView.quantity}"
-												style="#{contractView.quantityStyle}" styleClass="money">
+												style="#{contractView.quantityStyle}" size="15" styleClass="money">
 												<p:ajax event="blur" update="btc,money,preview"
 													listener="#{contractView.handleQuantity}" />
 											</p:inputText>
@@ -236,12 +237,13 @@
 							<p:row styleClass="buttonsbar">
 								<p:column style="border-right-style: hidden;"></p:column>
 								<p:column>
-									<div style="float: right;">
-										<h:panelGrid columns="4" style="margin-bottom:10px"
-											cellpadding="5">
+									<div >
+										<h:panelGrid columns="5" style="margin-bottom:10px"
+											cellpadding="5">									
 											<p:button type="button" value="#{msg.btn_back}"
 												icon="fa fa-fw fa-arrow-circle-o-left" outcome="main" />
-											<p:outputLabel for="@next" value="#{msg.data_true}" />
+											<p:spacer width="400" height="10" />											
+											<p:outputLabel for="@next" value="#{msg.data_true}" />									
 											<p:selectBooleanCheckbox id="check"
 												value="#{contractView.dataAuthentic}">
 												<p:ajax update="preview" />

@@ -8,28 +8,28 @@ import org.trimatek.digideal.ui.model.Address;
 
 public class Validators {
 
-	public static boolean validateEmail(String target, String message) {
+	public static boolean validateEmail(String target, String summary, String message) {
 		if (target != null && !target.matches(Config.EMAIL_REGEX)) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", message));
+					new FacesMessage(FacesMessage.SEVERITY_WARN, summary, message));
 			return false;
 		}
 		return true;
 	}
 
-	public static boolean validateName(String target, String message, int minWords) {
+	public static boolean validateName(String target, String summary, String message, int minWords) {
 		if (target == null || !target.matches(Config.NAME_REGEX) || target.split(" ").length < minWords) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", message));
+					new FacesMessage(FacesMessage.SEVERITY_WARN, summary, message));
 			return false;
 		}
 		return true;
 	}
 
-	public static boolean validateAddress(String target, String message) {
+	public static boolean validateAddress(String target, String summary, String message) {
 		if (target == null || !target.matches(Config.BTC_ADDRESS_REGEX)) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", message));
+					new FacesMessage(FacesMessage.SEVERITY_WARN, summary, message));
 			return false;
 		}
 		return true;
@@ -40,7 +40,7 @@ public class Validators {
 		String locale = FacesContext.getCurrentInstance().getViewRoot().getLocale().toString();
 		if (address == null) {
 			sb.append("<br/>");
-			sb.append(Tools.read("error_address_not_parseable",locale));
+			sb.append(Tools.read("error_address_invalid",locale));
 		} else {
 			if (address.getROUTE() == null) {
 				sb.append("<br/>");
@@ -63,13 +63,13 @@ public class Validators {
 				sb.append(Tools.read("error_country_not_found",locale));
 			}
 		}
-		return sb.length() > 0 ? Tools.read("error_address",locale) + sb.toString() : "";
+		return sb.length() > 0 ? Tools.read("error_address_not_parseable",locale) + sb.toString() : "";
 	}
 
-	public static boolean validateSentenceLength(String target, String message, int minWords) {
+	public static boolean validateSentenceLength(String target, String summary, String message, int minWords) {
 		if (target == null || target.split(" ").length < minWords) {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", message));
+					new FacesMessage(FacesMessage.SEVERITY_WARN, summary, message));
 			return false;
 		}
 		return true;
