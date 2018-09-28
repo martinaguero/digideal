@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.trimatek.digideal.ui.Config;
+import org.trimatek.digideal.ui.Context;
 import org.trimatek.digideal.ui.comm.SendSource;
 import org.trimatek.digideal.ui.model.Address;
 import org.trimatek.digideal.ui.model.Source;
@@ -74,22 +75,22 @@ public class ContractView extends CommonView {
 		currencies.put(CurrenciesEnum.BTC.name(), CurrenciesEnum.BTC.name());
 		currencies.put(CurrenciesEnum.BRL.name(), CurrenciesEnum.BRL.name());
 		updateBtc();
-		namePayerStyle = Config.REQUIRED_FIELD;
-		nickPayerStyle = Config.REQUIRED_FIELD;
-		emailPayerStyle = Config.REQUIRED_FIELD;
-		addressPayerStyle = Config.REQUIRED_FIELD;
-		nameCollectorStyle = Config.REQUIRED_FIELD;
-		nickCollectorStyle = Config.REQUIRED_FIELD;
-		emailCollectorStyle = Config.REQUIRED_FIELD;
-		addressCollectorStyle = Config.REQUIRED_FIELD;
-		quantityStyle = Config.REQUIRED_FIELD;
-		addressStyle = Config.REQUIRED_FIELD;
-		itemStyle = Config.REQUIRED_FIELD;
+		namePayerStyle = Context.REQUIRED_FIELD;
+		nickPayerStyle = Context.REQUIRED_FIELD;
+		emailPayerStyle = Context.REQUIRED_FIELD;
+		addressPayerStyle = Context.REQUIRED_FIELD;
+		nameCollectorStyle = Context.REQUIRED_FIELD;
+		nickCollectorStyle = Context.REQUIRED_FIELD;
+		emailCollectorStyle = Context.REQUIRED_FIELD;
+		addressCollectorStyle = Context.REQUIRED_FIELD;
+		quantityStyle = Context.REQUIRED_FIELD;
+		addressStyle = Context.REQUIRED_FIELD;
+		itemStyle = Context.REQUIRED_FIELD;
 	}
 
 	Runnable updateBtc = () -> {
 		try {
-			URL obj = new URL(Config.BTC_PRICE_URL);
+			URL obj = new URL(Config.getValue("BTC_PRICE_URL"));
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 			con.setRequestMethod("GET");
 			con.setRequestProperty("User-Agent", "Mozilla/5.0");
@@ -162,7 +163,7 @@ public class ContractView extends CommonView {
 			setNickPayer(nickPayerValid);
 			nickPayerStyle = null;
 		} else {
-			nickPayerStyle = Config.REQUIRED_FIELD;
+			nickPayerStyle = Context.REQUIRED_FIELD;
 			nickPayerValid = null;
 		}
 	}
@@ -174,7 +175,7 @@ public class ContractView extends CommonView {
 			setNickCollector(nickCollectorValid);
 			nickCollectorStyle = null;
 		} else {
-			nickCollectorStyle = Config.REQUIRED_FIELD;
+			nickCollectorStyle = Context.REQUIRED_FIELD;
 			nickCollectorValid = null;
 		}
 	}
@@ -217,7 +218,7 @@ public class ContractView extends CommonView {
 			}
 			quantityStyle = null;
 		} else {
-			quantityStyle = Config.REQUIRED_FIELD;
+			quantityStyle = Context.REQUIRED_FIELD;
 		}
 	}
 
@@ -227,13 +228,13 @@ public class ContractView extends CommonView {
 			emailPayerStyle = null;
 			setEmailPayer(emailPayer.toLowerCase());
 		} else {
-			emailPayerStyle = Config.REQUIRED_FIELD;
+			emailPayerStyle = Context.REQUIRED_FIELD;
 		}
 	}
 
 	public void validatePayerName() {
 		namePayerStyle = Validators.validateName(getNamePayer(), Tools.read("error_name", getLocale().toString()),
-				Tools.read("error_payer", getLocale().toString()), 2) ? null : Config.REQUIRED_FIELD;
+				Tools.read("error_payer", getLocale().toString()), 2) ? null : Context.REQUIRED_FIELD;
 	}
 
 	public void validatePayerAddress() {
@@ -242,7 +243,7 @@ public class ContractView extends CommonView {
 			addressPayerTooltip = getAddressPayer();
 			addressPayerStyle = null;
 		} else {
-			addressPayerStyle = Config.REQUIRED_FIELD;
+			addressPayerStyle = Context.REQUIRED_FIELD;
 			addressPayerTooltip = null;
 		}
 	}
@@ -253,7 +254,7 @@ public class ContractView extends CommonView {
 			addressCollectorTooltip = getAddressCollector();
 			addressCollectorStyle = null;
 		} else {
-			addressCollectorStyle = Config.REQUIRED_FIELD;
+			addressCollectorStyle = Context.REQUIRED_FIELD;
 			addressCollectorTooltip = null;
 		}
 	}
@@ -264,26 +265,26 @@ public class ContractView extends CommonView {
 			emailCollectorStyle = null;
 			setEmailCollector(emailCollector.toLowerCase());
 		} else {
-			emailCollectorStyle = Config.REQUIRED_FIELD;
+			emailCollectorStyle = Context.REQUIRED_FIELD;
 		}
 	}
 
 	public void validateCollectorName() {
 		nameCollectorStyle = Validators.validateName(getNameCollector(),
 				Tools.read("error_name", getLocale().toString()), Tools.read("error_collector", getLocale().toString()),
-				2) ? null : Config.REQUIRED_FIELD;
+				2) ? null : Context.REQUIRED_FIELD;
 	}
 
 	public void validateAddress() {
 		addressStyle = Validators.validateSentenceLength(getAddress(),
 				Tools.read("error_address", getLocale().toString()),
-				Tools.read("error_address_uncomplete", getLocale().toString()), 4) ? null : Config.REQUIRED_FIELD;
+				Tools.read("error_address_uncomplete", getLocale().toString()), 4) ? null : Context.REQUIRED_FIELD;
 	}
 
 	public void validateItem() {
 		itemStyle = Validators.validateSentenceLength(getItem(),
 				Tools.read("error_product", getLocale().toLanguageTag()),
-				Tools.read("error_product_uncomplete", getLocale().toString()), 4) ? null : Config.REQUIRED_FIELD;
+				Tools.read("error_product_uncomplete", getLocale().toString()), 4) ? null : Context.REQUIRED_FIELD;
 	}
 
 	public String getBtc() {
@@ -351,15 +352,15 @@ public class ContractView extends CommonView {
 	}
 
 	public String getAgentAddress() {
-		return Config.AGENT_ADDRESS;
+		return Context.AGENT_ADDRESS;
 	}
 
 	public String getAgentNick() {
-		return Config.AGENT_NICK;
+		return Config.getValue("AGENT_NICK");
 	}
 
 	public String getAgentEmail() {
-		return Config.AGENT_EMAIL;
+		return Config.getValue("AGENT_EMAIL");
 	}
 
 	public String getAddressPayerTooltip() {
@@ -440,7 +441,7 @@ public class ContractView extends CommonView {
 		source.setPdf(PDFBuilder.getPdf(SourceBuilder.formatPDF(source), source.getName(), buildSignature()));
 		SendSource.exec(source);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.NAVIGATION_RESULT);
+				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.getValue("NAVIGATION_RESULT"));
 	}
 
 	public StreamedContent getFile() {
@@ -453,7 +454,7 @@ public class ContractView extends CommonView {
 		source = null;
 		setDataAuthentic(false);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.NAVIGATION_INDEX);
+				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.getValue("NAVIGATION_INDEX"));
 	}
 
 	public String getTooltipPayer() {

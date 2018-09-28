@@ -18,7 +18,7 @@ public class SendTicket {
 
 	Runnable send = () -> {
 		try {
-			URL url = new URL(Config.DIGIDEAL_TICKET_URL);
+			URL url = new URL(Config.getValue("DIGIDEAL_TICKET_URL"));
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setDoOutput(true);
 			con.addRequestProperty("Content-Type", "application/" + "POST");

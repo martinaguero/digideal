@@ -29,7 +29,7 @@ public class CommonView {
 	}
 	
 	public String getNavigationIndex() {
-		return Config.NAVIGATION_INDEX + ".xhtml";
+		return Config.getValue("NAVIGATION_INDEX");
 	}
 
 }

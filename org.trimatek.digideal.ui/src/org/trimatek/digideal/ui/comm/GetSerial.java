@@ -17,7 +17,7 @@ public class GetSerial {
 	public static String exec(Source source) {
 		StringBuffer response = new StringBuffer();
 		try {
-			URL url = new URL(Config.SERIAL_URL);
+			URL url = new URL(Config.getValue("SERIAL_URL"));
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 			con.setRequestProperty("User-Agent", "Mozilla/5.0");

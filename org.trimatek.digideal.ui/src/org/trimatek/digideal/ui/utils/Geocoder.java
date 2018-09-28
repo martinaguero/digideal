@@ -3,7 +3,7 @@ package org.trimatek.digideal.ui.utils;
 import java.io.IOException;
 import java.util.Optional;
 
-import org.trimatek.digideal.ui.Config;
+import org.trimatek.digideal.ui.Context;
 import org.trimatek.digideal.ui.model.Address;
 
 import com.google.maps.GeoApiContext;
@@ -18,7 +18,7 @@ public class Geocoder {
 	private GeoApiContext context;
 
 	private Geocoder() {
-		context = new GeoApiContext.Builder().apiKey(Config.GOOGLE_GEO_API_KEY).build();
+		context = new GeoApiContext.Builder().apiKey(Context.GOOGLE_GEO_API_KEY).build();
 	}
 
 	public static Geocoder get() {

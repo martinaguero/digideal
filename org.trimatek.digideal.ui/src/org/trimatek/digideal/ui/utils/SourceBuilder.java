@@ -1,12 +1,12 @@
 package org.trimatek.digideal.ui.utils;
 
-import static org.trimatek.digideal.ui.Config.DATE_FORMAT;
+import static org.trimatek.digideal.ui.Context.DATE_FORMAT;
 
 import java.util.Date;
 
 import javax.faces.context.FacesContext;
 
-import org.trimatek.digideal.ui.Config;
+import org.trimatek.digideal.ui.Context;
 import org.trimatek.digideal.ui.beans.ContractView;
 import org.trimatek.digideal.ui.comm.GetSerial;
 import org.trimatek.digideal.ui.model.Source;
@@ -46,8 +46,8 @@ public class SourceBuilder {
 	public static String formatDraft(Source source) {
 		String[] tokens = source.getText().split(" ");
 		for (int i = 0; i < tokens.length; i++) {
-			tokens[i] = tokens[i].replaceAll(Config.EMAIL_REGEX, "");
-			tokens[i] = tokens[i].replaceAll(Config.BTC_ADDRESS_REGEX, "");
+			tokens[i] = tokens[i].replaceAll(Context.EMAIL_REGEX, "");
+			tokens[i] = tokens[i].replaceAll(Context.BTC_ADDRESS_REGEX, "");
 			tokens[i] = tokens[i].replaceAll("[{},]", "");
 			tokens[i] = tokens[i].replaceAll("\"", "");
 			tokens[i] = tokens[i].replaceAll("¡", ",");
@@ -75,8 +75,8 @@ public class SourceBuilder {
 		String spaces = "                                            ";
 		String[] tokens = source.getText().split(" ");
 		for (int i = 0; i < tokens.length; i++) {
-			tokens[i] = tokens[i].replaceAll(Config.EMAIL_REGEX, "");
-			tokens[i] = tokens[i].replaceAll(Config.BTC_ADDRESS_REGEX, "");
+			tokens[i] = tokens[i].replaceAll(Context.EMAIL_REGEX, "");
+			tokens[i] = tokens[i].replaceAll(Context.BTC_ADDRESS_REGEX, "");
 			tokens[i] = tokens[i].replaceAll("[{},]", "");
 			tokens[i] = tokens[i].replaceAll("\"", "");
 			tokens[i] = tokens[i].replaceAll("¡", ",");
