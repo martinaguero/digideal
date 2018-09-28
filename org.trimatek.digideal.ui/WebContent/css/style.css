@@ -113,3 +113,35 @@ img {
 	font-size: 17px;
 	line-height: 30px;
 }
+
+textarea::-webkit-input-placeholder {
+font-size: 14px !important;
+}
+ 
+textarea:-moz-placeholder { /* Firefox 18- */
+font-size: 14px !important;  
+}
+ 
+textarea::-moz-placeholder {  /* Firefox 19+ */
+font-size: 14px !important;
+}
+ 
+textarea:-ms-input-placeholder {  
+font-size: 14px !important;
+}
+
+input::-webkit-input-placeholder {
+font-size: 14px !important;
+}
+ 
+input:-moz-placeholder { /* Firefox 18- */
+font-size: 14px !important;
+}
+ 
+input::-moz-placeholder {  /* Firefox 19+ */
+font-size: 14px !important; 
+}
+ 
+input:-ms-input-placeholder {  
+font-size: 14px !important; 
+}

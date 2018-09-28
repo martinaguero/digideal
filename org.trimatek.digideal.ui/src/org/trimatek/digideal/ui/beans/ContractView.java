@@ -209,7 +209,8 @@ public class ContractView extends CommonView {
 	}
 
 	public void handleQuantity() {
-		if (getQuantity() != null) {
+		if (Validators.validateQuantity(getQuantity(), Tools.read("error_quantity", getLocale().toString()),
+				Tools.read("error_incorrect", getLocale().toString()))) {
 			if (CurrenciesEnum.BTC.name().equals(getSelectedCurrency())) {
 				setBtc(getQuantity());
 			} else {

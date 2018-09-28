@@ -22,5 +22,9 @@ public class Tools {
 			fieldNames.add(field.getName());
 		return fieldNames;
 	}
+	
+	public static boolean isNumeric(String strNum) {
+	    return strNum.matches("-?\\d+(\\.\\d+)?");
+	}
 
 }

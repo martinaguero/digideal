@@ -26,7 +26,7 @@
 26.mejorar el parser de código de recibo(SOLUCIONADO)
 27.agregar al QR de código de recibo el #DigiDeal
 28.agregar logueo a DigiDeal(AGREGADO)
-29.crear website
+29.crear website(AGREGADO)
 30.enlace contact-us en el mail(AGREGADO)
 31.agregar parser PT
 32.seguridad DB
@@ -34,7 +34,9 @@
 34.Revisar org.trimatek.digideal.comm.rest.Server addOne(AGREGADO)
 35.Parametrizar rango listunspent
 36.HTTPS(AGREGADO)
-37.Testnet/Mainnet
+37.Testnet/Mainnet -> SelectOneButton(AGREGADO)
 38.UI.Selected menu label
-39.UI.handleQuantity >> sólo numéricos, revisar el color y tamaño
+39.UI.handleQuantity >> sólo numéricos, revisar el color y tamaño(AGREGADO)
 40.UI.Validar que no sean iguales los datos de comprador y vendedor
+41.UI.Una vez enviado, resetear el formulario
+42.UI.Nick sin tilde(AGREGADO)

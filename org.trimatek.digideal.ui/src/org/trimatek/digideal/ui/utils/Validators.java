@@ -29,6 +29,15 @@ public class Validators {
 		return true;
 	}
 
+	public static boolean validateQuantity(String target, String summary, String message) {
+		if (target == null || !Tools.isNumeric(target)) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, summary, message));
+			return false;
+		}
+		return true;
+	}
+	
 	public static boolean validateAddress(String target, String summary, String message) {
 		if (target == null || !target.matches(Context.BTC_ADDRESS_REGEX)) {
 			FacesContext.getCurrentInstance().addMessage(null,
