@@ -34,7 +34,7 @@
 								</p:column>
 							</p:row>
 							<p:row style="height: 110px">
-								<p:column style="font-weight: bold;writing-mode: sideways-lr;">
+								<p:column styleClass="vText">
 									<h:outputText value="#{msg.form_whom}" />
 								</p:column>
 								<p:column>
@@ -76,6 +76,7 @@
 														id="addressPayer"
 														placeholder="#{msg.form_payer_bitcoin_address}"
 														maxlength="35" value="#{contractView.addressPayer}"
+														styleClass="btcaddress"
 														style="#{contractView.addressPayerStyle}">
 														<p:ajax update="msgs,addressPayer,preview" event="blur"
 															listener="#{contractView.validatePayerAddress}" />
@@ -121,6 +122,7 @@
 														id="addressCollector"
 														placeholder="#{msg.form_collector_bitcoin_address}"
 														maxlength="35" value="#{contractView.addressCollector}"
+														styleClass="btcaddress"
 														style="#{contractView.addressCollectorStyle}">
 														<p:ajax update="msgs,addressCollector,preview"
 															event="blur"
@@ -142,7 +144,7 @@
 								</p:column>
 							</p:row>
 							<p:row style="height: 50px">
-								<p:column style="font-weight: bold;writing-mode: sideways-lr;">
+								<p:column styleClass="vText">
 									<h:outputText value="#{msg.form_how_much}" />
 								</p:column>
 								<p:column>
@@ -165,8 +167,8 @@
 												<f:selectItems value="#{contractView.currencies}" />
 											</p:selectOneMenu>
 											<p:inputText id="money" value="#{contractView.quantity}"
-												style="#{contractView.quantityStyle}width:100px;" size="15"
-												styleClass="money" >
+												style="#{contractView.quantityStyle}" size="15"
+												styleClass="money">
 												<p:watermark for="money" value="00.00" />
 												<p:ajax event="blur" update="btc,money,preview"
 													listener="#{contractView.handleQuantity}" />
@@ -180,7 +182,7 @@
 								</p:column>
 							</p:row>
 							<p:row style="height: 80px">
-								<p:column style="font-weight: bold;writing-mode: sideways-lr;">
+								<p:column styleClass="vText">
 									<h:outputText value="#{msg.form_condition}" />
 								</p:column>
 								<p:column>
@@ -192,7 +194,7 @@
 												value="#{contractView.nickCollector}" readonly="true" />
 											<span class="ui-inputgroup-addon"><h:outputText
 													value="#{msg.form_delivers_in}" /></span>
-											<p:inputTextarea styleClass="textArea" rows="3" cols="36"
+											<p:inputTextarea styleClass="textArea" rows="3" cols="33"
 												id="address" value="#{contractView.address}"
 												style="#{contractView.addressStyle}"
 												placeholder="#{msg.form_example_address}">
@@ -201,7 +203,7 @@
 											</p:inputTextarea>
 											<span class="ui-inputgroup-addon"><h:outputText
 													value="#{msg.form_the_next}" /></span>
-											<p:inputTextarea styleClass="textArea" rows="3" cols="40"
+											<p:inputTextarea styleClass="textArea" rows="3" cols="36"
 												id="item" value="#{contractView.item}"
 												style="#{contractView.itemStyle}"
 												placeholder="#{msg.form_example_product_service}">
@@ -213,7 +215,7 @@
 								</p:column>
 							</p:row>
 							<p:row style="height: 50px">
-								<p:column style="font-weight: bold;writing-mode: sideways-lr;">
+								<p:column styleClass="vText">
 									<h:outputText value="#{msg.form_guarantor}" />
 								</p:column>
 								<p:column>
@@ -226,7 +228,7 @@
 											<span class="ui-inputgroup-addon"> {</span>
 											<p:inputText pt:data-tooltip="#{contractView.agentAddress}"
 												value="#{contractView.agentAddress}" readonly="true"
-												style="width:250px" />
+												styleClass="btcaddress" />
 											<span class="ui-inputgroup-addon"> ,</span>
 											<p:inputText value="#{contractView.agentEmail}"
 												readonly="true" style="width:220px" />
@@ -242,7 +244,7 @@
 										<h:panelGrid columns="6" cellpadding="5">
 											<p:button type="button" value="#{msg.btn_back}"
 												icon="fa fa-fw fa-arrow-circle-o-left" outcome="main" />
-											<p:spacer width="380" height="40" />
+											<p:spacer width="350" height="40" />
 											<p:outputLabel for="@next" value="#{msg.data_true}" />
 											<p:selectBooleanCheckbox id="check"
 												value="#{contractView.dataAuthentic}">
@@ -328,8 +330,6 @@
 			</div>
 		</div>
 		</main>
-
-
 	</ui:define>
 </ui:composition>
 </html>

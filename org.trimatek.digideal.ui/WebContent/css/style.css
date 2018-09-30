@@ -81,11 +81,15 @@ img {
 }
 
 .nick {
-	width: 130px;
+	width: 110px;
 }
 
 .money {
-	width: 75px;
+	width: 80px;
+}
+
+.btcaddress {
+	width: 150px;
 }
 
 .textArea {
@@ -115,33 +119,43 @@ img {
 }
 
 textarea::-webkit-input-placeholder {
-font-size: 14px !important;
+	font-size: 14px !important;
 }
- 
+
 textarea:-moz-placeholder { /* Firefox 18- */
-font-size: 14px !important;  
+	font-size: 14px !important;
 }
- 
-textarea::-moz-placeholder {  /* Firefox 19+ */
-font-size: 14px !important;
+
+textarea::-moz-placeholder { /* Firefox 19+ */
+	font-size: 14px !important;
 }
- 
-textarea:-ms-input-placeholder {  
-font-size: 14px !important;
+
+textarea:-ms-input-placeholder {
+	font-size: 14px !important;
 }
 
 input::-webkit-input-placeholder {
-font-size: 14px !important;
+	font-size: 14px !important;
 }
- 
+
 input:-moz-placeholder { /* Firefox 18- */
-font-size: 14px !important;
+	font-size: 14px !important;
 }
- 
-input::-moz-placeholder {  /* Firefox 19+ */
-font-size: 14px !important; 
+
+input::-moz-placeholder { /* Firefox 19+ */
+	font-size: 14px !important;
 }
- 
-input:-ms-input-placeholder {  
-font-size: 14px !important; 
+
+input:-ms-input-placeholder {
+	font-size: 14px !important;
+}
+
+.vText {
+	font-weight: bold;
+	text-align: center;
+	writing-mode: sideways-lr;
+	-ms-transform: rotate(270deg); /* IE 9 */
+	-moz-transform: rotate(270deg); /* Firefox */
+	-webkit-transform: rotate(270deg); /* Safari and Chrome */
+	-o-transform: rotate(270deg); /* Opera */
 }
