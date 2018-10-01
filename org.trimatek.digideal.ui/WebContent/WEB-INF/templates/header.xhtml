@@ -26,16 +26,19 @@
 				id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false">#{msg.menu_wiki}</a>
 				<div class="dropdown-menu" aria-labelledby="dropdown01">
-					 <p:commandLink styleClass="dropdown-item" value="#{msg.menu_wiki_technology}" action="whatis" />
-					 <p:commandLink styleClass="dropdown-item" value="#{msg.menu_wiki_robot}" action="robot" />
-					 <p:commandLink styleClass="dropdown-item" value="#{msg.menu_wiki_use_cases}" action="fee" />
+					<p:link styleClass="dropdown-item" outcome="p2sh"
+						value="#{msg.menu_wiki_technology}" />
+					<p:link styleClass="dropdown-item" outcome="robot"
+						value="#{msg.menu_wiki_robot}" />
+					<p:link styleClass="dropdown-item" outcome="usecases"
+						value="#{msg.menu_wiki_use_cases}" />
 				</div></li>
+			<li class="nav-item"><p:link styleClass="nav-link" outcome="faq"
+					value="#{msg.menu_faq}"></p:link></li>
 			<li class="nav-item"><p:link styleClass="nav-link"
-					outcome="support" value="#{msg.menu_faq}"></p:link></li>
+					outcome="contactus" value="#{msg.menu_contact_us}"></p:link></li>
 			<li class="nav-item"><p:link styleClass="nav-link"
-					outcome="support" value="#{msg.menu_contact_us}"></p:link></li>
-			<li class="nav-item"><p:link styleClass="nav-link"
-					value="#{msg.menu_about_us}"></p:link></li>
+					outcome="about" value="#{msg.menu_about_us}"></p:link></li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0">
 			<input class="form-control mr-sm-2" type="text" placeholder="Search"

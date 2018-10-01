@@ -20,7 +20,7 @@
 	</managed-bean>
 	<application>
 		<locale-config>
-			<default-locale>es</default-locale>
+			<default-locale>en</default-locale>
 			<supported-locale>es</supported-locale>
 			<supported-locale>en</supported-locale>
 			<supported-locale>pt</supported-locale>
@@ -63,26 +63,18 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/support.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>send</from-outcome>
-			<to-view-id>/thanks.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/thanks.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>support</from-outcome>
-			<to-view-id>/support.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
-			<from-outcome>support</from-outcome>
-			<to-view-id>/support.xhtml</to-view-id>
+			<from-outcome>robot</from-outcome>
+			<to-view-id>/robot.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/robot.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>main</from-outcome>
+			<to-view-id>/main.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
