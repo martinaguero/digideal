@@ -40,3 +40,4 @@
 40.UI.Validar que no sean iguales los datos de comprador y vendedor
 41.UI.Una vez enviado, resetear el formulario
 42.UI.Nick sin tilde(AGREGADO)
+43.UI.Términos y condiciones. Cookie.
