@@ -8,6 +8,7 @@ import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Launcher;
 import org.trimatek.digideal.model.Source;
 import org.trimatek.digideal.model.Ticket;
+import org.trimatek.digideal.model.utils.Config;
 import org.trimatek.digideal.repo.RepositorySupport;
 
 import com.google.gson.Gson;
@@ -46,12 +47,13 @@ public class Server extends AbstractVerticle implements Launcher {
 		router.route("/").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
 			response.setStatusCode(200);
-			response.putHeader("content-type", "text/html").end("<h1>Hi, I'm DigiDeal</h1>");
+			response.putHeader("content-type", "text/html")
+					.end("<h1>Hi, I'm DigiDeal, version " + Config.getValue("DIGIDEAL_VERSION") + "</h1>");
 		});
 
 		router.route("/api/sources*").handler(BodyHandler.create());
 		router.post("/api/sources").handler(this::addSource);
-		
+
 		router.route("/api/tickets*").handler(BodyHandler.create());
 		router.post("/api/tickets").handler(this::addTicket);
 
@@ -87,7 +89,7 @@ public class Server extends AbstractVerticle implements Launcher {
 		routingContext.response().setStatusCode(status).putHeader("content-type", "text/plain; charset=utf-8")
 				.end(result);
 	}
-	
+
 	private void addTicket(RoutingContext routingContext) {
 		String result = null;
 		int status = 201;
@@ -104,7 +106,5 @@ public class Server extends AbstractVerticle implements Launcher {
 		routingContext.response().setStatusCode(status).putHeader("content-type", "text/plain; charset=utf-8")
 				.end(result);
 	}
-	
-
 
 }

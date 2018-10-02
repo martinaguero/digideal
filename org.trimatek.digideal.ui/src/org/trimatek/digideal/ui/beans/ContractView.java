@@ -74,18 +74,7 @@ public class ContractView extends CommonView {
 		currencies.put(CurrenciesEnum.USD.name(), CurrenciesEnum.USD.name());
 		currencies.put(CurrenciesEnum.BTC.name(), CurrenciesEnum.BTC.name());
 		currencies.put(CurrenciesEnum.BRL.name(), CurrenciesEnum.BRL.name());
-		updateBtc();
-		namePayerStyle = Context.REQUIRED_FIELD;
-		nickPayerStyle = Context.REQUIRED_FIELD;
-		emailPayerStyle = Context.REQUIRED_FIELD;
-		addressPayerStyle = Context.REQUIRED_FIELD;
-		nameCollectorStyle = Context.REQUIRED_FIELD;
-		nickCollectorStyle = Context.REQUIRED_FIELD;
-		emailCollectorStyle = Context.REQUIRED_FIELD;
-		addressCollectorStyle = Context.REQUIRED_FIELD;
-		quantityStyle = Context.REQUIRED_FIELD;
-		addressStyle = Context.REQUIRED_FIELD;
-		itemStyle = Context.REQUIRED_FIELD;
+		resetFields();
 	}
 
 	Runnable updateBtc = () -> {
@@ -109,6 +98,36 @@ public class ContractView extends CommonView {
 			logger.log(Level.WARNING, e.getMessage());
 		}
 	};
+	
+	private void resetFields() {
+		namePayerStyle = Context.REQUIRED_FIELD;
+		setNamePayer("");
+		nickPayerStyle = Context.REQUIRED_FIELD;
+		setNickPayer("");
+		emailPayerStyle = Context.REQUIRED_FIELD;
+		setEmailPayer("");
+		addressPayerStyle = Context.REQUIRED_FIELD;
+		setAddressPayer("");
+		nameCollectorStyle = Context.REQUIRED_FIELD;
+		setNameCollector("");
+		nickCollectorStyle = Context.REQUIRED_FIELD;
+		setNickCollector("");
+		emailCollectorStyle = Context.REQUIRED_FIELD;
+		setEmailCollector("");
+		addressCollectorStyle = Context.REQUIRED_FIELD;
+		setAddressCollector("");
+		quantityStyle = Context.REQUIRED_FIELD;
+		setQuantity("");
+		addressStyle = Context.REQUIRED_FIELD;
+		setAddress("");
+		itemStyle = Context.REQUIRED_FIELD;
+		setItem("");
+		nickPayerValid = null;
+		nickCollectorValid = null;
+		setBtc("");
+		setDataAuthentic(false);
+		updateBtc();
+	}
 
 	public String getNamePayer() {
 		return namePayer;
@@ -151,6 +170,8 @@ public class ContractView extends CommonView {
 	}
 
 	public void onLoad() {
+		source = null;
+		file = null;		
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, Tools.read("msg_welcome", getLocale().toString()),
 						Tools.read("msg_welcome_detail", getLocale().toString())));
@@ -441,19 +462,22 @@ public class ContractView extends CommonView {
 	public void confirmDraftAction() {
 		source.setPdf(PDFBuilder.getPdf(SourceBuilder.formatPDF(source), source.getName(), buildSignature()));
 		SendSource.exec(source);
+		resetFields();
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.getValue("NAVIGATION_RESULT"));
 	}
 
 	public StreamedContent getFile() {
 		file = new DefaultStreamedContent(new ByteArrayInputStream(source.getPdf()), "application/pdf",
-				(Tools.read("contract_header", source.getLocale()) + source.getName() + ".pdf"));
+				(getFileName()));
 		return file;
 	}
 
+	public String getFileName() {
+		return Tools.read("contract_header", source.getLocale()) + source.getName() + ".pdf";
+	}
+
 	public void closeResultAction() {
-		source = null;
-		setDataAuthentic(false);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.getValue("NAVIGATION_INDEX"));
 	}
