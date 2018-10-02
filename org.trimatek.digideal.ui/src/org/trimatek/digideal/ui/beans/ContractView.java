@@ -374,7 +374,7 @@ public class ContractView extends CommonView {
 	}
 
 	public String getAgentAddress() {
-		return Context.AGENT_ADDRESS;
+		return Config.getValue("AGENT_ADDRESS");
 	}
 
 	public String getAgentNick() {

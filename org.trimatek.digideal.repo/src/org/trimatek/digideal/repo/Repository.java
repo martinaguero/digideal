@@ -65,5 +65,12 @@ public class Repository {
 		em.getTransaction().commit();
 		return results;
 	}
+	
+	public int setRunningFalse(long id) {
+		em.getTransaction().begin();
+		int result = em.createNamedQuery("setRunningFalse", Contract.class).setParameter("p", id).executeUpdate();
+		em.getTransaction().commit();
+		return result;
+	}
 
 }

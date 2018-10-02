@@ -14,6 +14,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -21,7 +22,10 @@ import javax.persistence.Transient;
 import org.trimatek.digideal.model.utils.Tools;
 
 @Entity
-@NamedQuery(name = "loadUndoneContracts", query = "SELECT c FROM Contract c WHERE c.statusName != 'Done' and c.running = FALSE ORDER BY c.id")
+@NamedQueries({
+@NamedQuery(name = "loadUndoneContracts", query = "SELECT c FROM Contract c WHERE c.statusName != 'Done' and c.running = FALSE ORDER BY c.id"),
+@NamedQuery(name = "setRunningFalse", query = "UPDATE Contract c SET running = FALSE WHERE c.id = :p")
+})
 public class Contract implements Serializable {
 
 	private static final long serialVersionUID = 1L;

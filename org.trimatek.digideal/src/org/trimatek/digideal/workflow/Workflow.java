@@ -36,15 +36,14 @@ public class Workflow implements Runnable {
 				cnt.setStatusName(state.getNextName());
 				Repository.getInstance().save(cnt);
 			}
+			if (Done.class.isInstance(state)) {
+				cnt.setRunning(Boolean.FALSE);
+				Repository.getInstance().save(cnt);
+				Thread.currentThread().stop();
+			}
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, e.getMessage()); 			
+			logger.log(Level.SEVERE, e.getMessage());
 		}
-		if (Done.class.isInstance(state)) {
-			cnt.setRunning(Boolean.FALSE);
-			Repository.getInstance().save(cnt);
-			Thread.currentThread().stop();
-		}
-
 	}
 
 	private State loadState(Contract cnt) throws Exception {
@@ -54,7 +53,6 @@ public class Workflow implements Runnable {
 	}
 
 	public static void main(String[] args) {
-
 
 	}
 
