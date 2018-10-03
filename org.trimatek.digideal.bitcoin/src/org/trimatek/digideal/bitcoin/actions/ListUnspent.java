@@ -1,13 +1,8 @@
 package org.trimatek.digideal.bitcoin.actions;
 
-import static org.trimatek.digideal.bitcoin.entities.Context.DELTA;
-import static org.trimatek.digideal.bitcoin.entities.Context.MAX_CONF;
-import static org.trimatek.digideal.bitcoin.entities.Context.MIN_CONF;
-
 import java.io.IOException;
 import java.util.logging.Level;
 
-import org.trimatek.digideal.bitcoin.tools.ReadStream;
 import org.trimatek.digideal.bitcoin.tools.Translators;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
@@ -23,12 +18,13 @@ import com.google.gson.JsonObject;
 public class ListUnspent extends Action {
 
 	public Contract exec(Contract contract) throws IOException, InterruptedException {
-		int min = MIN_CONF;
+		int min = Integer.parseInt(Config.getValue("BC_UNSPENT_MIN_CONF"));
+		int MAX_CONF = Integer.parseInt(Config.getValue("BC_UNSPENT_MAX_CONF"));
 		Runtime rt = Runtime.getRuntime();
 		logger.log(Level.INFO, "Ready to run ListUnspent for " + contract.getValue("id"));
 
 		while (min != MAX_CONF) {
-			int max = min + DELTA;
+			int max = min + Integer.parseInt(Config.getValue("BC_UNSPENT_DELTA_CONF"));
 			Process pr = rt
 					.exec(Config.getValue("BTC_PATH_TO_CLI") + buildParams(contract.getMultisigAddress(), min, max));
 /*
@@ -62,7 +58,7 @@ public class ListUnspent extends Action {
 			} else {
 				logger.log(Level.SEVERE, err);
 			}
-			min = min + DELTA;
+			min = min + Integer.parseInt(Config.getValue("BC_UNSPENT_DELTA_CONF"));
 		}
 		logger.log(Level.INFO, "0 unspent transaction found.");
 		return null;

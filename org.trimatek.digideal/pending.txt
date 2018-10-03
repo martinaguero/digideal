@@ -41,7 +41,7 @@
 41.UI.Una vez enviado, resetear el formulario(AGREGADO)
 42.UI.Nick sin tilde(AGREGADO)
 43.UI.Términos y condiciones. Cookie.
-44.UI.V2.Buscador / HTML Unit: https://stackoverflow.com/questions/13367885/making-a-search-on-a-web-site-via-java / Levenshtein 
+44.V2.UI.Buscador / HTML Unit: https://stackoverflow.com/questions/13367885/making-a-search-on-a-web-site-via-java / Levenshtein 
 45.V2:Transmisión del Source sincrónica con aviso de resultado en el momento.
 46.V2:Log y versión en BBDD
 47.Detener servicio dd y actualizar estado de BBDD(AGREGADO)

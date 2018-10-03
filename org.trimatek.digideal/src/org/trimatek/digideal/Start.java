@@ -46,6 +46,7 @@ public class Start implements Launcher {
 
 	private void shutdown() throws InterruptedException {
 		wfRunner.stop();
+		logger.log(Level.INFO, "Shutting down complete");
 	}
 
 	private void startREST() {
@@ -54,11 +55,14 @@ public class Start implements Launcher {
 	}
 
 	private void startWorkflow() {
-		logger.log(Level.INFO, "Starting Workflow Runner");
+		logger.log(Level.INFO,
+				"Starting workflow runner with a capacity of " + Config.getValue("WF_CAPACITY")
+						+ " simultaneous contracts and a reload rate of " + Config.getValue("WF_RELOAD_RATE_MIN") + " "
+						+ TimeUnit.MINUTES);
 		exe = Executors.newScheduledThreadPool(1);
 		wfRunner = new WorkflowRunner();
-		exe.scheduleAtFixedRate(wfRunner, 0, 1, TimeUnit.MINUTES);
-		logger.log(Level.INFO, "Workflow Runner reload rate " + 1 + " " + TimeUnit.MINUTES);
+		exe.scheduleAtFixedRate(wfRunner, 0, Long.parseLong(Config.getValue("WF_RELOAD_RATE_MIN")), TimeUnit.MINUTES);
+		logger.log(Level.INFO, "DigiDeal ROBOT ready");
 	}
 
 	public static void main(String[] args)
@@ -77,15 +81,14 @@ public class Start implements Launcher {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				logger.log(Level.INFO, "Shutting down finished");
 			}
 		});
 	}
 
 	class WorkflowRunner implements Runnable {
 
-		ScheduledExecutorService exe = Executors.newScheduledThreadPool(10);
-		List<Long> loaded = new ArrayList<Long>();
+		ScheduledExecutorService exe = Executors
+				.newScheduledThreadPool(Integer.parseInt(Config.getValue("WF_CAPACITY")));
 		// ScheduledFuture<Workflow> future = null;
 
 		@Override
@@ -95,24 +98,29 @@ public class Start implements Launcher {
 			// future.cancel(false);
 			// }
 
-			logger.log(Level.INFO, "Loading undone contracts");
 			List<Contract> undone = Repository.getInstance().loadUndoneContracts();
 			logger.log(Level.INFO, "Round undone contracts: " + undone.size());
 
 			for (Contract cnt : undone) {
 				cnt.setRunning(Boolean.TRUE);
 				Repository.getInstance().save(cnt);
-				loaded.add(cnt.getId());
 				Workflow wf = new Workflow(cnt);
-				exe.scheduleAtFixedRate(wf, 0, 20, TimeUnit.SECONDS);
+				exe.scheduleAtFixedRate(wf, 0, Long.parseLong(Config.getValue("WF_RERUN_RATE_SEC")), TimeUnit.SECONDS);
 			}
 
 		}
 
 		public void stop() {
-			for (long id : loaded) {
-				Repository.getInstance().setRunningFalse(id);
+			exe.shutdown();
+			try {
+				if (!exe.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+					exe.shutdownNow();
+				}
+			} catch (InterruptedException e) {
+				exe.shutdownNow();
 			}
+			int updated = Repository.getInstance().setRunningFalse();
+			logger.log(Level.INFO, updated + " contracts stopped");
 		}
 
 	}
