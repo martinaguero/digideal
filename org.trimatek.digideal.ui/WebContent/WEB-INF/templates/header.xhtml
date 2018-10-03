@@ -41,9 +41,10 @@
 					outcome="about" value="#{msg.menu_about_us}"></p:link></li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0">
-			<input class="form-control mr-sm-2" type="text" placeholder="Search"
-				aria-label="Search"></input>
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			<p:inputText styleClass="form-control mr-sm-2" id="search"
+				placeholder="#{msg.menu_search}" />
+			<h:button class="btn btn-outline-success my-2 my-sm-0" type="button"
+				value="#{msg.menu_search}" outcome="search" />
 		</form>
 	</div>
 	</nav>

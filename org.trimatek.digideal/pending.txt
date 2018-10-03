@@ -32,7 +32,7 @@
 32.seguridad DB
 33.Tomcat -> AWS(AGREGADO)
 34.Revisar org.trimatek.digideal.comm.rest.Server addOne(AGREGADO)
-35.Parametrizar rango listunspent
+35.Parametrizar rango listunspent(AGREGADO)
 36.HTTPS(AGREGADO)
 37.Testnet/Mainnet -> SelectOneButton(AGREGADO)
 38.UI.Selected menu label
