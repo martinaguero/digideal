@@ -45,3 +45,5 @@
 45.V2:Transmisión del Source sincrónica con aviso de resultado en el momento.
 46.V2:Log y versión en BBDD
 47.Detener servicio dd y actualizar estado de BBDD(AGREGADO)
+48.UI.Anteponer tBTC en el formulario y el source
+49.UI.Explicar en el mail solicitando fondos la demora que demanda en recibir al menos 1 confirmación

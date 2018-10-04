@@ -13,11 +13,7 @@
 		<managed-bean-class>org.trimatek.digideal.ui.beans.SupportView</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-		<managed-bean>
-		<managed-bean-name>commonView</managed-bean-name>
-		<managed-bean-class>org.trimatek.digideal.ui.beans.CommonView</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
+
 	<application>
 		<locale-config>
 			<default-locale>en</default-locale>

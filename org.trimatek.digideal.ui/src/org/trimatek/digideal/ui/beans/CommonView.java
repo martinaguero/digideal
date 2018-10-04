@@ -2,9 +2,12 @@ package org.trimatek.digideal.ui.beans;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+
+import javax.faces.context.FacesContext;
 
 import org.trimatek.digideal.ui.Config;
 
@@ -22,6 +25,7 @@ public class CommonView {
 			}
 		}
 	}
+	private Locale locale;
 	
 	public CommonView() {
 		logger = Logger.getLogger(CommonView.class.getCanonicalName());
@@ -30,6 +34,13 @@ public class CommonView {
 	
 	public String getNavigationIndex() {
 		return Config.getValue("NAVIGATION_INDEX");
+	}
+	
+	public Locale getLocale() {
+		if (locale == null) {
+			locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+		}
+		return locale;
 	}
 
 }

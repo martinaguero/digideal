@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -67,7 +66,6 @@ public class ContractView extends CommonView {
 	private Source source;
 	private boolean dataAuthentic;
 	private StreamedContent file;
-	private Locale locale;
 
 	public ContractView() {
 		currencies = new LinkedHashMap<String, String>();
@@ -531,13 +529,6 @@ public class ContractView extends CommonView {
 		signature.add(getTooltipCollector());
 		signature.add(getTooltipAgent());
 		return signature;
-	}
-
-	public Locale getLocale() {
-		if (locale == null) {
-			locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-		}
-		return locale;
 	}
 
 }
