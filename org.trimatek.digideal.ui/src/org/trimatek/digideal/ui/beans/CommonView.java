@@ -9,10 +9,8 @@ import java.util.logging.Logger;
 
 import javax.faces.context.FacesContext;
 
-import org.trimatek.digideal.ui.Config;
-
 public class CommonView {
-	
+
 	protected static Logger logger;
 	static {
 		InputStream inputStream = CommonView.class.getResourceAsStream("/logging.properties");
@@ -26,16 +24,12 @@ public class CommonView {
 		}
 	}
 	private Locale locale;
-	
+
 	public CommonView() {
 		logger = Logger.getLogger(CommonView.class.getCanonicalName());
 		logger.log(Level.INFO, "Ready logging");
 	}
-	
-	public String getNavigationIndex() {
-		return Config.getValue("NAVIGATION_INDEX");
-	}
-	
+
 	public Locale getLocale() {
 		if (locale == null) {
 			locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();

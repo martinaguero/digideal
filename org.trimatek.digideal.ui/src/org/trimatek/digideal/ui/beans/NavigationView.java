@@ -1,42 +1,31 @@
 package org.trimatek.digideal.ui.beans;
 
 import java.time.Instant;
-import java.util.Map;
 
-import javax.faces.context.FacesContext;
-
+import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.Context;
 import org.trimatek.digideal.ui.comm.SendTicket;
 import org.trimatek.digideal.ui.model.Ticket;
 import org.trimatek.digideal.ui.utils.Tools;
 import org.trimatek.digideal.ui.utils.Validators;
 
-public class SupportView extends CommonView {
+public class NavigationView extends CommonView {
 
 	private String message;
 	private String messageStyle;
-	private String id;
 	private String from;
 	private String fromStyle;
 
-	public SupportView() {
-		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		id = params.get("id");
-		from = params.get("from");
+	public NavigationView() {
+	}
+	
+	public void onLoad() {
 		fromStyle = Context.REQUIRED_FIELD;
 		messageStyle = Context.REQUIRED_FIELD;
 	}
 
-	public String getId() {
-		return id;
-	}
-
 	public void setFrom(String from) {
 		this.from = from;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getFrom() {
@@ -90,13 +79,16 @@ public class SupportView extends CommonView {
 		t.setLocale(getLocale().toString());
 		t.setDatetime(Instant.now().toEpochMilli() / 1000L + "");
 		t.setFrom(getFrom());
-		t.setDealId(getId());
 		t.setText(getMessage());
 		SendTicket.exec(t);
 	}
 
 	public boolean getSendDisabled() {
 		return fromStyle == null && messageStyle == null ? false : true;
+	}
+
+	public String getNavigationIndex() {
+		return Config.getValue("NAVIGATION_INDEX");
 	}
 
 }

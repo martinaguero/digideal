@@ -96,7 +96,7 @@ public class ContractView extends CommonView {
 			logger.log(Level.WARNING, e.getMessage());
 		}
 	};
-	
+
 	private void resetFields() {
 		namePayerStyle = Context.REQUIRED_FIELD;
 		setNamePayer("");
@@ -169,7 +169,7 @@ public class ContractView extends CommonView {
 
 	public void onLoad() {
 		source = null;
-		file = null;		
+		file = null;
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, Tools.read("msg_welcome", getLocale().toString()),
 						Tools.read("msg_welcome_detail", getLocale().toString())));

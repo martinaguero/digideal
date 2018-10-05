@@ -9,8 +9,8 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>supportView</managed-bean-name>
-		<managed-bean-class>org.trimatek.digideal.ui.beans.SupportView</managed-bean-class>
+		<managed-bean-name>navigationView</managed-bean-name>
+		<managed-bean-class>org.trimatek.digideal.ui.beans.NavigationView</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 

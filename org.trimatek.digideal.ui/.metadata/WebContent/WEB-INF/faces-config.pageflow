@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15272877596690" configfile="/org.trimatek.digideal.ui/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="success.xhtml" x="564" y="243" id="pf15299676908521" path="/success.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="result.xhtml" id="pf15346030974151" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf15346031603194" inlinks="pf15346031603195" path="/result.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf15346031603196" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf15346031603195" inlinks="pf15346031603194 pf15377026498154" path="/form.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="thanks.xhtml" id="pf15371980502873" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf15371986715854" inlinks="pf15371986715855" path="/thanks.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="support.xhtml" id="pf15371986715856" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" outlinks="pf15371986715855" inlinks="pf15371986715854" path="/support.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="main.xhtml" id="pf15377026498155" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15377026498156" path="/main.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="form.xhtml" id="pf15377026498157" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15377026498154" inlinks="pf15377026498156" path="/form.xhtml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15272877596690" configfile="/web/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="success.xhtml" x="122" y="178" id="pf15299676908521" path="/success.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="result.xhtml" x="554" y="552" id="pf15346030974151" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf15383946357340" inlinks="pf15346031603195" path="/result.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="754" id="pf15346031603196" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf15346031603195 pf15383946357341" inlinks="pf153839859106310" path="/form.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="main.xhtml" x="770" y="754" id="pf15377026498155" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf15383946357341 pf15383946357340 pf15383970476129" path="/main.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="form.xhtml" x="122" y="562" id="pf15377026498157" referenceLink="//@navigationRule.1/@fromViewId|" path="/form.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="946" id="pf15383946357344" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf15383946357345 pf153839859106310" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="contactus.xhtml" id="pf15383946357346" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf15383970476129" inlinks="pf15383946357345" path="/robot.xhtml"/>
   <links id="pf15346031603195" target="pf15346030974151" source="pf15346031603196" outcome="result" redirect="true"/>
-  <links id="pf15346031603194" target="pf15346031603196" source="pf15346030974151" outcome="main" redirect="true"/>
-  <links id="pf15371986715855" target="pf15371980502873" source="pf15371986715856" outcome="send" redirect="true"/>
-  <links id="pf15371986715854" target="pf15371986715856" source="pf15371980502873" outcome="support" redirect="true"/>
-  <links id="pf15377026498156" target="pf15377026498157" source="pf15377026498155" outcome="new" redirect="true"/>
-  <links id="pf15377026498154" target="pf15346031603196" source="pf15377026498157" outcome="main" redirect="true"/>
+  <links id="pf15383946357341" target="pf15377026498155" source="pf15346031603196" outcome="main" redirect="true"/>
+  <links id="pf15383946357340" target="pf15377026498155" source="pf15346030974151" outcome="main" redirect="true"/>
+  <links id="pf15383946357345" target="pf15383946357346" source="pf15383946357344" outcome="robot" redirect="true"/>
+  <links id="pf15383970476129" target="pf15377026498155" source="pf15383946357346" outcome="main" redirect="true"/>
+  <links id="pf153839859106310" target="pf15346031603196" source="pf15383946357344" outcome="new" redirect="true"/>
 </pageflow:Pageflow>
