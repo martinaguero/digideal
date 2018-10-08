@@ -1,8 +1,5 @@
 package org.trimatek.digideal.ui.utils;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -26,7 +23,7 @@ public class MessageValidator implements Validator {
 		if (value.toString().length() <= Context.CONTACT_MESSAGE_MIN
 				|| value.toString().length() >= Context.CONTACT_MESSAGE_MAX) {
 			FacesMessage msg = new FacesMessage(null, Tools.read("error_message_length", locale) + " ["
-					+ Context.CONTACT_MESSAGE_MIN + "," + Context.CONTACT_MESSAGE_MAX + "]");
+					+ Context.CONTACT_MESSAGE_MIN + "," + Context.CONTACT_MESSAGE_MAX + "] " + Tools.read("error_message_characters", locale));
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(msg);
 		}

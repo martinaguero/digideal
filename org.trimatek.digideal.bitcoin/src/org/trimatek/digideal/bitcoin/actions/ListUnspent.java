@@ -24,7 +24,7 @@ public class ListUnspent extends Action {
 		logger.log(Level.INFO, "Ready to run ListUnspent for " + contract.getValue("id"));
 
 		while (min != MAX_CONF) {
-			int max = min + Integer.parseInt(Config.getValue("BC_UNSPENT_DELTA_CONF"));
+			int max = min + Integer.parseInt(Config.getValue("BC_UNSPENT_DELTA"));
 			Process pr = rt
 					.exec(Config.getValue("BTC_PATH_TO_CLI") + buildParams(contract.getMultisigAddress(), min, max));
 /*
@@ -58,7 +58,7 @@ public class ListUnspent extends Action {
 			} else {
 				logger.log(Level.SEVERE, err);
 			}
-			min = min + Integer.parseInt(Config.getValue("BC_UNSPENT_DELTA_CONF"));
+			min = min + Integer.parseInt(Config.getValue("BC_UNSPENT_DELTA"));
 		}
 		logger.log(Level.INFO, "0 unspent transaction found.");
 		return null;

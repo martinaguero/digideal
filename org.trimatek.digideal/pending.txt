@@ -1,49 +1,44 @@
-1.código en minúsculas no lo valida (SOLUCIONADO)
-2.enviar un mail al vendedor avisando que se liberó el pago y otro al comprador (AGREGADO)
-3.cambiar a STS (MODIFICADO)
-4.cambiar la comisión (CANCELADO)
-5.integración REST (AGREGADO)
-6.delay para enviar la transacción de pago
-7.contrato en dólares (AGREGADO)
-8.fee variable -> servicio REST (AGREGADO)
-9.semilla para ID de contrato (AGREGADO)
-10.enviar funds request con QR para wallet (AGREGADO) -> agregar para ReRequest (AGREGADO)
-11.agregar id de contrato invisible en los mails (AGREGADO) ->agregar para ReRequest (AGREGADO)
-12.revisar cálculo de pagos (SOLUCIONADO)
-13.embeber QR
-14.averiguar si es posible detectar fondos enviados a la multisigaddress (AGREGADO)
-15.enviar el PDF por REST (AGREGADO)
-16.matchear el SN del contrato con la TX en el mail(CANCELADO)
-17.avisar a collector cuando payer pagó el total(AGREGADO)
-18.app lectora de QR https://developers.google.com/vision/android/barcodes-overview
-19.esperar a que la transacción tenga unas 3 confirmaciones
-20.en el mail de confirmación exitosa del contrato, agregar la url para ver la tx de pago (AGREGADO)
-21.formatear emails: https://github.com/leemunroe/responsive-html-email-template (AGREGADO)
-22.obtener código de mail html/multipart(SOLUCIONADO)
-23.crear parser en inglés(AGREGADO)
-24.mails multilanguage(AGREGADO)
-25.corregir el combo de moneda(SOLUCIONADO)
-26.mejorar el parser de código de recibo(SOLUCIONADO)
-27.agregar al QR de código de recibo el #DigiDeal
-28.agregar logueo a DigiDeal(AGREGADO)
-29.crear website(AGREGADO)
-30.enlace contact-us en el mail(AGREGADO)
-31.agregar parser PT
-32.seguridad DB
-33.Tomcat -> AWS(AGREGADO)
-34.Revisar org.trimatek.digideal.comm.rest.Server addOne(AGREGADO)
-35.Parametrizar rango listunspent(AGREGADO)
-36.HTTPS(AGREGADO)
-37.Testnet/Mainnet -> SelectOneButton(AGREGADO)
-38.UI.Selected menu label
-39.UI.handleQuantity >> sólo numéricos, revisar el color y tamaño(AGREGADO)
-40.UI.Validar que no sean iguales los datos de comprador y vendedor
-41.UI.Una vez enviado, resetear el formulario(AGREGADO)
-42.UI.Nick sin tilde(AGREGADO)
-43.UI.Términos y condiciones. Cookie.
-44.V2.UI.Buscador / HTML Unit: https://stackoverflow.com/questions/13367885/making-a-search-on-a-web-site-via-java / Levenshtein 
-45.V2:Transmisión del Source sincrónica con aviso de resultado en el momento.
-46.V2:Log y versión en BBDD
-47.Detener servicio dd y actualizar estado de BBDD(AGREGADO)
-48.UI.Anteponer tBTC en el formulario y el source
-49.UI.Explicar en el mail solicitando fondos la demora que demanda en recibir al menos 1 confirmación
+1.SOLUCIONADO	/código en minúsculas no lo valida
+2.AGREGADO		/enviar un mail al vendedor avisando que se liberó el pago y otro al comprador
+3.MODIFICADO	/cambiar a STS
+4.CANCELADO		/cambiar la comisión
+5.AGREGADO		/integración REST
+6.				/delay para enviar la transacción de pago
+7.AGREGADO		/contrato en dólares
+8.AGREGADO		/fee variable -> servicio REST
+9.AGREGADO		/semilla para ID de contrato
+10.AGREGADO		/enviar funds request con QR para wallet -> agregar para ReRequest
+11.AGREGADO		/agregar id de contrato invisible en los mails ->agregar para ReRequest
+12.SOLUCIONADO	/revisar cálculo de pagos
+13.				/embeber QR
+14.AGREGADO		/averiguar si es posible detectar fondos enviados a la multisigaddress
+15.AGREGADO		/enviar el PDF por REST
+16.CANCELADO	/matchear el SN del contrato con la TX en el mail
+17.AGREGADO		/avisar a collector cuando payer pagó el total
+18.				/app lectora de QR https://developers.google.com/vision/android/barcodes-overview
+19.				/esperar a que la transacción tenga unas 3 confirmaciones
+20.AGREGADO		/en el mail de confirmación exitosa del contrato, agregar la url para ver la tx de pago
+21.AGREGADO		/formatear emails: https://github.com/leemunroe/responsive-html-email-template
+22.SOLUCIONADO	/obtener código de mail html/multipart
+23.AGREGADO		/crear parser en inglés
+24.AGREGADO		/mails multilanguage
+25.SOLUCIONADO	/corregir el combo de moneda
+26.SOLUCIONADO	/mejorar el parser de código de recibo
+27.				/agregar al QR de código de recibo el #DigiDeal
+28.AGREGADO		/agregar logueo a DigiDeal
+29.AGREGADO		/crear website
+30.AGREGADO		/enlace contact-us en el mail
+31.				/agregar parser PT
+32.				/seguridad DB (bloquear puertos desde IPLAN)
+33.AGREGADO		/Tomcat -> AWS
+34.AGREGADO		/Revisar org.trimatek.digideal.comm.rest.Server addOne
+35.AGREGADO		/Parametrizar rango listunspent
+36.AGREGADO		/HTTPS
+37.AGREGADO		/Testnet/Mainnet -> SelectOneButton
+38.				/V2:Transmisión del Source sincrónica con aviso de resultado en el momento.
+39.				/V2:Log y versión en BBDD
+40.AGREGADO		/Detener servicio dd y actualizar estado de BBDD
+41.				/En los mails también filtrar por ID de DigiDeal
+42.				/Gmail API Setup Singleton
+43.				/Solucionar envío de Tickets
+44.				/Agregar ID de contrato en el asunto del QR receipt code
