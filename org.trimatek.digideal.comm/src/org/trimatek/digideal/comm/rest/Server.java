@@ -28,6 +28,7 @@ public class Server extends AbstractVerticle implements Launcher {
 
 	public Server(int port) {
 		PORT = port;
+		RepositorySupport.getInstance();
 	}
 
 	public void init() {

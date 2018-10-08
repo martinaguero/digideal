@@ -72,11 +72,14 @@ public class Start implements Launcher {
 		logger.log(Level.INFO, "Ready logging");
 		Start s = new Start();
 		s.init();
+		System.out.println("DigiDeal v." + Config.getValue("DIGIDEAL_VERSION") + " started on port "
+				+ Config.getValue("REST_SERVER_PORT") + ".");
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				logger.log(Level.INFO, "Workflow Runner is shutting down");
 				try {
 					s.shutdown();
+					System.out.println("DigiDeal stopped.");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -1,9 +1,12 @@
 package org.trimatek.digideal.ui.beans;
 
+import java.time.Instant;
 import java.util.logging.Level;
 
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.Context;
+import org.trimatek.digideal.ui.comm.SendTicket;
+import org.trimatek.digideal.ui.model.Ticket;
 import org.trimatek.digideal.ui.utils.Tools;
 import org.trimatek.digideal.ui.utils.Validators;
 
@@ -108,8 +111,6 @@ public class NavigationView extends CommonView {
 		setMessage("");
 		captchaCodeStyle = Context.REQUIRED_FIELD;
 		setCaptchaCode("");
-		btnContinueRendered = Boolean.FALSE;
-		btnRetryRendered = Boolean.FALSE;
 	}
 
 	public void validateEmail() {
@@ -139,18 +140,19 @@ public class NavigationView extends CommonView {
 	}
 
 	public void sendAction() {
-		boolean isHuman = captcha.validate(captchaCode);
+		boolean isHuman = captcha.validate(captchaCode);		
 		if (isHuman) {
 			setResult(Tools.read("contact_send_success", getLocale().toString()));
-			resetFields();
 			btnContinueRendered = Boolean.TRUE;
+			btnRetryRendered = Boolean.FALSE;
+			Ticket t = new Ticket();
+			t.setLocale(getLocale().toString());
+			t.setDatetime(Instant.now().toEpochMilli() / 1000L + "");
+			t.setFrom(getFrom());
+			t.setText(getMessage());
+			SendTicket.exec(t);
+			resetFields();
 			logger.log(Level.INFO, "New contact message sent");
-			// Ticket t = new Ticket();
-			// t.setLocale(getLocale().toString());
-			// t.setDatetime(Instant.now().toEpochMilli() / 1000L + "");
-			// t.setFrom(getFrom());
-			// t.setText(getMessage());
-			// SendTicket.exec(t);			
 		} else {
 			setResult(Tools.read("contact_send_fail", getLocale().toString()));
 			btnContinueRendered = Boolean.FALSE;
@@ -166,6 +168,10 @@ public class NavigationView extends CommonView {
 
 	public String getNavigationIndex() {
 		return Config.getValue("NAVIGATION_INDEX");
+	}
+	
+	public String getVersion() {
+		return Config.getValue("DIGIDEAL_WEB_VERSION");
 	}
 
 }

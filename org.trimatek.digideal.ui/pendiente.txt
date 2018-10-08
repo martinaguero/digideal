@@ -7,7 +7,7 @@
 7.				/Buscador / HTML Unit: https://stackoverflow.com/questions/13367885/making-a-search-on-a-web-site-via-java / Levenshtein / Ver PrimeFaces
 8.				/Anteponer tBTC en el formulario y el source
 9.AGREGADO		/Contact Us
-10.				/Acerca de -> muestra versión
+10.AGREGADO		/Acerca de -> muestra versión
 11.				/Cambiar el favicon de Tomcat x Digideal
 12.				/Contact Us que recibe parámetros por mail
 13.				/Validar cifra mínima
