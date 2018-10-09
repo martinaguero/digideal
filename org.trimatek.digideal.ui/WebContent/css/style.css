@@ -153,10 +153,14 @@ input:-ms-input-placeholder {
 .vText {
 	font-weight: bold;
 	text-align: center;
-	writing-mode: sideways-lr;
-//	-ms-transform: rotate(270deg); /* IE 9 */
-//	-moz-transform: rotate(270deg); /* Firefox */
-//	-webkit-transform: rotate(270deg); /* Safari and Chrome */
+	writing-mode: sideways-lr; //
+	-ms-transform: rotate(270deg); /* IE 9 */ //
+	-moz-transform: rotate(270deg); /* Firefox */ //
+	-webkit-transform: rotate(270deg); /* Safari and Chrome */
 	-o-transform: rotate(270deg); /* Opera */
 }
 
+noBorders tr, .noBorders td {
+	background: none !important;
+	border: none !important;
+}
