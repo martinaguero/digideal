@@ -20,6 +20,33 @@
 			<div class="container">
 				<h:body>
 					<h:form>
+						<div class="ui-fluid">
+							<p:panelGrid id="grid" columns="3" columnClasses="ui-grid-col-3"
+								layout="grid" styleClass="ui-panelgrid-blank">
+								<h:outputLabel class="text-justify" style="float: left"
+									value="#{msg.robot_text_1}" />
+								<h:outputLabel class="text-justify" style="float: left"
+									value="#{msg.robot_text_2}" />
+								<h:outputLabel class="text-justify" style="float: left"
+									value="#{msg.robot_text_3}&lt;br /&gt;#{msg.robot_down_arrow}"
+									escape="false" />
+								<h:outputLabel value="" />
+								<h:graphicImage value="../images/wise-robot-.jpg" />
+								<h:outputLabel class="text-justify" style="float: left"
+									value="#{msg.robot_text_4}" />
+								<h:outputLabel class="text-justify" style="float: left"
+									value="#{msg.robot_text_7}&lt;br /&gt;#{msg.robot_finish}"
+									escape="false" />
+								<h:outputLabel class="text-justify" style="float: left"
+									value="#{msg.robot_text_6}&lt;br /&gt;#{msg.robot_left_arrow}"
+									escape="false" />
+								<h:outputLabel class="text-justify" style="float: left"
+									value="#{msg.robot_text_5}&lt;br /&gt;#{msg.robot_left_arrow}"
+									escape="false" />
+							</p:panelGrid>
+						</div>
+						<br />
+						<br />
 						<p:button type="button" value="#{msg.btn_back}"
 							icon="fa fa-fw fa-arrow-circle-o-left" outcome="main" />
 					</h:form>
