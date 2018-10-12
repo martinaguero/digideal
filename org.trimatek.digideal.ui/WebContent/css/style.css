@@ -160,7 +160,7 @@ input:-ms-input-placeholder {
 	-o-transform: rotate(270deg); /* Opera */
 }
 
-noBorders tr, .noBorders td {
+.noBorders tr, .noBorders td {
 	background: none !important;
 	border: none !important;
 }
