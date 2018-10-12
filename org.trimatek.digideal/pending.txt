@@ -43,3 +43,4 @@
 43.SOLUCIONADO	/Solucionar envío de Tickets
 44.				/Agregar ID de contrato en el asunto del QR receipt code
 45.				/Agregar enlace a transacción de fondos al aviso de disponibilidad
+46.				/Cambiar email a un no-reply
