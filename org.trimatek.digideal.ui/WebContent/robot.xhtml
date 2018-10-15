@@ -20,7 +20,7 @@
 			<div class="container">
 				<h:body>
 					<h:form>
-						<h2>#{msg.page_robot}</h2>
+						<h2 class="text-primary">#{msg.page_robot}</h2>
 						<br />
 						<h4>#{msg.main_title_what}</h4>
 						<h:outputLabel class="text-justify"
@@ -29,10 +29,10 @@
 						<br />
 						<h4>#{msg.robot_subtitle}</h4>
 						<div class="ui-fluid">
-							<p:panelGrid id="grid" columns="3" columnClasses="ui-grid-col-3"
+							<p:panelGrid id="grid" columns="3" columnClasses="ui-grid-col"
 								layout="grid" styleClass="ui-panelgrid-blank">
 								<p:panel>
-									<h:outputLabel class="text-justify" value="#{msg.robot_text_1}" />
+									<h:outputLabel class="text-justify" value="#{msg.robot_text_1}&lt;br /&gt;#{msg.robot_right_arrow}" escape="false" />
 								</p:panel>
 								<p:panel>
 									<h:outputLabel class="text-justify" value="#{msg.robot_text_2}" />

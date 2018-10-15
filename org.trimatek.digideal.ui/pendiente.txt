@@ -1,4 +1,4 @@
-1.				/Selected menu label
+1.AGREGADO		/Selected menu label
 2.AGREGADO		/handleQuantity >> sólo numéricos, revisar el color y tamaño
 3.				/Validar que no sean iguales los datos de comprador y vendedor
 4.				/Una vez enviado, resetear el formulario
@@ -15,3 +15,4 @@
 15.				/Explicar en la confirmación de nuevo contrato que recién después de 5 confirmaciones se avisará sobre su disponibilidad
 16.				/V2.Mostrar un status del contrato
 17.				/Agregar marca de agua al PDF, timestamp y versión
+18.				/Agregar sobre Oraculo en Tecnología

@@ -19,9 +19,11 @@
 
 	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><p:link styleClass="nav-link" outcome="new"
-					value="#{msg.main_new}"></p:link></li>
-			<li class="nav-item dropdown"><a
+			<li class="nav-item"><p:link
+					styleClass="nav-link #{view.viewId.contains('form') ? 'active' : ''}"
+					outcome="new" value="#{msg.main_new}"></p:link></li>
+			<li
+				class="nav-item dropdown #{view.viewId.contains('p2sh')||view.viewId.contains('robot')||view.viewId.contains('usecases') ? 'active' : ''}"><a
 				class="nav-link dropdown-toggle" href="http://example.com"
 				id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false">#{msg.menu_wiki}</a>
@@ -33,12 +35,14 @@
 					<p:link styleClass="dropdown-item" outcome="usecases"
 						value="#{msg.menu_wiki_use_cases}" />
 				</div></li>
-			<li class="nav-item"><p:link styleClass="nav-link" outcome="faq"
-					value="#{msg.menu_faq}"></p:link></li>
-			<li class="nav-item"><p:link styleClass="nav-link"
-					outcome="contactus" value="#{msg.menu_contact_us}"></p:link></li>
-			<li class="nav-item"><p:link styleClass="nav-link"
-					outcome="about" value="#{msg.menu_about_us}"></p:link></li>
+			<li class="nav-item #{view.viewId.contains('faq') ? 'active' : ''}"><p:link
+					styleClass="nav-link" outcome="faq" value="#{msg.menu_faq}"></p:link></li>
+			<li
+				class="nav-item #{view.viewId.contains('contactus') ? 'active' : ''}"><p:link
+					styleClass="nav-link" outcome="contactus"
+					value="#{msg.menu_contact_us}"></p:link></li>
+			<li class="nav-item #{view.viewId.contains('about') ? 'active' : ''}"><p:link
+					styleClass="nav-link" outcome="about" value="#{msg.menu_about_us}"></p:link></li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0">
 			<p:inputText styleClass="form-control mr-sm-2" id="search"

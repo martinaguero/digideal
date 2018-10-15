@@ -20,7 +20,7 @@
 			<div class="container">
 				<h:body>
 					<h:form>
-						<h2>#{msg.page_usecases}</h2>
+						<h2 class="text-primary">#{msg.page_usecases}</h2>
 						<br />
 						<h4>#{msg.main_title_for}</h4>
 						<h:outputLabel class="text-justify"
@@ -29,19 +29,65 @@
 						<br />
 						<h4>#{msg.cases_subtitle}</h4>
 						<br />
-						<div class="ui-fluid">
-							<p:panel>
-								<p:layoutUnit position="west" resizable="false">
-									<h:graphicImage value="../images/wise-robot-.jpg" />
-								</p:layoutUnit>
-								<p:layoutUnit position="center" resizable="false">
-									<h:outputLabel class="text-justify"
+						<p:fieldset style="margin-bottom:20px">
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:graphicImage value="../images/wise-robot-.jpg" />
+								<h:panelGrid columns="1">
+									<h:outputText style="font-weight: bold;"
 										value="#{msg.cases_c1_title}" />
 									<h:outputLabel class="text-justify"
 										value="#{msg.cases_c1_text1}" />
-								</p:layoutUnit>
-							</p:panel>
-						</div>
+								</h:panelGrid>
+							</h:panelGrid>
+						</p:fieldset>
+						<p:fieldset style="margin-bottom:20px">
+							<h:panelGrid columns="2" cellpadding="5">
+								<h:panelGrid columns="1">
+									<h:outputText style="font-weight: bold;"
+										value="#{msg.cases_c2_title}" />
+									<h:outputLabel class="text-justify"
+										value="#{msg.cases_c2_text1}" />
+								</h:panelGrid>
+								<p:graphicImage value="../images/wise-robot-.jpg" />
+							</h:panelGrid>
+						</p:fieldset>
+						<p:fieldset style="margin-bottom:20px">
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:graphicImage value="../images/wise-robot-.jpg" />
+								<h:panelGrid columns="1">
+									<h:outputText style="font-weight: bold;"
+										value="#{msg.cases_c3_title}" />
+									<h:outputLabel class="text-justify"
+										value="#{msg.cases_c3_text1}" />
+								</h:panelGrid>
+							</h:panelGrid>
+						</p:fieldset>
+						<p:fieldset style="margin-bottom:20px">
+							<h:panelGrid columns="2" cellpadding="5">
+								<h:panelGrid columns="1">
+									<h:outputText style="font-weight: bold;"
+										value="#{msg.cases_c4_title}" />
+									<h:outputLabel class="text-justify"
+										value="#{msg.cases_c4_text1}" />
+								</h:panelGrid>
+								<p:graphicImage value="../images/wise-robot-.jpg" />
+							</h:panelGrid>
+						</p:fieldset>
+						<p:fieldset style="margin-bottom:20px">
+							<h:panelGrid columns="2" cellpadding="5">
+								<p:graphicImage value="../images/wise-robot-.jpg" />
+								<h:panelGrid columns="1">
+									<h:outputText style="font-weight: bold;"
+										value="#{msg.cases_c5_title}" />
+									<h:outputLabel class="text-justify"
+										value="#{msg.cases_c5_text1}" />
+								</h:panelGrid>
+							</h:panelGrid>
+						</p:fieldset>
+						<br />
+						<h:outputLabel class="text-justify" value="#{msg.cases_footer}"
+							escape="false" />
+						<br />
 						<br />
 						<br />
 						<p:button type="button" value="#{msg.btn_back}"
