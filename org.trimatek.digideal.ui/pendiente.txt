@@ -1,7 +1,7 @@
 1.AGREGADO		/Selected menu label
 2.AGREGADO		/handleQuantity >> sólo numéricos, revisar el color y tamaño
 3.				/Validar que no sean iguales los datos de comprador y vendedor
-4.				/Una vez enviado, resetear el formulario
+4.AGREGADO		/Una vez enviado, resetear el formulario
 5.AGREGADO		/Nick sin tilde
 6.				/Términos y condiciones. Cookie.
 7.				/V2.Buscador / HTML Unit: https://stackoverflow.com/questions/13367885/making-a-search-on-a-web-site-via-java / Levenshtein / Ver PrimeFaces

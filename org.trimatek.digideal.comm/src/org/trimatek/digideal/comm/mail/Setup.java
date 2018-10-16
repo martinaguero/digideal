@@ -43,6 +43,9 @@ public class Setup {
 	 * ~/.credentials/gmail-java-quickstart
 	 */
 	private static final List<String> SCOPES = Arrays.asList(GmailScopes.MAIL_GOOGLE_COM);
+	private static Setup INSTANCE;
+	private Gmail gmail;
+	private Credential credential;
 
 	static {
 		try {
@@ -62,16 +65,27 @@ public class Setup {
 	 */
 	public static Credential authorize() throws IOException {
 		// Load client secrets.
-		logger.log(Level.INFO,"Ready to load emails credentials");
+		logger.log(Level.INFO, "Ready to load emails credentials");
 		InputStream in = GMailResource.class.getResourceAsStream("/client_id.json");
-		logger.log(Level.INFO,"Credentials input stream is available: " +in.available());
+		logger.log(Level.INFO, "Credentials input stream is available: " + in.available());
 		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 		// Build flow and trigger user authorization request.
 		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
 				clientSecrets, SCOPES).setDataStoreFactory(DATA_STORE_FACTORY).setAccessType("offline").build();
 		Credential credential = new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
-//		System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+		// System.out.println("Credentials saved to " +
+		// DATA_STORE_DIR.getAbsolutePath());
 		return credential;
+	}
+
+	private Setup() {
+		try {
+			credential = authorize();
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, e.getMessage());
+		}
+		gmail = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME)
+				.build();
 	}
 
 	/**
@@ -81,8 +95,10 @@ public class Setup {
 	 * @throws IOException
 	 */
 	public static Gmail getGmailService() throws IOException {
-		Credential credential = authorize();
-		return new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
+		if (INSTANCE == null) {
+			INSTANCE = new Setup();
+		}
+		return INSTANCE.gmail;
 	}
 
 }

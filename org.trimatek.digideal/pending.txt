@@ -39,8 +39,9 @@
 39.				/V2:Log y versión en BBDD
 40.AGREGADO		/Detener servicio dd y actualizar estado de BBDD
 41.				/En los mails también filtrar por ID de DigiDeal
-42.				/Gmail API Setup Singleton
+42.AGREGADO		/Gmail API Setup Singleton
 43.SOLUCIONADO	/Solucionar envío de Tickets
 44.				/Agregar ID de contrato en el asunto del QR receipt code
-45.				/Agregar enlace a transacción de fondos al aviso de disponibilidad
+45.AGREGADO		/Agregar enlace a transacción de fondos al aviso de disponibilidad
 46.				/Cambiar email a un no-reply
+47.AGREGADO		/Guardar error de compilación

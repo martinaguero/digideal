@@ -25,6 +25,7 @@
 						<h4>#{msg.main_title_what}</h4>
 						<h:outputLabel class="text-justify"
 							value="#{msg.main_what_synthesis}" />
+						<h:outputLabel class="text-justify" value="#{msg.robot_text_0}" />
 						<br />
 						<br />
 						<h4>#{msg.robot_subtitle}</h4>
@@ -32,7 +33,9 @@
 							<p:panelGrid id="grid" columns="3" columnClasses="ui-grid-col"
 								layout="grid" styleClass="ui-panelgrid-blank">
 								<p:panel>
-									<h:outputLabel class="text-justify" value="#{msg.robot_text_1}&lt;br /&gt;#{msg.robot_right_arrow}" escape="false" />
+									<h:outputLabel class="text-justify"
+										value="#{msg.robot_text_1}&lt;br /&gt;#{msg.robot_right_arrow}"
+										escape="false" />
 								</p:panel>
 								<p:panel>
 									<h:outputLabel class="text-justify" value="#{msg.robot_text_2}" />
@@ -65,6 +68,8 @@
 							</p:panelGrid>
 						</div>
 						<br />
+						<h:outputLabel class="text-justify" value="#{msg.robot_text_10}" />
+						<br /><br />
 						<h4>#{msg.robot_fee}</h4>
 						<h:outputLabel class="text-justify"
 							value="#{msg.robot_fee_detail}" />

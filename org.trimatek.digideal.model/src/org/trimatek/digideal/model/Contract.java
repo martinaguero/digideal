@@ -23,9 +23,8 @@ import org.trimatek.digideal.model.utils.Tools;
 
 @Entity
 @NamedQueries({
-@NamedQuery(name = "loadUndoneContracts", query = "SELECT c FROM Contract c WHERE c.statusName != 'Done' and c.running = FALSE ORDER BY c.id"),
-@NamedQuery(name = "setRunningFalse", query = "UPDATE Contract c SET c.running = FALSE WHERE c.running = TRUE")
-})
+		@NamedQuery(name = "loadUndoneContracts", query = "SELECT c FROM Contract c WHERE c.statusName != 'Done' AND c.statusName != 'Failed' AND c.running = FALSE ORDER BY c.id"),
+		@NamedQuery(name = "setRunningFalse", query = "UPDATE Contract c SET c.running = FALSE WHERE c.running = TRUE") })
 public class Contract implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -55,6 +54,7 @@ public class Contract implements Serializable {
 	//
 	private String statusName;
 	private Boolean running;
+	private String comments;
 	//
 	@Embedded
 	private Receipt receipt;
@@ -227,6 +227,14 @@ public class Contract implements Serializable {
 
 	public void setPrivateKey(String privateKey) {
 		this.privateKey = privateKey;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 }

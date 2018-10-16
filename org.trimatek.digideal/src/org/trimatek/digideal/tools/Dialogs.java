@@ -1,5 +1,7 @@
 package org.trimatek.digideal.tools;
 
+import static org.trimatek.digideal.tools.Dialogs.setHiperlink;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -23,6 +25,12 @@ public class Dialogs {
 
 	public static String getSupportUrl(String contractId, String from) {
 		return Config.getValue("UI_CONTACT_US_URL") + "?id=" + contractId + "&from=" + from;
+	}
+
+	public static String toUrl(String tx, String locale) {
+		return Boolean.parseBoolean(Config.getValue("MAINNET"))
+				? setHiperlink(tx, 16, Config.getValue("BTC_TX_TRACK_MAINNET") + tx)
+				: setHiperlink(tx, 16, Config.getValue("BTC_TX_TRACK_TESTNET") + tx);
 	}
 
 }

@@ -19,11 +19,10 @@ public class Compile extends Action implements Runnable {
 
 	@Override
 	public void run() {
+		String err = null;
+		String res = null;
 
 		try {
-			String err = null;
-			String res = null;
-
 			Runtime rt = Runtime.getRuntime();
 			logger.log(Level.INFO, "Ready to compile source");
 			String sourcePath = Config.getValue("COCO_TEMP") + contract.getSource().getName();
@@ -46,14 +45,16 @@ public class Compile extends Action implements Runnable {
 				contract.setBtc(new BigDecimal(contract.getValue("btc")));
 				Repository.getInstance().save(contract);
 				done = Boolean.TRUE;
-
-			} else {
-				logger.log(Level.SEVERE, err);
+			} else {		
 				logger.log(Level.INFO, "Execution failed: source could not be compiled");
+				contract.setComments(err);
+				contract.setStatusName("Failed");
+				contract.setRunning(Boolean.FALSE);
+				Repository.getInstance().save(contract);
 				contract = null;
-			}
+			}			
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Error while compiling source. Message: " + e.getMessage());
+			logger.log(Level.SEVERE, "Error while compiling source. Message: " + e.getMessage());			
 		}
 
 	}
