@@ -528,6 +528,10 @@ public class ContractView extends CommonView {
 		signature.add(getTooltipPayer());
 		signature.add(getTooltipCollector());
 		signature.add(getTooltipAgent());
+		signature.add("");
+		signature.add("--------------------------------------------------");
+		signature.add(Tools.read("pdf_created_with", getLocale().toString()) + " "
+				+ Tools.read("about_version", getLocale().toString()) + Config.getValue("DIGIDEAL_WEB_VERSION"));
 		return signature;
 	}
 

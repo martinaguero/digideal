@@ -23,7 +23,7 @@ import org.trimatek.digideal.model.utils.Tools;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "loadUndoneContracts", query = "SELECT c FROM Contract c WHERE c.statusName != 'Done' AND c.statusName != 'Failed' AND c.running = FALSE ORDER BY c.id"),
+		@NamedQuery(name = "loadUndoneContracts", query = "SELECT c FROM Contract c WHERE c.statusName != 'Done' AND c.running = FALSE ORDER BY c.id"),
 		@NamedQuery(name = "setRunningFalse", query = "UPDATE Contract c SET c.running = FALSE WHERE c.running = TRUE") })
 public class Contract implements Serializable {
 
