@@ -42,7 +42,7 @@ public class ListUnspent extends Action {
 			
 			if (err != null && err.isEmpty()) {
 				JsonArray txs = new Gson().fromJson(in, JsonArray.class);
-				logger.log(Level.INFO, "Execution success. In confirmations rage [" + min + "," + max + "] retrieved "
+				logger.log(Level.INFO, "Execution success. In confirmations range [" + min + "," + max + "] retrieved "
 						+ txs.size() + " transactions.");
 				for (JsonElement t : txs) {
 					JsonObject o = t.getAsJsonObject();

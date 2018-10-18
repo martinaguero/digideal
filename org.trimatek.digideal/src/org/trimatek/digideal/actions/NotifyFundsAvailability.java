@@ -1,12 +1,8 @@
 package org.trimatek.digideal.actions;
 
-import static org.trimatek.digideal.tools.Dialogs.setHiperlink;
 import static org.trimatek.digideal.tools.Dialogs.setTwitterColor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 import java.util.logging.Level;
 
 import javax.mail.Message.RecipientType;
@@ -16,7 +12,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.trimatek.digideal.bitcoin.actions.GetUnspentRaw;
 import org.trimatek.digideal.comm.mail.SendMessage;
 import org.trimatek.digideal.comm.mail.Template;
 import org.trimatek.digideal.comm.mail.utils.TemplateFactory;
@@ -56,7 +51,7 @@ public class NotifyFundsAvailability extends Action {
 		Template t = TemplateFactory.getEmailTemplate();
 		t.setHi(Dialogs.read("email_hi", locale) + " @" + cnt.getValue("collector.name") + "</b>");
 		String content1 = Dialogs.read("email_funds_available_collector_content1_a", locale) + "<br/>"
-				+ getUnspentTxUrls(cnt, locale) + "<br/>"
+				+ Dialogs.getUnspentTxUrls(cnt) + "<br/>"
 				+ Dialogs.read("email_funds_available_collector_content1_b", locale) + " "
 				+ setTwitterColor(" @" + cnt.getValue("payer.name") + " ")
 				+ Dialogs.read("email_funds_available_collector_content1_c", locale);
@@ -66,24 +61,12 @@ public class NotifyFundsAvailability extends Action {
 		t.setSalutation(Dialogs.read("email_salutation", locale));
 		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
 				Dialogs.getSupportUrl(cnt.getSource().getName(), cnt.getValue("collector.email")));
+		t.setVersion(Config.getValue("DIGIDEAL_VERSION"));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);
 		email.setContent(content);
 		return email;
-	}
-
-	private static String getUnspentTxUrls(Contract cnt, String locale) {
-		StringBuffer sb = new StringBuffer();
-		int left = cnt.getUnspentTransactions().size();
-		for (Transaction tx : cnt.getUnspentTransactions()) {
-			sb.append(Dialogs.toUrl(tx.getTxId(), locale));
-			left--;
-			if (left > 0) {
-				sb.append("<br/>");
-			}
-		}
-		return sb.toString();
 	}
 
 }

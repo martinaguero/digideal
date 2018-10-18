@@ -42,6 +42,11 @@ public class Template {
 		html = html.replace("\"#{preview}\"", preview);
 		return this;
 	}
+	
+	public Template setVersion(String version) {
+		html = html.replace("\"#{version}\"", version);
+		return this;
+	}
 
 	public Template setSupport(String needSupport, String contactUs, String supportUrl) {
 		html = html.replace("\"#{need_support}\"", needSupport);

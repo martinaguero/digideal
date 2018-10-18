@@ -58,6 +58,7 @@ public class NotifyContractSuccess extends Action {
 		t.setSalutation(Dialogs.read("email_salutation",locale));
 		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
 				Dialogs.getSupportUrl(cnt.getSource().getName(),cnt.getValue("payer.email")));
+		t.setVersion(Config.getValue("DIGIDEAL_VERSION"));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);
@@ -86,6 +87,7 @@ public class NotifyContractSuccess extends Action {
 		t.setSalutation(Dialogs.read("email_salutation",locale));
 		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
 				Dialogs.getSupportUrl(cnt.getSource().getName(),cnt.getValue("collector.email")));
+		t.setVersion(Config.getValue("DIGIDEAL_VERSION"));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);

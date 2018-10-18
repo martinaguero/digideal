@@ -19,6 +19,7 @@ import org.trimatek.digideal.comm.mail.Tools;
 import org.trimatek.digideal.comm.mail.utils.TemplateFactory;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
+import org.trimatek.digideal.model.utils.Config;
 import org.trimatek.digideal.tools.Dialogs;
 import org.trimatek.digideal.tools.Generators;
 
@@ -62,20 +63,24 @@ public class SendReceiptCode extends Action {
 		email.setFrom(new InternetAddress(cnt.getValue("agent.email"), "DigiDeal"));
 		InternetAddress[] to = InternetAddress.parse(cnt.getValue("payer.email"));
 		email.setRecipients(RecipientType.TO, to);
-		email.setSubject(Dialogs.read("email_subject_prefix",locale) + " " + Dialogs.read("email_funds_available_subject",locale));
+		email.setSubject(Dialogs.read("email_subject_prefix", locale) + " "
+				+ Dialogs.read("email_funds_available_subject", locale));
 
 		MimeMultipart content = new MimeMultipart("related");
 		MimeBodyPart htmlPart = new MimeBodyPart();
 
 		Template t = TemplateFactory.getEmailTemplate();
-		t.setHi(Dialogs.read("email_hi",locale) + " @" + cnt.getValue("payer.name") + "</b>");
-		String content1 = Dialogs.read("email_send_receipt_code_content1",locale) + " <b>" + code + "</b>";
+		t.setHi(Dialogs.read("email_hi", locale) + " @" + cnt.getValue("payer.name") + "</b>");
+		String content1 = Dialogs.read("email_funds_available_collector_content1_a", locale) + "<br/>"
+				+ Dialogs.getUnspentTxUrls(cnt) + "<br/>"
+				+ Dialogs.read("email_send_receipt_code_content1", locale) + " <b>" + code + "</b>";
 		t.setPreview(content1);
 		t.setContent1(content1);
-		t.setContent2(Dialogs.read("email_content2",locale) + cnt.getValue("id"));
-		t.setSalutation(Dialogs.read("email_salutation",locale));
+		t.setContent2(Dialogs.read("email_content2", locale) + cnt.getValue("id"));
+		t.setSalutation(Dialogs.read("email_salutation", locale));
 		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
-				Dialogs.getSupportUrl(cnt.getSource().getName(),cnt.getValue("payer.email")));
+				Dialogs.getSupportUrl(cnt.getSource().getName(), cnt.getValue("payer.email")));
+		t.setVersion(Config.getValue("DIGIDEAL_VERSION"));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);
@@ -85,8 +90,9 @@ public class SendReceiptCode extends Action {
 	}
 
 	private static String genQRGmail(Contract cnt) throws IOException {
-		return "googlegmail:///co?subject=" + "[DD] Code scanned" + "&to=" + cnt.getValue("agent.email") + "&body="
-				+ cnt.getReceiptCode();
+		return "googlegmail:///co?subject=" + Dialogs.read("email_subject_prefix", cnt.getSource().getLocale()) + " "
+				+ Dialogs.read("email_validate_receipt_code_subject", cnt.getSource().getLocale()) + "&to="
+				+ cnt.getValue("agent.email") + "&body=" + cnt.getReceiptCode();
 	}
 
 	public static void main(String args[]) {

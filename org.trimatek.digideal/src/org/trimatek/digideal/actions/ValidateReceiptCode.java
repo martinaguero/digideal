@@ -17,6 +17,7 @@ import org.trimatek.digideal.comm.mail.utils.TemplateFactory;
 import org.trimatek.digideal.model.Action;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Receipt;
+import org.trimatek.digideal.model.utils.Config;
 import org.trimatek.digideal.tools.Dialogs;
 
 public class ValidateReceiptCode extends Action {
@@ -62,6 +63,7 @@ public class ValidateReceiptCode extends Action {
 		t.setSalutation(Dialogs.read("email_salutation",locale));
 		t.setSupport(Dialogs.read("email_need_support", locale), Dialogs.read("email_contact_us", locale),
 				Dialogs.getSupportUrl(cnt.getSource().getName(),cnt.getValue("collector.email")));
+		t.setVersion(Config.getValue("DIGIDEAL_VERSION"));
 		htmlPart.setText(t.toHtml(), "US-ASCII", "html");
 
 		content.addBodyPart(htmlPart);
