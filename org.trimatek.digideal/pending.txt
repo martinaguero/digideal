@@ -45,3 +45,4 @@
 45.AGREGADO		/Agregar enlace a transacción de fondos al aviso de disponibilidad
 46.				/Cambiar email a un no-reply
 47.AGREGADO		/Guardar error de compilación
+48.				/Agregar versión en mail
