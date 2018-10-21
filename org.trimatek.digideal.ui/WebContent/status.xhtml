@@ -63,7 +63,8 @@
 									icon="fa fa-fw fa-arrow-circle-o-left" outcome="main" />
 								<p:commandButton id="accept" value="#{msg.btn_accept}"
 									actionListener="#{statusView.acceptAction}"
-									onclick="PF('result').show();" update="paneldialog,panelbar"
+									onclick="PF('result').show();"
+									update="paneldialog,panelbar,panelsteps"
 									icon="fa fa-fw fa-arrow-circle-o-right"
 									disabled="#{statusView.acceptDisabled}" />
 							</p:panelGrid>
@@ -79,13 +80,28 @@
 										rendered="#{statusView.renderProgressbar}" />
 								</p:panelGrid>
 								<p:panelGrid layout="grid" styleClass="ui-noborder"
+									id="panelsteps" columns="1">
+									<p:steps id="steps" activeIndex="3"
+										rendered="#{statusView.btnContinueRendered}">
+										<p:menuitem value="Nuevo" />
+										<p:menuitem value="Esp. Fondos" />
+										<p:menuitem value="Esp. Recibo" />
+										<p:menuitem value="Completado" />
+									</p:steps>
+								</p:panelGrid>
+								<br />
+								<p:panelGrid layout="grid" styleClass="ui-noborder"
 									id="paneldialog" columns="2">
 									<h:outputLabel value="DigiDeal #" />
 									<h:outputLabel value="#{statusView.status.id}" />
-									<h:outputLabel value="Request result" />
-									<h:outputLabel value="#{statusView.status.result}" />
-									<h:outputLabel value="Status" />
-									<h:outputLabel value="#{statusView.status.status}" />
+									<h:outputLabel value="Status"
+										rendered="#{statusView.btnContinueRendered}" />
+									<h:outputLabel value="#{statusView.status.status}"
+										rendered="#{statusView.btnContinueRendered}" />
+									<h:outputLabel value="Result"
+										rendered="#{statusView.btnRetryRendered}" />
+									<h:outputLabel value="#{statusView.result}"
+										rendered="#{statusView.btnRetryRendered}" />
 									<h:outputLabel value="" />
 									<h:outputLabel value="" />
 									<p:button type="button" value="#{msg.btn_retry}"
@@ -93,7 +109,7 @@
 										rendered="#{statusView.btnRetryRendered}"
 										onclick="PF('result').hide();" />
 									<p:button type="button" value="#{msg.btn_continue}"
-										icon="fa fa-fw fa-arrow-circle-o-left" outcome="main"
+										icon="fa fa-fw fa-arrow-circle-o-right" outcome="main"
 										rendered="#{statusView.btnContinueRendered}" />
 								</p:panelGrid>
 							</div>

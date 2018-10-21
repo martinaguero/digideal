@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import org.trimatek.digideal.ui.Context;
 import org.trimatek.digideal.ui.comm.GetStatus;
 import org.trimatek.digideal.ui.model.Status;
+import org.trimatek.digideal.ui.utils.Tools;
 
 import com.captcha.botdetect.web.jsf.SimpleJsfCaptcha;
 
@@ -16,6 +17,7 @@ public class StatusView extends CommonView {
 	private SimpleJsfCaptcha captcha;
 	private String captchaCode;
 	private String captchaCodeStyle;
+	private String result;
 
 	public void onLoad() {
 		status = null;
@@ -92,10 +94,12 @@ public class StatusView extends CommonView {
 			if (status.getResult() == 200) {
 				resetFields();
 			}
+			setResult(Tools.read("status_id_fail", getLocale().toString()));
 		} else {
 			status = new Status();
 			status.setId(getId());
 			status.setResult(-1);
+			setResult(Tools.read("status_captcha_fail", getLocale().toString()));
 			logger.log(Level.INFO, "Status captcha error");
 		}
 	}
@@ -126,6 +130,14 @@ public class StatusView extends CommonView {
 
 	public boolean getBtnContinueRendered() {
 		return status != null && status.getResult() == 200 ? true : false;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 
 }
