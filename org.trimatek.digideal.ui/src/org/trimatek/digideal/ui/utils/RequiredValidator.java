@@ -9,21 +9,19 @@ import javax.faces.validator.ValidatorException;
 
 import org.trimatek.digideal.ui.Context;
 
-@FacesValidator("org.trimatek.digideal.ui.utils.MessageValidator")
-public class MessageValidator implements Validator {
+@FacesValidator("org.trimatek.digideal.ui.utils.RequiredValidator")
+public class RequiredValidator implements Validator {
 
 	private String locale;
 
-	public MessageValidator() {
+	public RequiredValidator() {
 		locale = FacesContext.getCurrentInstance().getViewRoot().getLocale().toString();
 	}
 
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-		if (value.toString().length() <= Context.CONTACT_MESSAGE_MIN
-				|| value.toString().length() >= Context.CONTACT_MESSAGE_MAX) {
-			FacesMessage msg = new FacesMessage(null, Tools.read("error_message_length", locale) + " ["
-					+ Context.CONTACT_MESSAGE_MIN + "," + Context.CONTACT_MESSAGE_MAX + "] " + Tools.read("error_message_characters", locale));
+		if (value.toString().length() < Context.STATUS_SERIAL_MIN) {
+			FacesMessage msg = new FacesMessage(null, Tools.read("error_input_required", locale));
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(msg);
 		}

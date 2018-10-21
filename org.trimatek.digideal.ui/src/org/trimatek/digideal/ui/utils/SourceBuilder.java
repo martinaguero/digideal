@@ -4,8 +4,6 @@ import static org.trimatek.digideal.ui.Context.DATE_FORMAT;
 
 import java.util.Date;
 
-import javax.faces.context.FacesContext;
-
 import org.trimatek.digideal.ui.Context;
 import org.trimatek.digideal.ui.beans.ContractView;
 import org.trimatek.digideal.ui.comm.GetSerial;

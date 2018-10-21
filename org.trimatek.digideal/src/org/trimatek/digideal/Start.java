@@ -77,6 +77,7 @@ public class Start implements Launcher {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				logger.log(Level.INFO, "Workflow Runner is shutting down");
+				System.out.println("DigiDeal shutting down.");
 				try {
 					s.shutdown();
 					System.out.println("DigiDeal stopped.");

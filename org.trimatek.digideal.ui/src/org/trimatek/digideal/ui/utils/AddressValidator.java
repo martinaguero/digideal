@@ -10,17 +10,17 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-@FacesValidator("org.trimatek.digideal.ui.utils.EmailValidator")
-public class EmailValidator implements Validator {
+import org.trimatek.digideal.ui.Context;
 
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\."
-			+ "[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*" + "(\\.[A-Za-z]{2,})$";
+@FacesValidator("org.trimatek.digideal.ui.utils.AddressValidator")
+public class AddressValidator implements Validator {
+	
 	private Pattern pattern;
 	private Matcher matcher;
 	private String locale;
 
-	public EmailValidator() {
-		pattern = Pattern.compile(EMAIL_PATTERN);
+	public AddressValidator() {
+		pattern = Pattern.compile(Context.BTC_ADDRESS_REGEX);
 		locale = FacesContext.getCurrentInstance().getViewRoot().getLocale().toString();
 	}
 
@@ -29,7 +29,7 @@ public class EmailValidator implements Validator {
 		matcher = pattern.matcher(value.toString());
 		if (!matcher.matches()) {
 			FacesMessage msg = new FacesMessage(null,
-					Tools.read("error_email", locale) + " " + Tools.read("error_invalid", locale));
+					Tools.read("status_address", locale) + " " + Tools.read("error_incorrect", locale));
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(msg);
 		}

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Source;
@@ -65,12 +66,20 @@ public class Repository {
 		em.getTransaction().commit();
 		return results;
 	}
-	
+
 	public int setRunningFalse() {
 		em.getTransaction().begin();
 		int result = em.createNamedQuery("setRunningFalse", Contract.class).executeUpdate();
 		em.getTransaction().commit();
 		return result;
+	}
+
+	public Contract loadContract(String id) {
+		em.getTransaction().begin();
+		List<Contract> result = em.createNamedQuery("loadContract", Contract.class).setParameter("id", id)
+				.getResultList();
+		em.getTransaction().commit();
+		return !result.isEmpty() ? result.get(0) : null;
 	}
 
 }

@@ -22,6 +22,9 @@
 			<li class="nav-item"><p:link
 					styleClass="nav-link #{view.viewId.contains('form') ? 'active' : ''}"
 					outcome="new" value="#{msg.main_new}"></p:link></li>
+			<li class="nav-item"><p:link
+					styleClass="nav-link #{view.viewId.contains('status') ? 'active' : ''}"
+					outcome="status" value="#{msg.menu_status}"></p:link></li>		
 			<li
 				class="nav-item dropdown #{view.viewId.contains('p2sh')||view.viewId.contains('robot')||view.viewId.contains('usecases') ? 'active' : ''}"><a
 				class="nav-link dropdown-toggle" href="http://example.com"

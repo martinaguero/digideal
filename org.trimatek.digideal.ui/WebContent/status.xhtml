@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:botDetect="https://captcha.com/java/jsf/simple-api">
+<h:head>
+	<title><h:outputText value="#{msg.page_status}" /></title>
+	<link rel="stylesheet" href="./css/style.css" />
+	<link rel="stylesheet" href="./css/showcase.css" />
+</h:head>
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+	<ui:define name="content">
+		<main role="main" class="container">
+		<div class="jumbotron">
+			<div class="container">
+				<h:body>
+					<h:form>
+						<p:remoteCommand name="onload" action="#{statusView.onLoad}"
+							autoRun="true" update="grid" />
+						<h2 class="text-primary">#{msg.page_status}</h2>
+						<br />
+						<div class="ui-fluid">
+							<p:panelGrid id="grid" columns="3"
+								columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+								layout="grid" styleClass="ui-panelgrid-blank">
+								<h:outputLabel value="DigiDeal # *" />
+								<p:inputText id="ddid" value="#{statusView.id}"
+									style="#{statusView.idStyle}">
+									<p:ajax event="blur" update="ddid,accept,msgddid"
+										listener="#{statusView.validateId}" />
+									<f:validator
+										validatorId="org.trimatek.digideal.ui.utils.RequiredValidator" />
+								</p:inputText>
+								<h:message id="msgddid" for="ddid" style="color:red" />
+								<h:outputLabel value="" />
+								<h:outputLabel value="" />
+								<p:tooltip id="tooltip" for="ddid"
+									value="#{msg.status_id_tooltip}" position="right" />
+								<h:outputLabel value="" />
+								<h:outputLabel value="" />
+								<h:outputLabel value="" />
+								<h:outputLabel value="#{msg.contact_turing}" />
+								<botDetect:simpleJsfCaptcha id="basicExampleCaptcha"
+									binding="#{statusView.captcha}" />
+								<br />
+								<h:outputLabel value="#{msg.contact_code}" />
+								<p:inputText id="captchaCode"
+									style="#{statusView.captchaCodeStyle};width: 100px;text-transform: uppercase"
+									value="#{statusView.captchaCode}">
+									<p:ajax update="captchaCode"
+										listener="#{statusView.validateCaptchaCode}" />
+								</p:inputText>
+								<br />
+								<br />
+								<br />
+								<p:button type="button" value="#{msg.btn_back}"
+									icon="fa fa-fw fa-arrow-circle-o-left" outcome="main" />
+								<p:commandButton id="accept" value="#{msg.btn_accept}"
+									actionListener="#{statusView.acceptAction}"
+									onclick="PF('result').show();" update="paneldialog,panelbar"
+									icon="fa fa-fw fa-arrow-circle-o-right"
+									disabled="#{statusView.acceptDisabled}" />
+							</p:panelGrid>
+						</div>
+						<p:dialog header="#{msg.contact_result}" widgetVar="result"
+							modal="true" resizable="false" responsive="true"
+							showHeader="false" draggable="false">
+							<div class="dialog">
+								<p:panelGrid layout="grid" styleClass="ui-noborder"
+									id="panelbar" columns="1">
+									<p:progressBar id="progressbar" style="height:6px"
+										mode="indeterminate"
+										rendered="#{statusView.renderProgressbar}" />
+								</p:panelGrid>
+								<p:panelGrid layout="grid" styleClass="ui-noborder"
+									id="paneldialog" columns="2">
+									<h:outputLabel value="DigiDeal #" />
+									<h:outputLabel value="#{statusView.status.id}" />
+									<h:outputLabel value="Request result" />
+									<h:outputLabel value="#{statusView.status.result}" />
+									<h:outputLabel value="Status" />
+									<h:outputLabel value="#{statusView.status.status}" />
+									<h:outputLabel value="" />
+									<h:outputLabel value="" />
+									<p:button type="button" value="#{msg.btn_retry}"
+										icon="fa fa-fw fa-undo"
+										rendered="#{statusView.btnRetryRendered}"
+										onclick="PF('result').hide();" />
+									<p:button type="button" value="#{msg.btn_continue}"
+										icon="fa fa-fw fa-arrow-circle-o-left" outcome="main"
+										rendered="#{statusView.btnContinueRendered}" />
+								</p:panelGrid>
+							</div>
+						</p:dialog>
+					</h:form>
+				</h:body>
+			</div>
+		</div>
+		</main>
+	</ui:define>
+</ui:composition>
+</html>

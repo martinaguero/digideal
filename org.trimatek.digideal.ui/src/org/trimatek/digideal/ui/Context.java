@@ -13,5 +13,6 @@ public class Context {
 	public final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 	public final static int CONTACT_MESSAGE_MIN = 1;
 	public final static int CONTACT_MESSAGE_MAX = 500;
+	public final static int STATUS_SERIAL_MIN = 6;
 
 }

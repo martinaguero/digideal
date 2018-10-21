@@ -35,7 +35,7 @@
 									<p:ajax event="blur" update="from,send,msgfrom"
 										listener="#{navigationView.validateEmail}" />
 									<f:validator
-										validatorId="org.trimatek.digideal.ui.EmailValidator" />
+										validatorId="org.trimatek.digideal.ui.utils.EmailValidator" />
 								</p:inputText>
 								<h:message id="msgfrom" for="from" style="color:red" />
 								<h:outputLabel for="message" value="#{msg.contact_message} *" />
@@ -45,7 +45,7 @@
 									<p:ajax event="blur" update="message,msgmessage,send"
 										listener="#{navigationView.validateMessage}" />
 									<f:validator
-										validatorId="org.trimatek.digideal.ui.MessageValidator" />
+										validatorId="org.trimatek.digideal.ui.utils.MessageValidator" />
 								</p:inputTextarea>
 								<h:message id="msgmessage" for="message" style="color:red" />
 								<h:outputLabel value="" />

@@ -1,5 +1,6 @@
 package org.trimatek.digideal.comm.rest;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -7,11 +8,15 @@ import org.trimatek.digideal.compiler.actions.Compile;
 import org.trimatek.digideal.model.Contract;
 import org.trimatek.digideal.model.Launcher;
 import org.trimatek.digideal.model.Source;
+import org.trimatek.digideal.model.Status;
 import org.trimatek.digideal.model.Ticket;
 import org.trimatek.digideal.model.utils.Config;
+import org.trimatek.digideal.model.utils.StatusFactory;
+import org.trimatek.digideal.repo.Repository;
 import org.trimatek.digideal.repo.RepositorySupport;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
@@ -57,6 +62,8 @@ public class Server extends AbstractVerticle implements Launcher {
 
 		router.route("/api/tickets*").handler(BodyHandler.create());
 		router.post("/api/tickets").handler(this::addTicket);
+
+		router.route("/api/status").handler(this::getStatus);
 
 		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", PORT),
 				result -> {
@@ -106,6 +113,27 @@ public class Server extends AbstractVerticle implements Launcher {
 		}
 		routingContext.response().setStatusCode(status).putHeader("content-type", "text/plain; charset=utf-8")
 				.end(result);
+	}
+
+	private void getStatus(RoutingContext routingContext) {
+		Status status = new Status();
+		String id = routingContext.request().getParam("id");
+		if (id != null) {
+			Contract cnt = Repository.getInstance().loadContract(id);
+			if (cnt != null) {
+				status = StatusFactory.build(cnt);
+				status.setResult(200);//OK
+			} else {
+				status.setId(id);
+				status.setResult(404);// NOT_FOUND
+			}
+		} else {
+			status.setId(id);
+			status.setResult(400);// BAD_REQUEST
+		}
+		Gson gson = new GsonBuilder().serializeNulls().create();
+		routingContext.response().setStatusCode(200).putHeader("content-type", "text/plain; charset=utf-8")
+				.end(gson.toJson(status));
 	}
 
 }

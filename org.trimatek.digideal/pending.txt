@@ -47,3 +47,4 @@
 47.AGREGADO		/Guardar error de compilación
 48.AGREGADO		/Agregar versión en mail
 49.AGREGADO		/Avisar por mail que falló la creación del digideal
+50.				/V2:Subidor de .properties compilado con enmienda

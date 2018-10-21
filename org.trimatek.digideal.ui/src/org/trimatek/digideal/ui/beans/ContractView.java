@@ -529,7 +529,7 @@ public class ContractView extends CommonView {
 		signature.add(getTooltipCollector());
 		signature.add(getTooltipAgent());
 		signature.add("");
-		signature.add("_____________________________________________________ " + "v." + Config.getValue("DIGIDEAL_WEB_VERSION"));
+		signature.add("_____________________________________________________ " + "DigiDeal_Web/v." + Config.getValue("DIGIDEAL_WEB_VERSION"));
 		return signature;
 	}
 
