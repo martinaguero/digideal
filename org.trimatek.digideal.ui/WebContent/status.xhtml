@@ -65,13 +65,15 @@
 									actionListener="#{statusView.acceptAction}"
 									onclick="PF('result').show();"
 									update="paneldialog,panelbar,panelsteps,paneldescription"
-									icon="fa fa-fw fa-arrow-circle-o-right"
 									disabled="#{statusView.acceptDisabled}" />
 							</p:panelGrid>
 						</div>
 						<p:dialog header="#{msg.contact_result}" widgetVar="result"
-							modal="true" resizable="false" responsive="true"
-							showHeader="false" draggable="false">
+							showEffect="fade" position="center" positionType="absolute"
+							closable="false" showHeader="false" modal="true"
+							width="#{statusView.dialogWidth}"
+							height="#{statusView.dialogHeight}" draggable="false"
+							resizable="false" onShow="PF('result').initPosition()">
 							<div class="dialog">
 								<p:panelGrid layout="grid" styleClass="ui-noborder"
 									id="panelbar" columns="1">
@@ -111,7 +113,8 @@
 									<p:link target="_blank"
 										style="text-decoration: underline; color: #1da1f2;"
 										href="#{statusView.txTrackUrl}#{statusView.status.spentTx}"
-										value="#{statusView.status.spentTx.substring(0,20)}..." />
+										value="#{statusView.status.spentTx.substring(0,30)}..."
+										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel style="font-weight:bold" value="Unspent tx:"
 										rendered="#{statusView.btnContinueRendered}" />
 									<p:dataList value="#{statusView.status.unspentTx}"
@@ -120,22 +123,25 @@
 										<p:link target="_blank"
 											style="text-decoration: underline; color: #1da1f2;"
 											href="#{statusView.txTrackUrl}#{tx}"
-											value="#{tx.substring(0,20)}..." />
+											value="#{tx.substring(0,30)}..."
+											rendered="#{statusView.btnContinueRendered}" />
 									</p:dataList>
 									<h:outputLabel style="font-weight:bold" value="Comentarios"
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel value="#{statusView.status.comments}"
-										rendered="#{statusView.btnContinueRendered}" />
+										rendered="#{statusView.btnContinueRendered}" style="width:200px" />
 								</p:panelGrid>
 								<br />
 								<p:panelGrid layout="grid" styleClass="ui-noborder"
 									id="paneldialog" columns="1">
 									<h:outputLabel value="#{statusView.result}"
 										rendered="#{statusView.btnRetryRendered}" />
+									<br />
 									<p:button type="button" value="#{msg.btn_retry}"
 										icon="fa fa-fw fa-undo"
 										rendered="#{statusView.btnRetryRendered}"
-										onclick="PF('result').hide();" />
+										onclick="PF('result').hide();"
+										update="paneldialog,panelbar,panelsteps,paneldescription" />
 									<p:button type="button" value="#{msg.btn_continue}"
 										icon="fa fa-fw fa-arrow-circle-o-right" outcome="status"
 										rendered="#{statusView.btnContinueRendered}" />

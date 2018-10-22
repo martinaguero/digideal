@@ -19,6 +19,8 @@ public class StatusView extends CommonView {
 	private String captchaCode;
 	private String captchaCodeStyle;
 	private String result;
+	private String dialogHeight;
+	private String dialogWidth;
 
 	public void onLoad() {
 		status = null;
@@ -26,7 +28,6 @@ public class StatusView extends CommonView {
 
 	public StatusView() {
 		resetFields();
-		status = null;
 	}
 
 	public void resetFields() {
@@ -89,12 +90,15 @@ public class StatusView extends CommonView {
 	}
 
 	public void acceptAction() {
+		status = null;
 		if (captcha.validate(captchaCode)) {
 			status = GetStatus.exec(getId());
 			logger.log(Level.INFO, "Status received");
 			if (status.getResult() == 200) {
 				resetFields();
 				setStatus(normalize(status));
+				setDialogHeight("440px");
+				setDialogWidth("490px");
 			} else {
 				setResult(Tools.read("status_id_fail", getLocale().toString()));
 			}
@@ -105,6 +109,8 @@ public class StatusView extends CommonView {
 			setResult(Tools.read("status_captcha_fail", getLocale().toString()));
 			logger.log(Level.INFO, "Status captcha error");
 		}
+		setDialogHeight("");
+		setDialogWidth("");
 	}
 
 	public void validateId() {
@@ -142,15 +148,31 @@ public class StatusView extends CommonView {
 	public void setResult(String result) {
 		this.result = result;
 	}
-	
+
 	private Status normalize(Status status) {
-		status.setRunning(Tools.read("status_" + status.getRunning(), getLocale().toString()));		
+		status.setRunning(Tools.read("status_" + status.getRunning(), getLocale().toString()));
 		status.setStatus(Tools.read("status_" + status.getStatus(), getLocale().toString()));
 		return status;
 	}
-	
+
 	public String getTxTrackUrl() {
 		return Config.getValue("BTC_TX_TRACK_TESTNET");
+	}
+
+	public String getDialogHeight() {
+		return dialogHeight;
+	}
+
+	public void setDialogHeight(String dialogHeight) {
+		this.dialogHeight = dialogHeight;
+	}
+
+	public String getDialogWidth() {
+		return dialogWidth;
+	}
+
+	public void setDialogWidth(String dialogWidth) {
+		this.dialogWidth = dialogWidth;
 	}
 
 }
