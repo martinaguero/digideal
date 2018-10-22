@@ -20,8 +20,10 @@ public class StatusFactory {
 			for (Transaction tx : cnt.getUnspentTransactions()) {
 				txs.add(tx.getTxId());
 			}
-			status.setUnspentTransactions(txs.stream().toArray(String[]::new));
+			status.setUnspentTx(txs.stream().toArray(String[]::new));
 		}
+		status.setRunning(cnt.getRunning() + "");
+		status.setSpentTx(cnt.getSpentTxId());
 		return status;
 	}
 

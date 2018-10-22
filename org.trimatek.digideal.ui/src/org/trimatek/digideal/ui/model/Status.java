@@ -4,13 +4,14 @@ public class Status {
 
 	private String id;
 	private String multisigAddress;
-	private String[] unspentTransactions;
+	private String[] unspentTx;
+	private String spentTx;
 	private String status;
 	private String running;
 	private String comments;
 	private int result;
-//400 BAD REQUEST
-//404 NOT FOUND
+	// 400 BAD REQUEST
+	// 404 NOT FOUND
 
 	public String getId() {
 		return id;
@@ -52,20 +53,28 @@ public class Status {
 		this.multisigAddress = multisigAddress;
 	}
 
-	public String[] getUnspentTransactions() {
-		return unspentTransactions;
-	}
-
-	public void setUnspentTransactions(String[] unspentTransactions) {
-		this.unspentTransactions = unspentTransactions;
-	}
-
 	public int getResult() {
 		return result;
 	}
 
 	public void setResult(int result) {
 		this.result = result;
+	}
+
+	public String[] getUnspentTx() {
+		return unspentTx;
+	}
+
+	public void setUnspentTx(String[] unspentTx) {
+		this.unspentTx = unspentTx;
+	}
+
+	public String getSpentTx() {
+		return spentTx;
+	}
+
+	public void setSpentTx(String spentTx) {
+		this.spentTx = spentTx;
 	}
 
 }

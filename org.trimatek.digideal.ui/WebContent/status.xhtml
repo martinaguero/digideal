@@ -64,7 +64,7 @@
 								<p:commandButton id="accept" value="#{msg.btn_accept}"
 									actionListener="#{statusView.acceptAction}"
 									onclick="PF('result').show();"
-									update="paneldialog,panelbar,panelsteps"
+									update="paneldialog,panelbar,panelsteps,paneldescription"
 									icon="fa fa-fw fa-arrow-circle-o-right"
 									disabled="#{statusView.acceptDisabled}" />
 							</p:panelGrid>
@@ -81,7 +81,7 @@
 								</p:panelGrid>
 								<p:panelGrid layout="grid" styleClass="ui-noborder"
 									id="panelsteps" columns="1">
-									<p:steps id="steps" activeIndex="3"
+									<p:steps id="steps" activeIndex="#{statusView.status.status}"
 										rendered="#{statusView.btnContinueRendered}">
 										<p:menuitem value="Nuevo" />
 										<p:menuitem value="Esp. Fondos" />
@@ -91,25 +91,53 @@
 								</p:panelGrid>
 								<br />
 								<p:panelGrid layout="grid" styleClass="ui-noborder"
-									id="paneldialog" columns="2">
-									<h:outputLabel value="DigiDeal #" />
-									<h:outputLabel value="#{statusView.status.id}" />
-									<h:outputLabel value="Status"
+									id="paneldescription" columns="2"
+									style="font-size: 11px;line-height: 12px;">
+									<h:outputLabel style="font-weight:bold" value="DigiDeal #"
 										rendered="#{statusView.btnContinueRendered}" />
-									<h:outputLabel value="#{statusView.status.status}"
+									<h:outputLabel value="#{statusView.status.id}"
 										rendered="#{statusView.btnContinueRendered}" />
-									<h:outputLabel value="Result"
-										rendered="#{statusView.btnRetryRendered}" />
+									<h:outputLabel style="font-weight:bold" value="En ejecución:"
+										rendered="#{statusView.btnContinueRendered}" />
+									<h:outputLabel value="#{statusView.status.running}"
+										rendered="#{statusView.btnContinueRendered}" />
+									<h:outputLabel style="font-weight:bold"
+										value="Dirección multisig:"
+										rendered="#{statusView.btnContinueRendered}" />
+									<h:outputLabel value="#{statusView.status.multisigAddress}"
+										rendered="#{statusView.btnContinueRendered}" />
+									<h:outputLabel style="font-weight:bold" value="Spent tx:"
+										rendered="#{statusView.btnContinueRendered}" />
+									<p:link target="_blank"
+										style="text-decoration: underline; color: #1da1f2;"
+										href="#{statusView.txTrackUrl}#{statusView.status.spentTx}"
+										value="#{statusView.status.spentTx.substring(0,20)}..." />
+									<h:outputLabel style="font-weight:bold" value="Unspent tx:"
+										rendered="#{statusView.btnContinueRendered}" />
+									<p:dataList value="#{statusView.status.unspentTx}"
+										rendered="#{statusView.btnContinueRendered}" type="none"
+										var="tx">
+										<p:link target="_blank"
+											style="text-decoration: underline; color: #1da1f2;"
+											href="#{statusView.txTrackUrl}#{tx}"
+											value="#{tx.substring(0,20)}..." />
+									</p:dataList>
+									<h:outputLabel style="font-weight:bold" value="Comentarios"
+										rendered="#{statusView.btnContinueRendered}" />
+									<h:outputLabel value="#{statusView.status.comments}"
+										rendered="#{statusView.btnContinueRendered}" />
+								</p:panelGrid>
+								<br />
+								<p:panelGrid layout="grid" styleClass="ui-noborder"
+									id="paneldialog" columns="1">
 									<h:outputLabel value="#{statusView.result}"
 										rendered="#{statusView.btnRetryRendered}" />
-									<h:outputLabel value="" />
-									<h:outputLabel value="" />
 									<p:button type="button" value="#{msg.btn_retry}"
 										icon="fa fa-fw fa-undo"
 										rendered="#{statusView.btnRetryRendered}"
 										onclick="PF('result').hide();" />
 									<p:button type="button" value="#{msg.btn_continue}"
-										icon="fa fa-fw fa-arrow-circle-o-right" outcome="main"
+										icon="fa fa-fw fa-arrow-circle-o-right" outcome="status"
 										rendered="#{statusView.btnContinueRendered}" />
 								</p:panelGrid>
 							</div>

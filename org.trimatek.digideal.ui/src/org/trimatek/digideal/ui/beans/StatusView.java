@@ -2,6 +2,7 @@ package org.trimatek.digideal.ui.beans;
 
 import java.util.logging.Level;
 
+import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.Context;
 import org.trimatek.digideal.ui.comm.GetStatus;
 import org.trimatek.digideal.ui.model.Status;
@@ -93,8 +94,10 @@ public class StatusView extends CommonView {
 			logger.log(Level.INFO, "Status received");
 			if (status.getResult() == 200) {
 				resetFields();
+				setStatus(normalize(status));
+			} else {
+				setResult(Tools.read("status_id_fail", getLocale().toString()));
 			}
-			setResult(Tools.read("status_id_fail", getLocale().toString()));
 		} else {
 			status = new Status();
 			status.setId(getId());
@@ -125,11 +128,11 @@ public class StatusView extends CommonView {
 	}
 
 	public boolean getBtnRetryRendered() {
-		return status != null && status.getResult() != 200 ? true : false;
+		return getStatus() != null && getStatus().getResult() != 200 ? true : false;
 	}
 
 	public boolean getBtnContinueRendered() {
-		return status != null && status.getResult() == 200 ? true : false;
+		return getStatus() != null && getStatus().getResult() == 200 ? true : false;
 	}
 
 	public String getResult() {
@@ -138,6 +141,16 @@ public class StatusView extends CommonView {
 
 	public void setResult(String result) {
 		this.result = result;
+	}
+	
+	private Status normalize(Status status) {
+		status.setRunning(Tools.read("status_" + status.getRunning(), getLocale().toString()));		
+		status.setStatus(Tools.read("status_" + status.getStatus(), getLocale().toString()));
+		return status;
+	}
+	
+	public String getTxTrackUrl() {
+		return Config.getValue("BTC_TX_TRACK_TESTNET");
 	}
 
 }

@@ -1,6 +1,5 @@
 package org.trimatek.digideal.comm.rest;
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
