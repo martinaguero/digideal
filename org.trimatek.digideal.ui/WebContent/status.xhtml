@@ -85,10 +85,19 @@
 									id="panelsteps" columns="1">
 									<p:steps id="steps" activeIndex="#{statusView.status.status}"
 										rendered="#{statusView.btnContinueRendered}">
-										<p:menuitem value="Nuevo" />
-										<p:menuitem value="Esp. Fondos" />
-										<p:menuitem value="Esp. Recibo" />
-										<p:menuitem value="Completado" />
+										<p:menuitem value="#{msg.status_new}" />
+										<p:menuitem value="#{msg.status_waiting_funds}"
+											rendered="#{statusView.status.comments==null}" />
+										<p:menuitem value="#{msg.status_waiting_receipt}"
+											rendered="#{statusView.status.comments==null}" />
+										<p:menuitem value="#{msg.status_error_comp}"
+											rendered="#{statusView.status.comments!=null}" />
+										<p:menuitem value="#{msg.status_error_send}"
+											rendered="#{statusView.status.comments!=null}" />
+										<p:menuitem value="#{msg.status_error_done}"
+											rendered="#{statusView.status.comments!=null}" />		
+										<p:menuitem value="#{msg.status_done}"
+										rendered="#{statusView.status.comments==null}" />
 									</p:steps>
 								</p:panelGrid>
 								<br />
@@ -99,23 +108,23 @@
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel value="#{statusView.status.id}"
 										rendered="#{statusView.btnContinueRendered}" />
-									<h:outputLabel style="font-weight:bold" value="En ejecución:"
+									<h:outputLabel style="font-weight:bold" value="#{msg.status_running}"
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel value="#{statusView.status.running}"
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel style="font-weight:bold"
-										value="Dirección multisig:"
+										value="#{msg.status_multisig}"
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel value="#{statusView.status.multisigAddress}"
 										rendered="#{statusView.btnContinueRendered}" />
-									<h:outputLabel style="font-weight:bold" value="Spent tx:"
+									<h:outputLabel style="font-weight:bold" value="Spent Tx:"
 										rendered="#{statusView.btnContinueRendered}" />
 									<p:link target="_blank"
 										style="text-decoration: underline; color: #1da1f2;"
 										href="#{statusView.txTrackUrl}#{statusView.status.spentTx}"
 										value="#{statusView.status.spentTx.substring(0,30)}..."
 										rendered="#{statusView.btnContinueRendered}" />
-									<h:outputLabel style="font-weight:bold" value="Unspent tx:"
+									<h:outputLabel style="font-weight:bold" value="Unspent Txs:"
 										rendered="#{statusView.btnContinueRendered}" />
 									<p:dataList value="#{statusView.status.unspentTx}"
 										rendered="#{statusView.btnContinueRendered}" type="none"
@@ -123,13 +132,14 @@
 										<p:link target="_blank"
 											style="text-decoration: underline; color: #1da1f2;"
 											href="#{statusView.txTrackUrl}#{tx}"
-											value="#{tx.substring(0,30)}..."
-											rendered="#{statusView.btnContinueRendered}" />
+											value="#{tx.substring(0,30)}..." 
+											rendered="#{statusView.btnContinueRendered}" /><br/>
 									</p:dataList>
-									<h:outputLabel style="font-weight:bold" value="Comentarios"
+									<h:outputLabel style="font-weight:bold" value="#{msg.status_comments}"
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel value="#{statusView.status.comments}"
-										rendered="#{statusView.btnContinueRendered}" style="width:200px" />
+										rendered="#{statusView.btnContinueRendered}"
+										style="width:150px" />
 								</p:panelGrid>
 								<br />
 								<p:panelGrid layout="grid" styleClass="ui-noborder"

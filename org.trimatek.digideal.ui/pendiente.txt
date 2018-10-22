@@ -16,3 +16,4 @@
 16.AGREGADO		/V2.Mostrar un status del contrato
 17.				/Agregar marca de agua al PDF, timestamp y versión
 18.				/Agregar sobre Oraculo en Tecnología
+19.AGREGADO		/Actualizar mensaje post envío Nuevo con enlace a Track

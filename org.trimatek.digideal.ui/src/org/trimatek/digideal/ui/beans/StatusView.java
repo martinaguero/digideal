@@ -151,7 +151,11 @@ public class StatusView extends CommonView {
 
 	private Status normalize(Status status) {
 		status.setRunning(Tools.read("status_" + status.getRunning(), getLocale().toString()));
-		status.setStatus(Tools.read("status_" + status.getStatus(), getLocale().toString()));
+		if (status.getComments() == null) {
+			status.setStatus(Tools.read("status_" + status.getStatus(), getLocale().toString()));
+		} else {
+			status.setStatus(Tools.read("status_error_" + status.getStatus(), getLocale().toString()));
+		}	
 		return status;
 	}
 
