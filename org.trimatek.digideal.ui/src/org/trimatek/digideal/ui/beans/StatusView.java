@@ -97,8 +97,8 @@ public class StatusView extends CommonView {
 			if (status.getResult() == 200) {
 				resetFields();
 				setStatus(normalize(status));
-				setDialogHeight("440px");
-				setDialogWidth("490px");
+				setDialogHeight(Context.STATUS_DIALOG_HEIGHT);
+				setDialogWidth(Context.STATUS_DIALOG_WIDTH);
 			} else {
 				setResult(Tools.read("status_id_fail", getLocale().toString()));
 			}
@@ -155,7 +155,7 @@ public class StatusView extends CommonView {
 			status.setStatus(Tools.read("status_" + status.getStatus(), getLocale().toString()));
 		} else {
 			status.setStatus(Tools.read("status_error_" + status.getStatus(), getLocale().toString()));
-		}	
+		}
 		return status;
 	}
 
@@ -177,6 +177,10 @@ public class StatusView extends CommonView {
 
 	public void setDialogWidth(String dialogWidth) {
 		this.dialogWidth = dialogWidth;
+	}
+
+	public String getStatusNumber() {
+		return Integer.valueOf(status.getStatus()) + 1 + "";
 	}
 
 }

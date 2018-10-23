@@ -5,6 +5,8 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.context.FacesContext;
+
 public class Config {
 
 	private Properties props;
@@ -33,6 +35,11 @@ public class Config {
 
 	public static String getValue(String key) {
 		return getConfig().getProps().get(key).toString();
+	}
+	
+	public static String getWatermarkPath() throws IOException {
+		return FacesContext.getCurrentInstance()
+                .getExternalContext().getRealPath(Context.WATERMARK_SOURCE);
 	}
 
 }

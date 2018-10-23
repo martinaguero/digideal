@@ -14,5 +14,8 @@ public class Context {
 	public final static int CONTACT_MESSAGE_MIN = 1;
 	public final static int CONTACT_MESSAGE_MAX = 500;
 	public final static int STATUS_SERIAL_MIN = 6;
+	public final static String STATUS_DIALOG_HEIGHT = "440px";
+	public final static String STATUS_DIALOG_WIDTH = "440px";
+	public final static String WATERMARK_SOURCE = "./resources/watermark.pdf";
 
 }

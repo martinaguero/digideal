@@ -69,11 +69,11 @@
 							</p:panelGrid>
 						</div>
 						<p:dialog header="#{msg.contact_result}" widgetVar="result"
-							showEffect="fade" position="center" positionType="absolute"
+							showEffect="fade" position="top" positionType="absolute"
 							closable="false" showHeader="false" modal="true"
-							width="#{statusView.dialogWidth}"
+							width="#{statusView.dialogWidth}" style="margin-top: 65px;"
 							height="#{statusView.dialogHeight}" draggable="false"
-							resizable="false" onShow="PF('result').initPosition()">
+							resizable="false">
 							<div class="dialog">
 								<p:panelGrid layout="grid" styleClass="ui-noborder"
 									id="panelbar" columns="1">
@@ -95,34 +95,41 @@
 										<p:menuitem value="#{msg.status_error_send}"
 											rendered="#{statusView.status.comments!=null}" />
 										<p:menuitem value="#{msg.status_error_done}"
-											rendered="#{statusView.status.comments!=null}" />		
+											rendered="#{statusView.status.comments!=null}" />
 										<p:menuitem value="#{msg.status_done}"
-										rendered="#{statusView.status.comments==null}" />
+											rendered="#{statusView.status.comments==null}" />
 									</p:steps>
 								</p:panelGrid>
 								<br />
 								<p:panelGrid layout="grid" styleClass="ui-noborder"
 									id="paneldescription" columns="2"
-									style="font-size: 11px;line-height: 12px;">
+									style="font-size: 12px;line-height: 12px;">
 									<h:outputLabel style="font-weight:bold" value="DigiDeal #"
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel value="#{statusView.status.id}"
 										rendered="#{statusView.btnContinueRendered}" />
-									<h:outputLabel style="font-weight:bold" value="#{msg.status_running}"
+									<h:outputLabel style="font-weight:bold"
+										value="#{msg.status_running}"
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel value="#{statusView.status.running}"
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel style="font-weight:bold"
+										value="#{msg.status_phase}"
+										rendered="#{statusView.btnContinueRendered}" />
+									<h:outputLabel value="#{statusView.statusNumber}"
+										rendered="#{statusView.btnContinueRendered}" />	
+									<h:outputLabel style="font-weight:bold"
 										value="#{msg.status_multisig}"
 										rendered="#{statusView.btnContinueRendered}" />
-									<h:outputLabel value="#{statusView.status.multisigAddress}"
+									<h:outputLabel id="multisig"
+										value="#{statusView.status.multisigAddress.equals('')? '':statusView.status.multisigAddress.substring(0,20)}..."
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel style="font-weight:bold" value="Spent Tx:"
 										rendered="#{statusView.btnContinueRendered}" />
 									<p:link target="_blank"
 										style="text-decoration: underline; color: #1da1f2;"
 										href="#{statusView.txTrackUrl}#{statusView.status.spentTx}"
-										value="#{statusView.status.spentTx.substring(0,30)}..."
+										value="#{statusView.status.spentTx.substring(0,20)}..."
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel style="font-weight:bold" value="Unspent Txs:"
 										rendered="#{statusView.btnContinueRendered}" />
@@ -132,10 +139,12 @@
 										<p:link target="_blank"
 											style="text-decoration: underline; color: #1da1f2;"
 											href="#{statusView.txTrackUrl}#{tx}"
-											value="#{tx.substring(0,30)}..." 
-											rendered="#{statusView.btnContinueRendered}" /><br/>
+											value="#{tx.substring(0,20)}..."
+											rendered="#{statusView.btnContinueRendered}" />
+										<br />
 									</p:dataList>
-									<h:outputLabel style="font-weight:bold" value="#{msg.status_comments}"
+									<h:outputLabel style="font-weight:bold"
+										value="#{msg.status_comments}"
 										rendered="#{statusView.btnContinueRendered}" />
 									<h:outputLabel value="#{statusView.status.comments}"
 										rendered="#{statusView.btnContinueRendered}"

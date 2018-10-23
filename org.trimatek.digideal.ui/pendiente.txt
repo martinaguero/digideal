@@ -14,7 +14,8 @@
 14.				/V2.Captcha en preview de contrato
 15.				/Explicar en la confirmación de nuevo contrato que recién después de 5 confirmaciones se avisará sobre su disponibilidad
 16.AGREGADO		/V2.Mostrar un status del contrato
-17.				/Agregar marca de agua al PDF, timestamp y versión
+17.AGREGADO		/Agregar marca de agua al PDF, timestamp y versión
 18.				/Agregar sobre Oraculo en Tecnología
 19.AGREGADO		/Actualizar mensaje post envío Nuevo con enlace a Track
-20.				/Dialog siempre arriba
+20.AGREGADO		/Dialog siempre arriba
+21.AGREGADO		/Agregar estado en reporte de estado

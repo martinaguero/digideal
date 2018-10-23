@@ -20,13 +20,15 @@
 				<p:remoteCommand name="resultClose"
 					actionListener="#{contractView.closeResultAction}" />
 				<p:dialog id="resultDialog" widgetVar="resultDlg" showEffect="fade"
-					position="center" positionType="absolute" closable="false"
+					position="top" positionType="absolute" closable="false"
 					showHeader="false" modal="true" width="600px" height="380px"
-					draggable="false" visible="true" resizable="false">
+					draggable="false" visible="true" resizable="false"
+					style="margin-top: 65px;">
 					<div class="dialog">
-						<br /> <b><p:outputLabel
-								value="#{msg.page_result_title}" /></b> <br />
-						<h:outputText value="#{msg.page_result_text}" escape="false" /><br/>
+						<br /> <b><p:outputLabel value="#{msg.page_result_title}" /></b>
+						<br />
+						<h:outputText value="#{msg.page_result_text}" escape="false" />
+						<br />
 						<h:outputText value=" #{msg.page_result_text_file} " />
 						<p:commandLink style="text-decoration: underline; color: #1da1f2;"
 							value="#{contractView.fileName}" ajax="false">

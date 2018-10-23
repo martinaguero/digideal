@@ -3,14 +3,18 @@ package org.trimatek.digideal.ui.utils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.pdfbox.multipdf.Overlay;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.trimatek.digideal.ui.Config;
+import org.trimatek.digideal.ui.Context;
 
 public class PDFBuilder {
 
@@ -39,11 +43,18 @@ public class PDFBuilder {
 			contentStream.endText();
 			contentStream.close();
 
+			HashMap<Integer, String> overlayGuide = new HashMap<Integer, String>();
+			for (int i = 0; i < document.getNumberOfPages(); i++) {
+				overlayGuide.put(i + 1, Config.getWatermarkPath());
+			}
+			Overlay overlay = new Overlay();
+			overlay.setInputPDF(document);
+			overlay.setOverlayPosition(Overlay.Position.BACKGROUND);
+			overlay.overlay(overlayGuide);
+
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			document.save(out);
-
 			file = out.toByteArray();
-
 			document.close();
 		} catch (IOException e) {
 
