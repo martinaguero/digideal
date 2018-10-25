@@ -1,11 +1,7 @@
 package org.trimatek.digideal.ui.beans;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,8 +17,11 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.trimatek.digideal.ui.Config;
 import org.trimatek.digideal.ui.Context;
+import org.trimatek.digideal.ui.comm.GetRates;
 import org.trimatek.digideal.ui.comm.SendSource;
 import org.trimatek.digideal.ui.model.Address;
+import org.trimatek.digideal.ui.model.BtcRates;
+import org.trimatek.digideal.ui.model.CurrenciesEnum;
 import org.trimatek.digideal.ui.model.Source;
 import org.trimatek.digideal.ui.utils.Geocoder;
 import org.trimatek.digideal.ui.utils.PDFBuilder;
@@ -62,7 +61,6 @@ public class ContractView extends CommonView {
 	private String itemStyle;
 	private String address;
 	private String addressStyle;
-	private BigDecimal BTC_PER_DOLLAR;
 	private Source source;
 	private boolean dataAuthentic;
 	private StreamedContent file;
@@ -75,27 +73,7 @@ public class ContractView extends CommonView {
 		resetFields();
 	}
 
-	Runnable updateBtc = () -> {
-		try {
-			URL obj = new URL(Config.getValue("BTC_PRICE_URL"));
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-			con.setRequestMethod("GET");
-			con.setRequestProperty("User-Agent", "Mozilla/5.0");
-			if (con.getResponseCode() == 200) {
-				BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-				String inputLine;
-				StringBuffer response = new StringBuffer();
-				while ((inputLine = in.readLine()) != null) {
-					response.append(inputLine);
-				}
-				in.close();
-				BTC_PER_DOLLAR = new BigDecimal(response.toString());
-				logger.log(Level.INFO, "Precio de BTC actualizado a: " + BTC_PER_DOLLAR);
-			}
-		} catch (Exception e) {
-			logger.log(Level.WARNING, e.getMessage());
-		}
-	};
+
 
 	private void resetFields() {
 		namePayerStyle = Context.REQUIRED_FIELD;
@@ -232,8 +210,11 @@ public class ContractView extends CommonView {
 				Tools.read("error_incorrect", getLocale().toString()))) {
 			if (CurrenciesEnum.BTC.name().equals(getSelectedCurrency())) {
 				setBtc(getQuantity());
+			} else if (CurrenciesEnum.USD.name().equals(getSelectedCurrency())) {
+				BigDecimal result = new BigDecimal(getQuantity()).multiply(BtcRates.instance().getUSD());
+				setBtc(result.setScale(8, BigDecimal.ROUND_HALF_EVEN).toPlainString());
 			} else {
-				BigDecimal result = new BigDecimal(getQuantity()).multiply(BTC_PER_DOLLAR);
+				BigDecimal result = new BigDecimal(getQuantity()).multiply(BtcRates.instance().getBRL());
 				setBtc(result.setScale(8, BigDecimal.ROUND_HALF_EVEN).toPlainString());
 			}
 			quantityStyle = null;
@@ -316,7 +297,7 @@ public class ContractView extends CommonView {
 	}
 
 	public void updateBtc() {
-		new Thread(updateBtc).start();
+		GetRates.exec();
 	}
 
 	public String getItem() {

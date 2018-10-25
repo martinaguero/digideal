@@ -87,10 +87,10 @@ public class Server extends AbstractVerticle {
 			response.putHeader("content-type", "text/plain; charset=utf-8").end(feeLookup.getStatus());
 		});
 
-		router.route("/digidata/rate/btc/usd").handler(routingContext -> {
+		router.route("/digidata/rates/btc").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
 			response.setStatusCode(200);
-			response.putHeader("content-type", "text/plain; charset=utf-8").end(rateLookup.getUsdRate());
+			response.putHeader("content-type", "text/plain; charset=utf-8").end(rateLookup.getRates());
 		});
 
 		router.route("/digidata/help").handler(routingContext -> {
@@ -125,14 +125,15 @@ public class Server extends AbstractVerticle {
 	}
 
 	private String printHelp() {
-		return "/digidata/serial \t\t\t Unique serial from: base36(epoch+counter)\n"
+		return  "DigiData v." + Config.DIGIDATA_VERSION + "\n"
+				+ "/digidata/serial \t\t\t Unique serial from: base36(epoch+counter)\n"
 				+ "/digidata/fee/[fast/mid/slow] \t\t Fee prediction for confirmation from: "
 				+ Config.BTC_FEE_PREDICTION_EARN_URL + " updated every " + Config.BTC_FEE_MINUTES_TO_UPDATE
 				+ " minutes\n" + "/digidata/fee/[fast/mid/slow]/hist \t Historic fee prediction from: "
 				+ Config.BTC_FEE_PREDICTION_EARN_URL + " updated every " + Config.BTC_FEE_HOURS_TO_UPDATE_HISTORIC
 				+ " hours\n" + "/digidata/fee/status \t\t\t Sum of historic fee prediction received samples\n"
-				+ "/digidata/rate/btc/usd \t\t\t Exchange rate from: " + Config.BTC_USD_RATE_BCINFO_URL
-				+ " updated every " + Config.BTC_RATE_HOURS_UPDATE + " hours\n";
+				+ "/digidata/rates/btc \t\t\t Exchange rates from: " + "https://blockchain.info/" + " updated every "
+				+ Config.BTC_RATE_HOURS_UPDATE + " hours\n";
 	}
 
 }

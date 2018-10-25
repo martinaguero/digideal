@@ -14,11 +14,13 @@ public class RateLookup {
 
 	private final static Logger logger = Logger.getLogger(RateLookup.class.getName());
 	private static RateLookup INSTANCE;
-	private BigDecimal dollar = new BigDecimal(Config.BTC_USD_RATE_LAST);
+	private BigDecimal dollar = new BigDecimal(Config.BTC_USD_RATE_START);
+	private BigDecimal reais = new BigDecimal(Config.BTC_BRL_RATE_START);
 
 	private RateLookup() {
-		ScheduledExecutorService exe = Executors.newScheduledThreadPool(1);
+		ScheduledExecutorService exe = Executors.newScheduledThreadPool(2);
 		exe.scheduleAtFixedRate(updateUsd, 0, Config.BTC_RATE_HOURS_UPDATE, TimeUnit.HOURS);
+		exe.scheduleAtFixedRate(updateBrl, 0, Config.BTC_RATE_HOURS_UPDATE, TimeUnit.HOURS);
 	}
 
 	public static RateLookup getInstance() {
@@ -40,8 +42,23 @@ public class RateLookup {
 		}
 	};
 
-	public String getUsdRate() {
-		return dollar.toString();
+	Runnable updateBrl = () -> {
+		try {
+			String result = Client.request(Config.BTC_BRL_RATE_BCINFO_URL);
+			if (result != null) {
+				reais = new BigDecimal(result);
+				logger.log(Level.INFO, "New reais rate data received");
+			}
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, e.getMessage());
+		}
+	};
+
+	public String getRates() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("USD=" + dollar + "\n");
+		sb.append("BRL=" + reais  + "\n");
+		return sb.toString();
 	}
 
 }
