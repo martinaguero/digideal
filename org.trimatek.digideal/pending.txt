@@ -28,7 +28,7 @@
 28.AGREGADO		/agregar logueo a DigiDeal
 29.AGREGADO		/crear website
 30.AGREGADO		/enlace contact-us en el mail
-31.				/agregar parser PT
+31.				/agregar parser PT (chequear compatibilidad con EUR y BRL)
 32.				/seguridad DB (bloquear puertos desde IPLAN)
 33.AGREGADO		/Tomcat -> AWS
 34.AGREGADO		/Revisar org.trimatek.digideal.comm.rest.Server addOne

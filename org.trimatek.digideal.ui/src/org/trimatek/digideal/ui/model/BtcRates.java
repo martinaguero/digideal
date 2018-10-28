@@ -6,6 +6,7 @@ public class BtcRates {
 
 	private BigDecimal USD;
 	private BigDecimal BRL;
+	private BigDecimal EUR;
 	private static BtcRates INSTANCE;
 
 	private BtcRates() {
@@ -26,12 +27,20 @@ public class BtcRates {
 		BRL = brl;
 	}
 
+	public void setEUR(BigDecimal eur) {
+		EUR = eur;
+	}
+
 	public BigDecimal getBRL() {
 		return BRL;
 	}
 
 	public BigDecimal getUSD() {
 		return USD;
+	}
+
+	public BigDecimal getEUR() {
+		return EUR;
 	}
 
 }

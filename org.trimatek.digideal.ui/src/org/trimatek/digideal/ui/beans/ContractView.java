@@ -1,7 +1,6 @@
 package org.trimatek.digideal.ui.beans;
 
 import java.io.ByteArrayInputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,9 +19,9 @@ import org.trimatek.digideal.ui.Context;
 import org.trimatek.digideal.ui.comm.GetRates;
 import org.trimatek.digideal.ui.comm.SendSource;
 import org.trimatek.digideal.ui.model.Address;
-import org.trimatek.digideal.ui.model.BtcRates;
-import org.trimatek.digideal.ui.model.CurrenciesEnum;
+import org.trimatek.digideal.ui.model.Currencies;
 import org.trimatek.digideal.ui.model.Source;
+import org.trimatek.digideal.ui.utils.CurrencyValidator;
 import org.trimatek.digideal.ui.utils.Geocoder;
 import org.trimatek.digideal.ui.utils.PDFBuilder;
 import org.trimatek.digideal.ui.utils.SourceBuilder;
@@ -67,13 +66,12 @@ public class ContractView extends CommonView {
 
 	public ContractView() {
 		currencies = new LinkedHashMap<String, String>();
-		currencies.put(CurrenciesEnum.USD.name(), CurrenciesEnum.USD.name());
-		currencies.put(CurrenciesEnum.BTC.name(), CurrenciesEnum.BTC.name());
-		currencies.put(CurrenciesEnum.BRL.name(), CurrenciesEnum.BRL.name());
+		currencies.put(Currencies.USD.name(), Currencies.USD.name());
+		currencies.put(Currencies.EUR.name(), Currencies.EUR.name());
+		currencies.put(Currencies.BRL.name(), Currencies.BRL.name());
+		currencies.put(Currencies.BTC.name(), Currencies.BTC.name());
 		resetFields();
 	}
-
-
 
 	private void resetFields() {
 		namePayerStyle = Context.REQUIRED_FIELD;
@@ -206,21 +204,8 @@ public class ContractView extends CommonView {
 	}
 
 	public void handleQuantity() {
-		if (Validators.validateQuantity(getQuantity(), Tools.read("error_quantity", getLocale().toString()),
-				Tools.read("error_incorrect", getLocale().toString()))) {
-			if (CurrenciesEnum.BTC.name().equals(getSelectedCurrency())) {
-				setBtc(getQuantity());
-			} else if (CurrenciesEnum.USD.name().equals(getSelectedCurrency())) {
-				BigDecimal result = new BigDecimal(getQuantity()).multiply(BtcRates.instance().getUSD());
-				setBtc(result.setScale(8, BigDecimal.ROUND_HALF_EVEN).toPlainString());
-			} else {
-				BigDecimal result = new BigDecimal(getQuantity()).multiply(BtcRates.instance().getBRL());
-				setBtc(result.setScale(8, BigDecimal.ROUND_HALF_EVEN).toPlainString());
-			}
-			quantityStyle = null;
-		} else {
-			quantityStyle = Context.REQUIRED_FIELD;
-		}
+		setBtc(CurrencyValidator.validateQuantity(getQuantity(), getSelectedCurrency(), getLocale().toString()));
+		quantityStyle = getBtc() != null ? null : Context.REQUIRED_FIELD;
 	}
 
 	public void validatePayerEmail() {
@@ -510,7 +495,8 @@ public class ContractView extends CommonView {
 		signature.add(getTooltipCollector());
 		signature.add(getTooltipAgent());
 		signature.add("");
-		signature.add("_____________________________________________________ " + "DigiDeal_Web/v." + Config.getValue("DIGIDEAL_WEB_VERSION"));
+		signature.add("_____________________________________________________ " + "DigiDeal_Web/v."
+				+ Config.getValue("DIGIDEAL_WEB_VERSION"));
 		return signature;
 	}
 

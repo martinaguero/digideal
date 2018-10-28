@@ -29,6 +29,8 @@ public class GetRates {
 						BtcRates.instance().setUSD(new BigDecimal(inputLine.substring(inputLine.indexOf("=") + 1)));
 					} else if (inputLine.startsWith("BRL")) {
 						BtcRates.instance().setBRL(new BigDecimal(inputLine.substring(inputLine.indexOf("=") + 1)));
+					} else if (inputLine.startsWith("EUR")) {
+						BtcRates.instance().setEUR(new BigDecimal(inputLine.substring(inputLine.indexOf("=") + 1)));
 					}
 				}
 				in.close();
@@ -41,7 +43,6 @@ public class GetRates {
 
 	public static void exec() {
 		GetRates gr = new GetRates();
-		// gr.rates = rates;
 		new Thread(gr.updateRates).start();
 	}
 
