@@ -29,7 +29,7 @@ public class SourceBuilder {
 		sb.append(Tools.read("contract_establishes",source.getLocale()) + " " + view.getNickPayerValid() + " "
 				+ Tools.read("contract_will_pay",source.getLocale()) + " " + view.getNickCollectorValid() + " ");
 		sb.append(Tools.read("contract_the_sum",source.getLocale()) + " \"" + view.getSelectedCurrency() + " " + view.getQuantity()
-				+ "\" " +Tools.read("contract_with",source.getLocale()) + " BTC \"" + view.getBtc() + "\" ");
+				+ "\" " +Tools.read("contract_with",source.getLocale()) + " tBTC \"" + view.getBtc() + "\" ");
 		sb.append(Tools.read("contract_if",source.getLocale()) + " " + view.getNickCollectorValid() + " "
 				+ Tools.read("contract_delivers",source.getLocale()) + " <i> { \" " + view.getAddress() + " \" } </i> ");
 		sb.append(Tools.read("contract_this",source.getLocale()) + " <i> \"" + view.getItem() + "\" · </i>");

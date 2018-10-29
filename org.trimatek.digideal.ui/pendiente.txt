@@ -5,7 +5,7 @@
 5.AGREGADO		/Nick sin tilde
 6.				/Términos y condiciones. Cookie.
 7.				/V2.Buscador / HTML Unit: https://stackoverflow.com/questions/13367885/making-a-search-on-a-web-site-via-java / Levenshtein / Ver PrimeFaces
-8.				/Anteponer tBTC en el formulario y el source
+8.AGREGADO		/Anteponer tBTC en el formulario y el source
 9.AGREGADO		/Contact Us
 10.AGREGADO		/Acerca de -> muestra versión
 11.				/Cambiar el favicon de Tomcat x Digideal
@@ -19,3 +19,6 @@
 19.AGREGADO		/Actualizar mensaje post envío Nuevo con enlace a Track
 20.AGREGADO		/Dialog siempre arriba
 21.AGREGADO		/Agregar estado en reporte de estado
+22.				/Completar etiquetas en inglés
+23.				/Agregar CAPTCHA en confirmar acuerdo
+24.				/Ver en Track: No puedo convertir [New] desde tipo [class java.lang.String] a [int]

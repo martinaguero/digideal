@@ -500,4 +500,7 @@ public class ContractView extends CommonView {
 		return signature;
 	}
 
+	public String getSourceName() {
+		return source != null ? source.getName() : "";
+	}
 }
