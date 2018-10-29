@@ -18,7 +18,7 @@ Reference:
 	'@' type=[Subject];
 
 PayTo:
-	'@' payer=[Subject] 'pagará a' ('@' collector=[Subject]) 'la suma de' quantity=STRING 'con BTC' btc=STRING;
+	'@' payer=[Subject] 'pagará a' ('@' collector=[Subject]) 'la suma de' quantity=STRING 'con tBTC' btc=STRING;
 
 PaymentCondition:
 	'si:' ('@' collector=[Subject]) level=FactsLevel facts=Facts 'el siguiente producto o servicio:' description=STRING ;
