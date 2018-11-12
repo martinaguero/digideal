@@ -28,6 +28,8 @@ import org.trimatek.digideal.ui.utils.SourceBuilder;
 import org.trimatek.digideal.ui.utils.Tools;
 import org.trimatek.digideal.ui.utils.Validators;
 
+import com.captcha.botdetect.web.jsf.SimpleJsfCaptcha;
+
 @ManagedBean
 public class ContractView extends CommonView {
 
@@ -63,6 +65,8 @@ public class ContractView extends CommonView {
 	private Source source;
 	private boolean dataAuthentic;
 	private StreamedContent file;
+	private SimpleJsfCaptcha captcha;
+	private String captchaCode;
 
 	public ContractView() {
 		currencies = new LinkedHashMap<String, String>();
@@ -96,6 +100,7 @@ public class ContractView extends CommonView {
 		setAddress("");
 		itemStyle = Context.REQUIRED_FIELD;
 		setItem("");
+		setCaptchaCode("");
 		nickPayerValid = null;
 		nickCollectorValid = null;
 		setBtc("");
@@ -146,9 +151,13 @@ public class ContractView extends CommonView {
 	public void onLoad() {
 		source = null;
 		file = null;
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, Tools.read("msg_welcome", getLocale().toString()),
-						Tools.read("msg_welcome_detail", getLocale().toString())));
+		if (dataAuthentic) {
+			dataAuthentic = false;
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, Tools.read("msg_welcome", getLocale().toString()),
+							Tools.read("msg_welcome_detail", getLocale().toString())));
+		}
 	}
 
 	public void handlePayerNick() {
@@ -424,11 +433,18 @@ public class ContractView extends CommonView {
 	}
 
 	public void confirmDraftAction() {
-		source.setPdf(PDFBuilder.getPdf(SourceBuilder.formatPDF(source), source.getName(), buildSignature()));
-		SendSource.exec(source);
-		resetFields();
-		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.getValue("NAVIGATION_RESULT"));
+		if (captcha.validate(captchaCode)) {
+			source.setPdf(PDFBuilder.getPdf(SourceBuilder.formatPDF(source), source.getName(), buildSignature()));
+			SendSource.exec(source);
+			resetFields();
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+					.handleNavigation(FacesContext.getCurrentInstance(), null, Config.getValue("NAVIGATION_RESULT"));
+		} else {
+			setCaptchaCode("");
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(
+					FacesContext.getCurrentInstance(), null, Config.getValue("NAVIGATION_RESULT_FAIL"));
+		}
+
 	}
 
 	public StreamedContent getFile() {
@@ -444,6 +460,11 @@ public class ContractView extends CommonView {
 	public void closeResultAction() {
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.getValue("NAVIGATION_INDEX"));
+	}
+
+	public void closeResultFailAction() {
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				.handleNavigation(FacesContext.getCurrentInstance(), null, Config.getValue("NAVIGATION_FORM"));
 	}
 
 	public String getTooltipPayer() {
@@ -503,4 +524,21 @@ public class ContractView extends CommonView {
 	public String getSourceName() {
 		return source != null ? source.getName() : "";
 	}
+
+	public SimpleJsfCaptcha getCaptcha() {
+		return captcha;
+	}
+
+	public void setCaptcha(SimpleJsfCaptcha captcha) {
+		this.captcha = captcha;
+	}
+
+	public String getCaptchaCode() {
+		return captchaCode;
+	}
+
+	public void setCaptchaCode(String captchaCode) {
+		this.captchaCode = captchaCode;
+	}
+
 }

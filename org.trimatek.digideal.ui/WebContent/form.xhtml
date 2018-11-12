@@ -6,7 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:botDetect="https://captcha.com/java/jsf/simple-api">
 <h:head>
 	<title><h:outputText value="#{msg.page_form}" /></title>
 	<link rel="stylesheet" href="./css/style.css" />
@@ -22,7 +23,7 @@
 					<p:tooltip position="top" />
 					<h:form id="new">
 						<p:remoteCommand name="onload" action="#{contractView.onLoad}"
-							autoRun="true" />
+							autoRun="true" update="check,preview" />
 						<p:panelGrid>
 							<p:row styleClass="messagesbar">
 								<p:column style="border-right-style: hidden;"></p:column>
@@ -254,7 +255,7 @@
 												disabled="#{contractView.previewDisabled}"
 												icon="ui-icon-circle-zoomin"
 												onclick="PF('draftDlg').show();"
-												update="draft,paneldialog,confirmbtn,panelbar">
+												update="draft,paneldialog,confirmbtn,panelbar,panelcaptcha">
 											</p:commandButton>
 										</h:panelGrid>
 									</div>
@@ -270,7 +271,7 @@
 							</p:selectOneButton>
 						</div>
 						<p:remoteCommand name="cancelDraft"
-							update="draft,check,preview,paneldialog,panelbar"
+							update="draft,check,preview,paneldialog,panelbar,panelcaptcha"
 							actionListener="#{contractView.cancelDraftAction}" />
 						<p:remoteCommand name="confirmDraft"
 							actionListener="#{contractView.confirmDraftAction}">
@@ -278,7 +279,7 @@
 						<p:dialog id="previewDialog" widgetVar="draftDlg"
 							showEffect="fade" position="top" positionType="absolute"
 							closable="false" showHeader="false" modal="true" width="600px"
-							height="440px" draggable="false" resizable="false"
+							height="540px" draggable="false" resizable="false"
 							style="margin-top: 65px;">
 							<br />
 							<br />
@@ -311,6 +312,18 @@
 									<p:tooltip for="signcollector"
 										value="#{contractView.tooltipCollector}" position="bottom" />
 								</p:panelGrid>
+								<br /> <br />
+								<p:panelGrid layout="grid" styleClass="ui-noborder"
+									id="panelcaptcha" columns="1">
+									<botDetect:simpleJsfCaptcha id="captcha"
+										binding="#{contractView.captcha}"
+										rendered="#{contractView.renderSignatures}" />
+									<p:inputText id="captchaCode"
+										style="background-color:#ffffcc;width: 100px;text-transform: uppercase"
+										value="#{contractView.captchaCode}"
+										rendered="#{contractView.renderSignatures}" />
+								</p:panelGrid>
+								<br />
 							</div>
 							<div style="float: right;">
 								<br />
