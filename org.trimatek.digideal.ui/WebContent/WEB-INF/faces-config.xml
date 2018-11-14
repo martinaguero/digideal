@@ -54,6 +54,11 @@
 			<to-view-id>/result.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>result-fail</from-outcome>
+			<to-view-id>/result-fail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/result.xhtml</from-view-id>
