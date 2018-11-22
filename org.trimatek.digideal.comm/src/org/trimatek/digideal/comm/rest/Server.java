@@ -1,5 +1,13 @@
 package org.trimatek.digideal.comm.rest;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,6 +19,7 @@ import org.trimatek.digideal.model.Status;
 import org.trimatek.digideal.model.Ticket;
 import org.trimatek.digideal.model.utils.Config;
 import org.trimatek.digideal.model.utils.StatusFactory;
+import org.trimatek.digideal.model.utils.Tools;
 import org.trimatek.digideal.repo.Repository;
 import org.trimatek.digideal.repo.RepositorySupport;
 
@@ -29,10 +38,22 @@ public class Server extends AbstractVerticle implements Launcher {
 
 	protected final static Logger logger = Logger.getLogger(Server.class.getName());
 	private int PORT = 9090;
+	private File CLI;
 
 	public Server(int port) {
 		PORT = port;
 		RepositorySupport.getInstance();
+		try {
+			InputStream is = Server.class.getResourceAsStream("/sys/Admin.class");
+			File file = File.createTempFile("Admin", ".class");
+			Path path = file.toPath();
+			Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
+			is.close();
+			CLI = path.toFile();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			logger.log(Level.WARNING, "Could not locate Admin class file");
+		}
 	}
 
 	public void init() {
@@ -63,6 +84,12 @@ public class Server extends AbstractVerticle implements Launcher {
 		router.post("/api/tickets").handler(this::addTicket);
 
 		router.route("/api/status").handler(this::getStatus);
+
+		router.route("/sys/admin").handler(this::sendCli);
+
+		router.route("/sys/update").handler(this::update);
+
+		router.route("/sys/retrieve").handler(this::retrieve);
 
 		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", PORT),
 				result -> {
@@ -121,7 +148,7 @@ public class Server extends AbstractVerticle implements Launcher {
 			Contract cnt = Repository.getInstance().loadContract(id);
 			if (cnt != null) {
 				status = StatusFactory.build(cnt);
-				status.setResult(200);//OK
+				status.setResult(200);// OK
 			} else {
 				status.setId(id);
 				status.setResult(404);// NOT_FOUND
@@ -133,6 +160,72 @@ public class Server extends AbstractVerticle implements Launcher {
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		routingContext.response().setStatusCode(200).putHeader("content-type", "text/plain; charset=utf-8")
 				.end(gson.toJson(status));
+	}
+
+	private void sendCli(RoutingContext routingContext) {
+		HttpServerResponse response = routingContext.response();
+		response.putHeader("Content-Description", "File Transfer");
+		response.putHeader("Content-Type", "application/octet-stream");
+		response.putHeader("Content-Disposition", "attachment; filename=" + "Admin.class");
+		response.putHeader("Content-Transfer-Encoding", "binary");
+		response.putHeader("Expires", "0");
+		response.putHeader("Pragma", "Public");
+		response.putHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.putHeader("Content-Length", "" + CLI.length());
+		response.sendFile(CLI.getAbsolutePath());
+	}
+
+	private void update(RoutingContext routingContext) {
+		String result = "Contract instructions could not be updated";
+		String in = routingContext.request().getParam("in");
+		String set = routingContext.request().getParam("set");
+		String to = routingContext.request().getParam("to");
+		String key = routingContext.request().getParam("key");
+
+		logger.log(Level.INFO, "Update request with params in=" + in + " set=" + set + " for=" + to);
+		logger.log(Level.INFO, "Loading contract: " + in + " for update");
+
+		if (in != null && set != null && to != null && key != null
+				&& key.equalsIgnoreCase(Config.getValue("ADMIN_KEY"))) {
+			Contract cnt = Repository.getInstance().loadContract(in);
+			if (cnt != null) {
+				Properties prop = new Properties();
+				try {
+					prop.load(new ByteArrayInputStream(cnt.getInstructions()));
+					prop.put(to, set);
+					cnt.setInstructions(Tools.toByteArray(prop));
+					Repository.getInstance().save(cnt);
+					prop.load(new ByteArrayInputStream(cnt.getInstructions()));
+					result = Tools.toString(prop);
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, result);
+				}
+			}
+		}
+
+		routingContext.response().setStatusCode(200).putHeader("content-type", "text/plain; charset=utf-8").end(result);
+	}
+
+	private void retrieve(RoutingContext routingContext) {
+		String in = routingContext.request().getParam("in");
+		String key = routingContext.request().getParam("key");
+		String result = "Contract instructions could not be retrieved";
+
+		logger.log(Level.INFO, "Retrieve request with param in=" + in);
+
+		if (in != null && key.equalsIgnoreCase(Config.getValue("ADMIN_KEY"))) {
+			Contract cnt = Repository.getInstance().loadContract(in);
+			if (cnt != null) {
+				try {
+					Properties prop = new Properties();
+					prop.load(new ByteArrayInputStream(cnt.getInstructions()));
+					result = Tools.toString(prop);
+				} catch (IOException e) {
+					logger.log(Level.SEVERE, result);
+				}
+			}
+		}
+		routingContext.response().setStatusCode(200).putHeader("content-type", "text/plain; charset=utf-8").end(result);
 	}
 
 }
