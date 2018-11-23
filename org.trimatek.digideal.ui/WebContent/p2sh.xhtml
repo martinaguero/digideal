@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
-	<title><h:outputText value="#{msg.page_p2sh}" /></title>
+	<title><h:outputText value="#{msg.page_p2sh_oracle}" /></title>
 	<link rel="stylesheet" href="./css/style.css" />
 	<link rel="stylesheet" href="./css/showcase.css" />
 </h:head>
@@ -55,7 +55,25 @@
 						<br />
 						<br />
 						<h2 class="text-primary">#{msg.page_oracle}</h2>
-						<p class="text-justify">#{msg.oracle_subtitle}</p>
+						<p class="text-justify">#{msg.oracle_text_0}</p>
+						<p class="text-justify">#{msg.oracle_text_1}</p>
+						<p class="text-justify">#{msg.oracle_text_2}</p>
+						<p class="text-justify">#{msg.oracle_text_3}</p>
+						<br />
+						<h:outputLabel class="text-justify" value="#{msg.page_more_info}" />
+						<br />
+						<p:link target="_blank"
+							href="https://coincentral.com/what-are-bitcoin-oracles/"
+							value="What are Bitcoin Oracles?" />
+						<br />
+						<p:link target="_blank"
+							href="https://cointelegraph.com/explained/blockchain-oracles-explained"
+							value="Blockchain Oracles, Explained" />
+						<br />
+						<p:link target="_blank"
+							href="https://www.ethnews.com/what-is-an-oracle"
+							value="What is an Oracle" />
+						<br />
 						<p:link target="_blank"
 							href="https://www.weforum.org/agenda/2018/11/this-ai-outperformed-20-corporate-lawyers-at-legal-work/"
 							value="This AI outperformed 20 corporate lawyers at legal work" />

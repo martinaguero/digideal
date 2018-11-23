@@ -15,7 +15,7 @@
 15.				/Explicar en la confirmación de nuevo contrato que recién después de 5 confirmaciones se avisará sobre su disponibilidad
 16.AGREGADO		/V2.Mostrar un status del contrato
 17.AGREGADO		/Agregar marca de agua al PDF, timestamp y versión (oscuro en Mobile)
-18.				/Agregar sobre Oraculo en Tecnología
+18.AGREGADO		/Agregar sobre Oraculo en Tecnología
 19.AGREGADO		/Actualizar mensaje post envío Nuevo con enlace a Track
 20.AGREGADO		/Dialog siempre arriba
 21.AGREGADO		/Agregar estado en reporte de estado
@@ -23,3 +23,6 @@
 23.AGREGADO		/Agregar CAPTCHA en confirmar acuerdo
 24.				/Ver en Track: No puedo convertir [New] desde tipo [class java.lang.String] a [int]
 25.				/Ruedita entre Confirmar acuerdo y Resultado
+26.				/Cambiar componente de layout para Casos de Uso, compatible con Responsive
+27.				/Agregar etiqueta DigiDeal a cada pestaña
+28.				/Retocar logo y robot
