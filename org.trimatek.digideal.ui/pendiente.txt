@@ -23,6 +23,6 @@
 23.AGREGADO		/Agregar CAPTCHA en confirmar acuerdo
 24.				/Ver en Track: No puedo convertir [New] desde tipo [class java.lang.String] a [int]
 25.				/Ruedita entre Confirmar acuerdo y Resultado
-26.				/Cambiar componente de layout para Casos de Uso, compatible con Responsive
+26.AGREGADO		/Cambiar componente de layout para Casos de Uso, compatible con Responsive
 27.				/Agregar etiqueta DigiDeal a cada pestaña
-28.				/Retocar logo y robot
+28.				/Retocar logo, robot y agregar imágenes a casos de uso
