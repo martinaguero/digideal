@@ -23,8 +23,7 @@
 						<h2 class="text-primary">#{msg.page_about}</h2>
 						<br />
 						<p:panelGrid styleClass="noBorders tr td" columns="1">
-							<p:graphicImage style="float:left;" width="250px"
-								value="../images/digideal.png" />
+							<h:graphicImage width="300" value="../images/digideal.png" />
 						</p:panelGrid>
 						<br />
 						<h:outputLabel
@@ -34,9 +33,9 @@
 							value="trimatek.org@gmail.com" />
 						<br />
 						<br />
-						<h:outputText
-							value="#{msg.terms_link}" />
-						<p:commandLink value="#{msg.terms_button}" onclick="PF('termsDlg').show();" />
+						<h:outputText value="#{msg.terms_link}" />
+						<p:commandLink value="#{msg.terms_button}"
+							onclick="PF('termsDlg').show();" />
 						<h:outputText value="." />
 						<br />
 						<br />

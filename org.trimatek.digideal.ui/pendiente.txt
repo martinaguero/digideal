@@ -25,4 +25,4 @@
 25.				/Ruedita entre Confirmar acuerdo y Resultado
 26.AGREGADO		/Cambiar componente de layout para Casos de Uso, compatible con Responsive
 27.AGREGADO		/Agregar etiqueta DigiDeal a cada pestaña
-28.				/Retocar logo, robot y agregar imágenes a casos de uso
+28.AGREGADO		/Retocar logo, robot y agregar imágenes a casos de uso

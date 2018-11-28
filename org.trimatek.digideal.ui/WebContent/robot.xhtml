@@ -46,9 +46,10 @@
 										escape="false" />
 								</p:panel>
 								<h:outputLabel value="" />
-								<h:graphicImage value="../images/wise-robot-.jpg" />
+								<h:graphicImage width="200" value="../images/robot.png" />
 								<p:panel>
-									<h:outputLabel class="text-justify" value="#{msg.robot_text_4}" />
+									<h:outputLabel class="text-justify" value="#{msg.robot_text_4} &lt;br /&gt;#{msg.robot_down_arrow}"
+										escape="false" />
 								</p:panel>
 								<p:panel>
 									<h:outputLabel class="text-justify"
@@ -69,7 +70,8 @@
 						</div>
 						<br />
 						<h:outputLabel class="text-justify" value="#{msg.robot_text_10}" />
-						<br /><br />
+						<br />
+						<br />
 						<h4>#{msg.robot_fee}</h4>
 						<h:outputLabel class="text-justify"
 							value="#{msg.robot_fee_detail}" />
