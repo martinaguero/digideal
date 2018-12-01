@@ -22,8 +22,8 @@
 22.				/Completar etiquetas en inglés
 23.AGREGADO		/Agregar CAPTCHA en confirmar acuerdo
 24.				/Ver en Track: No puedo convertir [New] desde tipo [class java.lang.String] a [int]
-25.				/Ruedita entre Confirmar acuerdo y Resultado
+25.AGREGADO		/Ruedita entre Confirmar acuerdo y Resultado
 26.AGREGADO		/Cambiar componente de layout para Casos de Uso, compatible con Responsive
 27.AGREGADO		/Agregar etiqueta DigiDeal a cada pestaña
 28.AGREGADO		/Retocar logo, robot y agregar imágenes a casos de uso
-29.				/Longitud mensaje contacto
+29.AGREGADO		/Longitud mensaje contacto

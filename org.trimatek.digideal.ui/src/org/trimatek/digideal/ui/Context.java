@@ -11,7 +11,7 @@ public class Context {
 	public final static String NAME_REGEX = "^[^\\d]+$";
 	public final static String BTC_ADDRESS_REGEX = "^[123mn][1-9A-HJ-NP-Za-km-z]{26,35}";
 	public final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-	public final static int CONTACT_MESSAGE_MIN = 1;
+	public final static int CONTACT_MESSAGE_MIN = 20;
 	public final static int CONTACT_MESSAGE_MAX = 500;
 	public final static int STATUS_SERIAL_MIN = 6;
 	public final static String STATUS_DIALOG_HEIGHT = "440px";

@@ -330,7 +330,7 @@
 								<p:commandButton id="confirmbtn" value="#{msg.btn_confirm}"
 									type="button" styleClass="ui-confirmdialog-yes"
 									icon="ui-icon-check" action="result"
-									onclick="confirmDraft();PF('draftDlg').hide();"
+									onclick="showSpinner();confirmDraft();PF('draftDlg').hide();"
 									disabled="#{contractView.confirmDraftDisabled}" />
 								<p:commandButton value="#{msg.btn_cancel}" type="button"
 									styleClass="ui-confirmdialog-no"

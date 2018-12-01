@@ -24,7 +24,8 @@
 	<link rel="shortcut icon" href="./../images/favicon.ico"
 		type="image/x-icon" />
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async='async' src="https://www.googletagmanager.com/gtag/js?id=UA-46703746-3"></script>
+	<script async='async'
+		src="https://www.googletagmanager.com/gtag/js?id=UA-46703746-3"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() {
@@ -33,6 +34,15 @@
 		gtag('js', new Date());
 
 		gtag('config', 'UA-46703746-3');
+	</script>
+	<script>
+		function showSpinner() {
+			var img = document.createElement("img");
+			img.src = './../images/spinner.gif';
+			img.style.position = "relative";
+			img.style.marginTop = "-570px";
+			document.body.appendChild(img);
+		}
 	</script>
 </h:head>
 
