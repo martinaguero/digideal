@@ -19,7 +19,7 @@
 19.AGREGADO		/Actualizar mensaje post envío Nuevo con enlace a Track
 20.AGREGADO		/Dialog siempre arriba
 21.AGREGADO		/Agregar estado en reporte de estado
-22.				/Completar etiquetas en inglés
+22.AGREGADO		/Completar etiquetas en inglés
 23.AGREGADO		/Agregar CAPTCHA en confirmar acuerdo
 24.				/Ver en Track: No puedo convertir [New] desde tipo [class java.lang.String] a [int]
 25.AGREGADO		/Ruedita entre Confirmar acuerdo y Resultado
