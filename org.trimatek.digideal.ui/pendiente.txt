@@ -27,3 +27,5 @@
 27.AGREGADO		/Agregar etiqueta DigiDeal a cada pestaña
 28.AGREGADO		/Retocar logo, robot y agregar imágenes a casos de uso
 29.AGREGADO		/Longitud mensaje contacto
+30.				/Open graph multilenguaje
+31.AGREGADO		/Aviso formulario para desktop

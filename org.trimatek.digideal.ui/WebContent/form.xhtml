@@ -12,6 +12,13 @@
 	<title><h:outputText value="DigiDeal | #{msg.page_form}" /></title>
 	<link rel="stylesheet" href="./css/style.css" />
 	<link rel="stylesheet" href="./css/showcase.css" />
+	<script>
+		function sidebar() {			
+			if (1200 > window.innerWidth) {
+				PF('sizebar').show();
+			}
+		}
+	</script>
 </h:head>
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
@@ -22,8 +29,13 @@
 				<h:body>
 					<p:tooltip position="top" />
 					<h:form id="new">
+						<p:sidebar widgetVar="sizebar" position="top" baseZIndex="10000">
+							<h1 style="font-weight: normal">#{msg.alert_screen_title}</h1>
+							<p class="text-justify">#{msg.alert_screen_text}</p>
+						</p:sidebar>
 						<p:remoteCommand name="onload" action="#{contractView.onLoad}"
-							autoRun="true" update="check,preview" />
+							autoRun="true" update="check,preview"
+							oncomplete="sidebar();" />
 						<p:panelGrid>
 							<p:row styleClass="messagesbar">
 								<p:column style="border-right-style: hidden;"></p:column>
