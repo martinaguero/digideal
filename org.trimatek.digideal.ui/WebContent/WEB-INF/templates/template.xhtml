@@ -7,13 +7,33 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
+	<!-- Google Tag Manager -->
+	<script>
+		(function(w, d, s, l, i) {
+			w[l] = w[l] || [];
+			w[l].push({
+				'gtm.start' : new Date().getTime(),
+				event : 'gtm.js'
+			});
+			var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&amp;l='
+					+ l
+					: '';
+			j.async = true;
+			j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+			f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-K7PHP3R');
+	</script>
+	<!-- End Google Tag Manager -->
 	<title><ui:insert name="title">DigiDeal</ui:insert></title>
+	<meta name="google-site-verification"
+		content="tG9thHMa15JG0HyT3mIRtZxcSNQNKGs8tHHh6Dh6QBA" />
 	<meta charset="utf-8"></meta>
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
 	<meta name="description" content="#{msg.og_description}" />
 	<meta property="og:title" content="DigiDeal" />
-	<meta property="og:url" content="https://digideal.services/web/view/main.xhtml" />
+	<meta property="og:url"
+		content="https://digideal.services/web/view/main.xhtml" />
 	<meta property="og:description" content="#{msg.og_description}" />
 	<meta property="og:image"
 		content="https://digideal.services/web/images/robot.png" />
@@ -56,6 +76,12 @@
 
 
 <body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript>
+		<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7PHP3R"
+			height="0" width="0" style="display: none; visibility: hidden"></iframe>
+	</noscript>
+	<!-- End Google Tag Manager (noscript) -->
 	<ui:debug hotkey="x"
 		rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}" />
 
