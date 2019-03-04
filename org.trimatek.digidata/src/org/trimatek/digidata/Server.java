@@ -99,6 +99,14 @@ public class Server extends AbstractVerticle {
 			response.putHeader("content-type", "text/plain; charset=utf-8").end(printHelp());
 		});
 
+		if (Config.STRATEGIES_ENABLED) {
+			router.route("/digidata/strategies").handler(routingContext -> {
+				HttpServerResponse response = routingContext.response();
+				response.setStatusCode(200);
+				response.putHeader("content-type", "text/plain; charset=utf-8").end("READY");
+			});
+		}
+
 		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", PORT),
 				result -> {
 					if (result.succeeded()) {
@@ -125,7 +133,7 @@ public class Server extends AbstractVerticle {
 	}
 
 	private String printHelp() {
-		return  "DigiData v." + Config.DIGIDATA_VERSION + "\n"
+		return "DigiData v." + Config.DIGIDATA_VERSION + "\n"
 				+ "/digidata/serial \t\t\t Unique serial from: base36(epoch+counter)\n"
 				+ "/digidata/fee/[fast/mid/slow] \t\t Fee prediction for confirmation from: "
 				+ Config.BTC_FEE_PREDICTION_EARN_URL + " updated every " + Config.BTC_FEE_MINUTES_TO_UPDATE

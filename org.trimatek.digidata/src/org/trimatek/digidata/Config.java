@@ -13,5 +13,6 @@ public class Config {
 	public final static float BTC_USD_RATE_START = 0.00015412f;
 	public final static float BTC_BRL_RATE_START = 0.00004153f;
 	public final static float BTC_EUR_RATE_START = 0.00017632f;
+	public final static boolean STRATEGIES_ENABLED = true;
 	
 }
