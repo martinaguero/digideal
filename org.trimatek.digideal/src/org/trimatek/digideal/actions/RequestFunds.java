@@ -62,7 +62,7 @@ public class RequestFunds extends Action {
 		Template t = TemplateFactory.getEmailTemplate();
 		t.setHi(Dialogs.read("email_hi", locale) + " @" + cnt.getValue("payer.name") + "</b>");
 		String content1 = Dialogs.read("email_request_funds_payer_content1_a", locale) + " <b>"
-				+ Dialogs.read("email_btc", locale) + " " + cnt.getValue("btc") + "</b> "
+				+ Dialogs.getSymbol(locale) + " " + cnt.getValue("btc") + "</b> "
 				+ Dialogs.read("email_request_funds_payer_content1_b", locale) + " " + cnt.getMultisigAddress()
 				+ "<br/> " + Dialogs.read("email_request_funds_payer_content1_c", locale)
 				+ setTwitterColor(" @" + cnt.getValue("collector.name")) + ".";

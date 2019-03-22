@@ -45,5 +45,10 @@ public class Dialogs {
 		}
 		return sb.toString();
 	}
+	
+	public static String getSymbol(String locale) {
+		return Boolean.parseBoolean(Config.getValue("MAINNET"))?
+				Dialogs.read("email_btc", locale):"t"+Dialogs.read("email_btc", locale);
+	}
 
 }

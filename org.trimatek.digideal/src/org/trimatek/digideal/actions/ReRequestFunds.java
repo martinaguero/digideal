@@ -57,10 +57,10 @@ public class ReRequestFunds extends Action {
 
 		Template t = TemplateFactory.getEmailTemplate();
 		t.setHi(Dialogs.read("email_hi",locale) + " @" + cnt.getValue("payer.name") + "</b>");
-		String content1 = Dialogs.read("email_btc",locale) + " "
+		String content1 = Dialogs.getSymbol(locale) + " "
 				+ cnt.getLastUnspentTransaction().getValue() + " " + Dialogs.read("email_rerequest_funds_content1_a",locale)
 				+ "<br/> " + Dialogs.read("email_rerequest_funds_content1_b",locale) + " <b>"
-				+ Dialogs.read("email_btc",locale) + " " + dif + "</b> "
+				+ Dialogs.getSymbol(locale) + " " + dif + "</b> "
 				+ Dialogs.read("email_rerequest_funds_content1_c",locale) + "<br/>" + cnt.getMultisigAddress() + "<br/>"
 				+ Dialogs.read("email_rerequest_funds_content1_d",locale);
 

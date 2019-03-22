@@ -3,5 +3,7 @@ java --add-opens org.trimatek.digideal.agent/org.trimatek.digideal.agent.rules=r
 #ps -fu root
 #kill -SIGTERM [PID]
 
+#tail -f /root/digideal.log
+
 
  
