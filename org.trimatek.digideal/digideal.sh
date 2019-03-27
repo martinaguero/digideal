@@ -5,5 +5,7 @@ java --add-opens org.trimatek.digideal.agent/org.trimatek.digideal.agent.rules=r
 
 #tail -f /root/digideal.log
 
+#D:\Temp>d:\bin\JDK9\bin\java -cp . sys.Admin canela
+#D:\Temp\sys\Admin.class
 
  
