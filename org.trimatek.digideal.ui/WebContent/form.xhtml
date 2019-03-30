@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="./css/style.css" />
 	<link rel="stylesheet" href="./css/showcase.css" />
 	<script>
-		function sidebar() {			
+		function sidebar() {
 			if (1200 > window.innerWidth) {
 				PF('sizebar').show();
 			}
@@ -34,8 +34,7 @@
 							<p class="text-justify">#{msg.alert_screen_text}</p>
 						</p:sidebar>
 						<p:remoteCommand name="onload" action="#{contractView.onLoad}"
-							autoRun="true" update="check,preview"
-							oncomplete="sidebar();" />
+							autoRun="true" update="check,preview" oncomplete="sidebar();" />
 						<p:panelGrid>
 							<p:row styleClass="messagesbar">
 								<p:column style="border-right-style: hidden;"></p:column>
@@ -72,6 +71,9 @@
 														<p:ajax update="msgs,namePayer,preview" event="blur"
 															listener="#{contractView.validatePayerName}" />
 													</p:inputText>
+													<p:tooltip id="tooltipNamePayer" for="namePayer"
+														hideEvent="blur" showEvent="focus"
+														value="#{msg.form_name_tooltip}" position="right" />
 													<span class="ui-inputgroup-addon"><h:outputText
 															value="#{msg.form_now_on}" /></span>
 													<p:inputText styleClass="nick" id="nickPayer"
@@ -118,6 +120,9 @@
 														<p:ajax update="msgs,nameCollector,preview" event="blur"
 															listener="#{contractView.validateCollectorName}" />
 													</p:inputText>
+													<p:tooltip id="tooltipNameColl" for="nameCollector"
+														hideEvent="blur" showEvent="focus"
+														value="#{msg.form_name_tooltip}" position="right" />
 													<span class="ui-inputgroup-addon"><h:outputText
 															value="#{msg.form_now_on}" /></span>
 													<p:inputText styleClass="nick" id="nickCollector"
@@ -222,6 +227,9 @@
 												<p:ajax event="blur" update="item,msgs,preview"
 													listener="#{contractView.validateItem}" />
 											</p:inputTextarea>
+											<p:tooltip id="tooltipItem" for="item" hideEvent="blur"
+												showEvent="focus" value="#{msg.form_description_tooltip}"
+												position="left" />
 										</div>
 									</div>
 								</p:column>
