@@ -407,6 +407,7 @@ public class ContractView extends CommonView {
 	}
 
 	public void previewAction() {
+		/*
 		Optional<Address> address;
 		String errors = Tools.read("error_address_not_parseable", getLocale().toString()) + "<br/>"
 				+ Tools.read("error_address_invalid", getLocale().toString());
@@ -420,11 +421,14 @@ public class ContractView extends CommonView {
 			logger.log(Level.SEVERE, e.getMessage());
 		}
 		if (errors.equals("")) {
+		*/
 			source = SourceBuilder.getSource(this);
+		/*
 		} else {
 			source = new Source();
 			source.setText(errors);
 		}
+		*/
 	}
 
 	public void cancelDraftAction() {

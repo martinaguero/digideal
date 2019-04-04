@@ -218,6 +218,9 @@
 												<p:ajax event="blur" update="address,msgs,preview"
 													listener="#{contractView.validateAddress}" />
 											</p:inputTextarea>
+											<p:tooltip id="tooltipAddress" for="address" hideEvent="blur"
+												showEvent="focus" value="#{msg.form_description_tooltip}"
+												position="right" />
 											<span class="ui-inputgroup-addon"><h:outputText
 													value="#{msg.form_the_next}" /></span>
 											<p:inputTextarea styleClass="textArea" rows="3" cols="36"
@@ -339,8 +342,8 @@
 										binding="#{contractView.captcha}"
 										rendered="#{contractView.renderSignatures}" />
 									<p:inputText id="captchaCode"
-										style="background-color:#ffffcc;width: 100px;text-transform: uppercase"
-										value="#{contractView.captchaCode}"
+										style="background-color:#ffffcc;width: 130px;text-transform: uppercase"
+										value="#{contractView.captchaCode}" placeholder="#{msg.form_enter_captcha}"
 										rendered="#{contractView.renderSignatures}" />
 								</p:panelGrid>
 								<br />

@@ -50,3 +50,4 @@
 50.AGREGADO		/V2:Subidor de .properties compilado con enmienda
 51.				/V2:Shutdown de REST server con borrado de archivo temporal Admin
 52.				/Aleatoriamente no envía el QR con pedido de fondos
+53.				/Revisar texto de "Se ha recibido el total de fondos estas transacciones:"
