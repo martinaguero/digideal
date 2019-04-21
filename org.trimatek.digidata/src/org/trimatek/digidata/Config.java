@@ -1,8 +1,8 @@
 package org.trimatek.digidata;
 
 public class Config {
-	
-	public static final String DIGIDATA_VERSION = "0.26.0-Beta";
+
+	public static final String DIGIDATA_VERSION = "0.27.1-Beta";
 	public static final String BTC_USD_RATE_BCINFO_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	public static final String BTC_BRL_RATE_BCINFO_URL = "https://blockchain.info/tobtc?currency=BRL&value=1";
 	public static final String BTC_EUR_RATE_BCINFO_URL = "https://blockchain.info/tobtc?currency=EUR&value=1";
@@ -13,6 +13,10 @@ public class Config {
 	public final static float BTC_USD_RATE_START = 0.00015412f;
 	public final static float BTC_BRL_RATE_START = 0.00004153f;
 	public final static float BTC_EUR_RATE_START = 0.00017632f;
-	public final static boolean STRATEGIES_ENABLED = true;
-	
+
+	public final static int TRADING_MAX_RESULTS = 100;
+	public final static String TRADING_DB_USERNAME = "canela";
+	public final static String TRADING_DB_PASSWORD = "elterrordelbarrio";
+	public final static String TRADING_URL = "objectdb://trimatek.org:6136/trading.odb";
+
 }

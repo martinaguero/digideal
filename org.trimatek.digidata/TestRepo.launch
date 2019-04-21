@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/org.trimatek.digidata/src/org/trimatek/digidata/TestRepo.java"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="1"/>
+    </listAttribute>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.trimatek.digidata.TestRepo"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.trimatek.digidata"/>
+</launchConfiguration>

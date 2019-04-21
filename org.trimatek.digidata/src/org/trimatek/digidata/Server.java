@@ -2,6 +2,9 @@ package org.trimatek.digidata;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -9,12 +12,16 @@ import java.util.logging.Logger;
 import org.trimatek.digidata.btc.fee.FeeLookup;
 import org.trimatek.digidata.btc.fee.FeeLookup.FEES;
 import org.trimatek.digidata.btc.fee.RateLookup;
+import org.trimatek.digidata.trading.Repository;
+import org.trimatek.digidata.trading.model.Strategy;
+import org.trimatek.digidata.trading.model.Trade;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
 
 public class Server extends AbstractVerticle {
 
@@ -99,13 +106,11 @@ public class Server extends AbstractVerticle {
 			response.putHeader("content-type", "text/plain; charset=utf-8").end(printHelp());
 		});
 
-		if (Config.STRATEGIES_ENABLED) {
-			router.route("/digidata/strategies").handler(routingContext -> {
-				HttpServerResponse response = routingContext.response();
-				response.setStatusCode(200);
-				response.putHeader("content-type", "text/plain; charset=utf-8").end("READY");
-			});
-		}
+		router.route("/digidata/strategy/active").handler(this::getStrategy);
+
+		router.route("/digidata/trading/records").handler(this::getTradingRecords);
+
+		router.route("/digidata/trading/add").handler(this::addTradingResult);
 
 		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", PORT),
 				result -> {
@@ -141,7 +146,58 @@ public class Server extends AbstractVerticle {
 				+ Config.BTC_FEE_PREDICTION_EARN_URL + " updated every " + Config.BTC_FEE_HOURS_TO_UPDATE_HISTORIC
 				+ " hours\n" + "/digidata/fee/status \t\t\t Sum of historic fee prediction received samples\n"
 				+ "/digidata/rates/btc \t\t\t Exchange rates from: " + "https://blockchain.info/" + " updated every "
-				+ Config.BTC_RATE_HOURS_UPDATE + " hours\n";
+				+ Config.BTC_RATE_HOURS_UPDATE + " hours\n"
+				+ "/digidata/strategy/active \t\t with <name,version> parameters\n" + "/digidata/trading/records \t\t last "
+				+ Config.TRADING_MAX_RESULTS + " records\n";
+	}
+
+	private void getStrategy(RoutingContext routingContext) {
+		String name = routingContext.request().getParam("name");
+		String version = routingContext.request().getParam("version");
+		logger.log(Level.INFO, "New strategy status request for = " + name + "/" + version);
+		Strategy s = Repository.getInstance().loadStrategy(name, version);
+		if (s != null) {
+			Repository.getInstance().refreshStrategy(s);
+		}
+		routingContext.response().setStatusCode(200).putHeader("content-type", "text/plain; charset=utf-8")
+				.end((s != null ? s.isActive() : false) + "");
+	}
+
+	private void getTradingRecords(RoutingContext routingContext) {
+		logger.log(Level.INFO, "New trading records request");
+		List<Trade> trades = Repository.getInstance().loadTrades();
+		routingContext.response().setStatusCode(200).putHeader("content-type", "text/plain; charset=utf-8")
+				.end((trades != null ? format(trades) : ""));
+	}
+
+	private String format(List<Trade> trades) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(
+				"ID" + "\tSESSION" + "\t\t\tACCOUNT" + "\t\tINSTRUMENT" + "\tCONNECTION" + "\tSTRATEGY" + "\tRESULT\n");
+		for (Trade trade : trades) {
+			sb.append(trade.getId() + "\t" + trade.getSession() + "\t" + trade.getAccount() + "\t\t"
+					+ trade.getInstrument() + "\t\t" + trade.getConnection() + "\t\t" + trade.getStrategy() + "\t"
+					+ trade.getResult().setScale(4, RoundingMode.HALF_UP) + "\n");
+		}
+		return sb.toString();
+	}
+
+	private void addTradingResult(RoutingContext routingContext) {
+		Trade t = new Trade();
+		t.setSession(routingContext.request().getParam("session"));
+		t.setAccount(routingContext.request().getParam("account"));
+		t.setConnection(routingContext.request().getParam("connection"));
+		t.setInstrument(routingContext.request().getParam("instrument"));
+		t.setStrategy(routingContext.request().getParam("strategy"));
+		String result = routingContext.request().getParam("result");
+		if (result.indexOf(",") != -1) {
+			result = result.replace(",", ".");
+		}
+		t.setResult(new BigDecimal(result));
+		logger.log(Level.INFO, "New trading record received");
+		Repository.getInstance().save(t);
+		routingContext.response().setStatusCode(200).putHeader("content-type", "text/plain; charset=utf-8")
+				.end("Added " + t.getId());
 	}
 
 }
