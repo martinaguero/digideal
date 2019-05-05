@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -22,6 +24,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.BodyHandler;
 
 public class Server extends AbstractVerticle {
 
@@ -110,7 +113,10 @@ public class Server extends AbstractVerticle {
 
 		router.route("/digidata/trading/records").handler(this::getTradingRecords);
 
-		router.route("/digidata/trading/add").handler(this::addTradingResult);
+		router.route(Config.ROUTE_TRADE_LOG).handler(this::getTradeLog);
+
+		router.route("/digidata/trading*").handler(BodyHandler.create());
+		router.post("/digidata/trading/add").handler(this::addTradingResult);
 
 		vertx.createHttpServer().requestHandler(router::accept).listen(config().getInteger("http.port", PORT),
 				result -> {
@@ -147,8 +153,9 @@ public class Server extends AbstractVerticle {
 				+ " hours\n" + "/digidata/fee/status \t\t\t Sum of historic fee prediction received samples\n"
 				+ "/digidata/rates/btc \t\t\t Exchange rates from: " + "https://blockchain.info/" + " updated every "
 				+ Config.BTC_RATE_HOURS_UPDATE + " hours\n"
-				+ "/digidata/strategy/active \t\t with <name,version> parameters\n" + "/digidata/trading/records \t\t last "
-				+ Config.TRADING_MAX_RESULTS + " records\n";
+				+ "/digidata/strategy/active \t\t with <name,version> parameters\n"
+				+ "/digidata/trading/records \t\t last " + Config.TRADING_MAX_RESULTS + " records\n"
+				+ "/digidata/trade/log \t\t\t with <id> parameter\n";
 	}
 
 	private void getStrategy(RoutingContext routingContext) {
@@ -166,19 +173,30 @@ public class Server extends AbstractVerticle {
 	private void getTradingRecords(RoutingContext routingContext) {
 		logger.log(Level.INFO, "New trading records request");
 		List<Trade> trades = Repository.getInstance().loadTrades();
-		routingContext.response().setStatusCode(200).putHeader("content-type", "text/plain; charset=utf-8")
+		routingContext.response().setStatusCode(200).putHeader("content-type", "text/html; charset=utf-8")
 				.end((trades != null ? format(trades) : ""));
 	}
 
 	private String format(List<Trade> trades) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(
-				"ID" + "\tSESSION" + "\t\t\tACCOUNT" + "\t\tINSTRUMENT" + "\tCONNECTION" + "\tSTRATEGY" + "\tRESULT\n");
+		sb.append("<!DOCTYPE html>\r\n" + "<html>\r\n" + "<head>\r\n" + "<title>Last 100 trades</title><style>\r\n" + 
+				"th {text-align: left;}" +" </style>\r " + "</head>\r\n"
+				+ "<body>");
+		sb.append("<table style=\"width:100%\">\r\n" + "  <tr>");
+		sb.append("<th>ID</th>" + "<th>SESSION</th>" + "<th>ACCOUNT</th>" + "<th>INSTRUMENT</th>"
+				+ "<th>CONNECTION</th>" + "<th>STRATEGY</th>" + "<th>RESULT</th>" + "<th>LOG</th>");
+		sb.append("</tr>");
+		String url = null;
 		for (Trade trade : trades) {
-			sb.append(trade.getId() + "\t" + trade.getSession() + "\t" + trade.getAccount() + "\t\t"
-					+ trade.getInstrument() + "\t\t" + trade.getConnection() + "\t\t" + trade.getStrategy() + "\t"
-					+ trade.getResult().setScale(4, RoundingMode.HALF_UP) + "\n");
+			url = Config.SERVER_NAME + ":" + PORT + Config.ROUTE_TRADE_LOG + "?id=" + trade.getId();
+			sb.append("<tr>\n");
+			sb.append("<td>" + trade.getId() + "</td>" + "<td>" + trade.getSession() + "</td>" + "<td>" + trade.getAccount() + "</td>"
+					+ "<td>" + trade.getInstrument() + "</td>" + "<td>" + trade.getConnection() + "</td>" + "<td>"
+					+ trade.getStrategy() + "</td>" + "<td>" + trade.getResult().setScale(4, RoundingMode.HALF_UP)
+					+ "</td>" + "<td>" + "<a href=http://" + url + ">Go</a>" + "</td>");
+			sb.append("</tr>\n");
 		}
+		sb.append("</body>\r\n" + "</html>");
 		return sb.toString();
 	}
 
@@ -189,15 +207,25 @@ public class Server extends AbstractVerticle {
 		t.setConnection(routingContext.request().getParam("connection"));
 		t.setInstrument(routingContext.request().getParam("instrument"));
 		t.setStrategy(routingContext.request().getParam("strategy"));
+		t.setLog(routingContext.getBodyAsString());
 		String result = routingContext.request().getParam("result");
 		if (result.indexOf(",") != -1) {
 			result = result.replace(",", ".");
 		}
 		t.setResult(new BigDecimal(result));
-		logger.log(Level.INFO, "New trading record received");
+		logger.log(Level.INFO,
+				"New trading record received for: " + t.getLog().substring(0, t.getLog().indexOf("]") + 1));
 		Repository.getInstance().save(t);
 		routingContext.response().setStatusCode(200).putHeader("content-type", "text/plain; charset=utf-8")
 				.end("Added " + t.getId());
+	}
+
+	private void getTradeLog(RoutingContext routingContext) {
+		logger.log(Level.INFO, "New trade log request");
+		String id = routingContext.request().getParam("id");
+		Trade t = Repository.getInstance().loadTrade(Long.parseLong(id));
+		routingContext.response().setStatusCode(200).putHeader("content-type", "text/plain; charset=utf-8")
+				.end((t != null ? t.getLog() : ""));
 	}
 
 }

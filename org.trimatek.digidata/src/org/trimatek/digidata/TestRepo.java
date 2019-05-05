@@ -9,9 +9,9 @@ public class TestRepo {
 		Repository r = Repository.getInstance();
 
 		 Strategy s = new Strategy();
-		 s.setActive(false);
-		 s.setName("Cross");
-		 s.setVersion("0.7.0");
+		 s.setActive(true);
+		 s.setName("Forex");
+		 s.setVersion("0.1.0");
 		 r.save(s);
 
 		// Strategy s = r.loadStrategy(1.0F);

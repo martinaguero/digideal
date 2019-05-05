@@ -19,8 +19,8 @@ public class Repository {
 	private static Repository INSTANCE;
 
 	private Repository() {
-//		com.objectdb.Enhancer.enhance("org.trimatek.digidata.trading.model.Trade");
-//		com.objectdb.Enhancer.enhance("org.trimatek.digidata.trading.model.Strategy");
+		com.objectdb.Enhancer.enhance("org.trimatek.digidata.trading.model.Trade");
+		com.objectdb.Enhancer.enhance("org.trimatek.digidata.trading.model.Strategy");
 		Map<String, String> properties = new HashMap<String, String>();
 		properties.put("javax.persistence.jdbc.user", Config.TRADING_DB_USERNAME);
 		properties.put("javax.persistence.jdbc.password", Config.TRADING_DB_PASSWORD);

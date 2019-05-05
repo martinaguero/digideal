@@ -2,7 +2,9 @@ package org.trimatek.digidata.trading.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -15,13 +17,15 @@ public class Trade {
 
 	@Id
 	@GeneratedValue
-	private long id;	
+	private long id;
 	private String session;
 	private String account;
 	private String instrument;
 	private String connection;
 	private String strategy;
 	private BigDecimal result;
+	@Basic(fetch = FetchType.LAZY)
+	private String log;
 
 	public long getId() {
 		return id;
@@ -77,6 +81,14 @@ public class Trade {
 
 	public void setStrategy(String strategy) {
 		this.strategy = strategy;
+	}
+
+	public String getLog() {
+		return log;
+	}
+
+	public void setLog(String log) {
+		this.log = log;
 	}
 
 }
