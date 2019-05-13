@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -179,21 +177,23 @@ public class Server extends AbstractVerticle {
 
 	private String format(List<Trade> trades) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("<!DOCTYPE html>\r\n" + "<html>\r\n" + "<head>\r\n" + "<title>Last 100 trades</title><style>\r\n" + 
-				"th {text-align: left;}" +" </style>\r " + "</head>\r\n"
-				+ "<body>");
+		sb.append("<!DOCTYPE html>\r\n" + "<html>\r\n" + "<head>\r\n" + "<title>Last 100 trades</title><style>\r\n"
+				+ "th {text-align: left;}" + " </style>\r " + "</head>\r\n" + "<body>");
 		sb.append("<table style=\"width:100%\">\r\n" + "  <tr>");
 		sb.append("<th>ID</th>" + "<th>SESSION</th>" + "<th>ACCOUNT</th>" + "<th>INSTRUMENT</th>"
 				+ "<th>CONNECTION</th>" + "<th>STRATEGY</th>" + "<th>RESULT</th>" + "<th>LOG</th>");
 		sb.append("</tr>");
-		String url = null;
+		String url, bar = null;
 		for (Trade trade : trades) {
 			url = Config.SERVER_NAME + ":" + PORT + Config.ROUTE_TRADE_LOG + "?id=" + trade.getId();
+			bar = trade.getSession().substring(trade.getSession().indexOf("[") + 1,
+					trade.getSession().indexOf("]"));
 			sb.append("<tr>\n");
-			sb.append("<td>" + trade.getId() + "</td>" + "<td>" + trade.getSession() + "</td>" + "<td>" + trade.getAccount() + "</td>"
-					+ "<td>" + trade.getInstrument() + "</td>" + "<td>" + trade.getConnection() + "</td>" + "<td>"
-					+ trade.getStrategy() + "</td>" + "<td>" + trade.getResult().setScale(4, RoundingMode.HALF_UP)
-					+ "</td>" + "<td>" + "<a href=http://" + url + ">Go</a>" + "</td>");
+			sb.append("<td>" + trade.getId() + "</td>" + "<td>" + trade.getSession() + "</td>" + "<td>"
+					+ trade.getAccount() + "</td>" + "<td>" + trade.getInstrument() + "</td>" + "<td>"
+					+ trade.getConnection() + "</td>" + "<td>" + trade.getStrategy() + "</td>" + "<td>"
+					+ trade.getResult().setScale(4, RoundingMode.HALF_UP) + "</td>" + "<td>" + "<a href=http://" + url
+					+ ">[" + bar + "]</a>" + "</td>");
 			sb.append("</tr>\n");
 		}
 		sb.append("</body>\r\n" + "</html>");

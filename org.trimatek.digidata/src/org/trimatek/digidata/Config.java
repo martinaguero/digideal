@@ -2,7 +2,7 @@ package org.trimatek.digidata;
 
 public class Config {
 
-	public static final String DIGIDATA_VERSION = "0.27.3-Beta";
+	public static final String DIGIDATA_VERSION = "0.27.4-Beta";
 	public static final String BTC_USD_RATE_BCINFO_URL = "https://blockchain.info/tobtc?currency=USD&value=1";
 	public static final String BTC_BRL_RATE_BCINFO_URL = "https://blockchain.info/tobtc?currency=BRL&value=1";
 	public static final String BTC_EUR_RATE_BCINFO_URL = "https://blockchain.info/tobtc?currency=EUR&value=1";

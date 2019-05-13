@@ -11,7 +11,7 @@ public class TestRepo {
 		 Strategy s = new Strategy();
 		 s.setActive(true);
 		 s.setName("Forex");
-		 s.setVersion("0.1.0");
+		 s.setVersion("0.2.4");
 		 r.save(s);
 
 		// Strategy s = r.loadStrategy(1.0F);
